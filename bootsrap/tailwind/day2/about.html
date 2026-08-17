@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us | TechNova Learning Hub</title>
+  <meta name="description" content="Discover the mission, philosophy, and expert instructors behind TechNova Learning Hub's Full-Stack and AI curriculum.">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-cyan-500 selection:text-white">
+
+  <!-- Ambient Blobs -->
+  <div class="fixed top-0 left-1/4 w-96 h-96 bg-blob-blue rounded-full filter blur-3xl pointer-events-none -z-10 animate-pulse"></div>
+
+  <!-- Navigation Bar -->
+  <nav class="sticky top-0 z-40 bg-slate-900/80 backdrop-blur-xl border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <div class="flex items-center gap-8">
+          <a href="index.html" class="flex items-center gap-3 group">
+            <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-cyan-400 flex items-center justify-center text-xl text-white shadow-lg shadow-cyan-500/25 group-hover:scale-105 transition-transform">
+              <i class="fa-solid fa-cube"></i>
+            </div>
+            <div>
+              <span class="text-xl font-extrabold tracking-tight text-white font-display flex items-center gap-1.5">
+                Tech<span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-300">Nova</span>
+              </span>
+              <span class="block text-[10px] font-semibold text-slate-400 tracking-widest uppercase">Learning Hub</span>
+            </div>
+          </a>
+
+          <div class="hidden lg:flex items-center gap-1">
+            <a href="index.html" class="nav-link px-3 py-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors rounded-lg">Home</a>
+            <a href="fullstack.html" class="nav-link px-3 py-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors rounded-lg">Full-Stack</a>
+            <a href="ai.html" class="nav-link px-3 py-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors rounded-lg">AI & Emerging</a>
+            <a href="courses.html" class="nav-link px-3 py-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors rounded-lg">Courses</a>
+            <a href="projects.html" class="nav-link px-3 py-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors rounded-lg">Projects</a>
+            <a href="dashboard.html" class="nav-link px-3 py-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors rounded-lg">Dashboard</a>
+            <a href="about.html" class="nav-link px-3 py-2 text-sm font-semibold text-cyan-400 font-bold transition-colors rounded-lg">About</a>
+            <a href="contact.html" class="nav-link px-3 py-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors rounded-lg">Contact</a>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button onclick="TechNovaMain.openSearchModal()" class="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-700/80 text-xs">
+            <i class="fa-solid fa-magnifying-glass text-slate-400"></i>
+            <span class="hidden sm:inline">Search...</span>
+            <kbd class="hidden md:inline-block px-1.5 py-0.5 text-[10px] font-mono bg-slate-900 text-slate-400 rounded border border-slate-700">Ctrl K</kbd>
+          </button>
+          <button class="theme-toggle-btn w-10 h-10 rounded-xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 flex items-center justify-center text-slate-300">
+            <i class="theme-toggle-icon fa-solid fa-sun text-amber-400 text-sm"></i>
+          </button>
+          <div id="navbar-auth-section" class="flex items-center"></div>
+          <button id="mobile-menu-btn" class="lg:hidden w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-slate-300 border border-slate-700">
+            <i class="fa-solid fa-bars text-lg"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="flex-1">
+
+    <header class="py-16 sm:py-24 border-b border-slate-800/80 bg-slate-900/40 relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <span class="px-3.5 py-1 rounded-full bg-cyan-950 text-cyan-400 border border-cyan-800/50 text-xs font-bold uppercase tracking-wider">Our Mission</span>
+        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white font-display mt-4">Empowering the Next Generation of Technologists</h1>
+        <p class="text-slate-300 text-base sm:text-lg max-w-3xl mx-auto mt-4 leading-relaxed">
+          TechNova Learning Hub was founded with a singular ambition: to bridge the gap between foundational web development and cutting-edge Artificial Intelligence engineering through rigorous, interactive, and project-based education.
+        </p>
+      </div>
+    </header>
+
+    <!-- 4-Step Learning Methodology -->
+    <section class="py-20 sm:py-28">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span class="px-3.5 py-1 rounded-full bg-blue-950 text-blue-400 border border-blue-800/50 text-xs font-bold uppercase tracking-wider">Methodology</span>
+          <h2 class="text-3xl sm:text-5xl font-black text-white font-display mt-3">The 4-Step TechNova Learning Loop</h2>
+          <p class="text-slate-400 text-sm sm:text-base mt-2">How we structure every course module to ensure true technical mastery.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          
+          <div class="glass-card p-6 rounded-3xl border border-slate-800 relative">
+            <span class="w-10 h-10 rounded-2xl bg-blue-600/20 text-blue-400 border border-blue-500/30 flex items-center justify-center font-black text-lg mb-4">1</span>
+            <h3 class="text-lg font-bold text-white">Syntax & Basics</h3>
+            <p class="text-xs text-slate-300 mt-2 leading-relaxed">Learn core principles, syntax rules, semantic tags, and mathematical definitions with zero jargon.</p>
+          </div>
+
+          <div class="glass-card p-6 rounded-3xl border border-slate-800 relative">
+            <span class="w-10 h-10 rounded-2xl bg-cyan-600/20 text-cyan-400 border border-cyan-500/30 flex items-center justify-center font-black text-lg mb-4">2</span>
+            <h3 class="text-lg font-bold text-white">System Architecture</h3>
+            <p class="text-xs text-slate-300 mt-2 leading-relaxed">Understand how asynchronous event loops, REST APIs, SQL transactions, and neural weights operate under the hood.</p>
+          </div>
+
+          <div class="glass-card p-6 rounded-3xl border border-slate-800 relative">
+            <span class="w-10 h-10 rounded-2xl bg-purple-600/20 text-purple-400 border border-purple-500/30 flex items-center justify-center font-black text-lg mb-4">3</span>
+            <h3 class="text-lg font-bold text-white">Production Projects</h3>
+            <p class="text-xs text-slate-300 mt-2 leading-relaxed">Build complete, real-world portfolio applications (E-commerce stores, AI chatbots, hotel booking databases).</p>
+          </div>
+
+          <div class="glass-card p-6 rounded-3xl border border-slate-800 relative">
+            <span class="w-10 h-10 rounded-2xl bg-emerald-600/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center font-black text-lg mb-4">4</span>
+            <h3 class="text-lg font-bold text-white">Verified Mastery</h3>
+            <p class="text-xs text-slate-300 mt-2 leading-relaxed">Earn authenticated, digitally signed certificates with unique verification IDs ready for your LinkedIn and resume.</p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Mentors & Instructors -->
+    <section class="py-20 bg-slate-900/50 border-t border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span class="px-3.5 py-1 rounded-full bg-purple-950 text-purple-400 border border-purple-800/50 text-xs font-bold uppercase tracking-wider">Expert Leadership</span>
+          <h2 class="text-3xl sm:text-5xl font-black text-white font-display mt-3">Taught by Senior Engineers</h2>
+          <p class="text-slate-400 text-sm sm:text-base mt-2">Learn directly from engineers who build production systems at leading tech companies.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <div class="glass-card p-6 rounded-3xl border border-slate-800 text-center">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300&auto=format&fit=crop&q=80" alt="Marcus Vance" class="w-24 h-24 rounded-3xl object-cover mx-auto mb-4 border-2 border-blue-500/50 shadow-xl">
+            <h4 class="text-lg font-bold text-white">Marcus Vance</h4>
+            <p class="text-xs text-cyan-400 font-semibold">Lead Frontend Architect</p>
+            <p class="text-xs text-slate-400 mt-3">12+ years specializing in HTML5 standards, CSS Grid engines, and modern JavaScript frameworks.</p>
+          </div>
+
+          <div class="glass-card p-6 rounded-3xl border border-slate-800 text-center">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&auto=format&fit=crop&q=80" alt="Dr. Sarah Chen" class="w-24 h-24 rounded-3xl object-cover mx-auto mb-4 border-2 border-purple-500/50 shadow-xl">
+            <h4 class="text-lg font-bold text-white">Dr. Sarah Chen</h4>
+            <p class="text-xs text-purple-400 font-semibold">AI & Backend Director</p>
+            <p class="text-xs text-slate-400 mt-3">PhD in Distributed Systems. Pioneer in FastAPI asynchronous architectures, PyTorch, and RAG pipelines.</p>
+          </div>
+
+          <div class="glass-card p-6 rounded-3xl border border-slate-800 text-center">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&auto=format&fit=crop&q=80" alt="Vikram Malhotra" class="w-24 h-24 rounded-3xl object-cover mx-auto mb-4 border-2 border-emerald-500/50 shadow-xl">
+            <h4 class="text-lg font-bold text-white">Vikram Malhotra</h4>
+            <p class="text-xs text-emerald-400 font-semibold">Enterprise Java & SQL Lead</p>
+            <p class="text-xs text-slate-400 mt-3">Former Principal Engineer at Fortune 500 financial institutions. Specialist in Spring Boot 3 & high-scale SQL.</p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-slate-950 border-t border-slate-800 text-slate-400 text-xs py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p>&copy; 2026 TechNova Learning Hub. About Our Mission.</p>
+      <div class="flex gap-4">
+        <a href="index.html" class="hover:text-white">Home</a>
+        <a href="courses.html" class="hover:text-white">Courses</a>
+        <a href="projects.html" class="hover:text-white">Projects</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

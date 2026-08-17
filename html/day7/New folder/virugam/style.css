@@ -1,0 +1,54 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.header{
+    display: flex;
+    margin: 10;
+    padding: 5px;
+}
+nav{
+    margin-left: 60%;
+}
+.anwer{
+   text-align: left;
+   display: inline-block;
+   padding: 20;
+   margin: 10px;
+}
+.question{
+    padding: 5px;
+    margin: 5px;
+
+}
+
+.contact{
+    margin: 5px;
+
+}
+.helps{
+    margin: 5px;
+}
+.helps content{
+    padding: 20px;
+}
+.complaints{
+    margin: 5px;
+}
+.com data{
+    padding: 15px;
+}
+.pc anwer{
+    display: inline-block;
+    text-align: left;
+    padding: 20px;
+    margin: 10px;
+}
+
+.busanwer{
+    display: inline-block;
+    text-align: left;
+    padding: 10px;
+    margin: 10px;
+
+}

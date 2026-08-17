@@ -1,0 +1,17 @@
+Q1.what is HTML?
+HTML stands for Hyper Text Markup Language and is used create the structure of Web Pages.
+Q2.what is a Root Element?
+The <HTML>tag is called the Root Element because it contains all other HTML elements.
+Q3.what is a Parent Element?
+An element that contains another element.
+Q4.What is a child element?
+an element placed inside another element.
+Q5.what is a Container Element?
+An element that can contain other HTML elements inside it.
+Q6.what is the difference between Head and Body?
+Head contains webpage information, while Body contains visible webpage content.
+Q7.What is Nesting?
+Placing one HTML element inside another HTML element is called Nesting.
+Q8.What is DOM?
+DOM stands for Document OBject Model. It is tree structure create by the browser from HTML
++

@@ -1,0 +1,23 @@
+*{
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+}
+html{
+    scroll-behavior: smooth;
+}
+body{
+    font-family: 'Times New Roman', Times, serif; 
+}
+a{
+    text-decoration: none;
+}
+#head{
+    background-color: red;color: aliceblue;text-align: center;
+}
+.head2{
+    background-color:aqua;color: black;text-align: center;
+}
+.details{
+    background-color: beige;color: darkred;text-align: center;
+}

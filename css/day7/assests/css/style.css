@@ -1,0 +1,22 @@
+*{
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+}
+html{
+    scroll-behavior: smooth;
+}
+body{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.whatsapp{
+    position: fixed;
+    background-color: rgb(34, 241, 34); color: whitesmoke;
+bottom: 20px;
+    right: 20px;
+    padding: 15px;
+    margin: 10px;
+    cursor: pointer;
+    font-size: 15px;
+
+}

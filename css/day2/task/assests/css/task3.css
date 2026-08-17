@@ -1,0 +1,23 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html{
+    scroll-behavior: smooth;
+}
+a{
+    text-decoration: none;
+
+}
+#heading{
+    background-color: chartreuse;color: aqua;
+    text-align: center;
+}
+.course{
+    background-color: rgb(243, 5, 5);color: aliceblue;
+    text-align: center; height: 30px;
+}
+.content{
+    background-color: aqua;
+}

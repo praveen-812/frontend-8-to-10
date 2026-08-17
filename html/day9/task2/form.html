@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>form</title>
+</head>
+
+<body>
+    <center>
+        <section>
+            <h3>login</h3>
+            <div>
+                <form>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><label for="Employee id">Employee ID:</label></td>
+                                <td><input type="text" placeholder="enter your ID" required id="Employee id"></td>
+
+                            </tr>
+                            <tr>
+                                <td><label for="user name">
+                                        Employee Name:</label></td>
+                                <td><input type="text" id="user name" placeholder="enter your name" required></td>
+
+                            </tr>
+                            <tr>
+                                <td><label for="department">Department</label></td>
+                                <td>
+                                    <select>
+                                        <option value="" disabled selected>select one...</option>
+                                        <option value="html">html</option>
+                                        <option value="css">css</option>
+                                        <option value="js">js</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="Experience">Experience:</label></td>
+                                <td>
+                                    <input type="checkbox" required>1 to 3
+                                    <input type="checkbox">4 to 8
+                                    <input type="checkbox">9 to 15
+
+                                    <input type="checkbox">15 above
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="salary">Salary</label>
+                                <td><input type="number" placeholder="enter your salary"> </td>
+                            </tr>
+                            <tr>
+                                <td><label for="status">Status</label></td>
+                                <td><textarea name="stauts" id="status" placeholder="text current status"
+                                        required></textarea></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><button>login</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </form>
+            </div>
+        </section>
+    </center>
+</body>
+
+</html>

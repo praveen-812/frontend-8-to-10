@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLA institute</title>
+    <link rel="shortcut icon" href="assets/logo.png">
+</head>
+
+<body>
+    <center>
+        <main>
+            <h1>Registration Form</h1>
+            <div>
+                <form method="post">
+                    <table>
+                        <label for=" firstname">First name: </label>
+                        <input type="text" id="firstname" placeholder="enter your name" required><br />
+                        <label for=" lastname">Last name: </label>
+                        <input type="text" id="lastname" placeholder="enter your name" required><br />
+                        <label for=" email">Email: </label>
+                        <input type="email" id="email" placeholder="enter your mail" required><br />
+                        <label for="password">Password: </label>
+                        <input type="password" id="password" placeholder="enter password" required><br />
+                        <label for="mobile number">Mobile Number: </label>
+                        <input type="tel" id="mobile number" placeholder="enter 10 digit number" required maxlength="10"
+                            minlength="10"><br />
+                        <label for="gender">Gender: </label>
+                        <input type="radio" id="gender">Male
+                        <input type="radio" id="gender">Female
+                        <input type="radio" id="gender">others<br />
+                        <label for="date">Date of Birth; </label>
+                        <input type="date" placeholder="dd-mm-yyyy"><br />
+                        <label for="course">Course: </label>
+                        <select name="course" id="course">
+                            <option>HTML</option>
+                            <option>CSS</option>
+                            <option>JAWA</option>
+                            <option>PYTHON</option>
+                            <option>BOOT</option>
+                        </select>
+                        <br />
+                        <label for="hobies">Hobies: </label>
+                        <input type="checkbox" id="hobies" name="reading">reading
+                        <input type="checkbox" id="hobies" name="traveling">traveling
+                        <input type="checkbox" id="hobies" name="music">music
+                        <input type="checkbox" id="hobies" name="sports">sports<br />
+                        <label for="address">Address: </label>
+                        <textarea name="address" id="address">address</textarea><br />
+                        <label for="resume">Resume: </label>
+                        <input type="file"><br />
+                        <label for="preferred contact">contact: </label>
+                        <input type="radio">Email
+                        <input type="radio">phone <br />
+                        <label for="comments">Comments: </label>
+                        <textarea name="feedback" id="comments" rows="2" cols="15">feedback</textarea><br />
+                        <input type="submit"><input type="reset">
+                    </table>
+                </form>
+            </div>
+        </main>
+    </center>
+</body>
+
+</html>

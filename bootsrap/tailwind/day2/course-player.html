@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classroom LMS Player | TechNova Learning Hub</title>
+  <meta name="description" content="Interactive learning classroom with live code runner, lesson readings, and knowledge check quizzes.">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col h-screen overflow-hidden antialiased selection:bg-cyan-500 selection:text-white">
+
+  <!-- TOP PLAYER NAVBAR -->
+  <header class="h-16 bg-slate-900 border-b border-slate-800 px-4 sm:px-6 flex items-center justify-between shrink-0 z-30">
+    <div class="flex items-center gap-4">
+      <a href="courses.html" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-semibold flex items-center gap-1.5 transition-colors">
+        <i class="fa-solid fa-arrow-left"></i> <span class="hidden sm:inline">Courses</span>
+      </a>
+      <div class="border-l border-slate-700/80 pl-4">
+        <h1 id="player-course-title" class="text-sm font-bold text-white truncate max-w-xs sm:max-w-md">Course Title</h1>
+        <p id="player-lesson-meta" class="text-[11px] text-cyan-400 truncate">Module 1 • Lesson 1</p>
+      </div>
+    </div>
+
+    <!-- Center Progress Bar -->
+    <div class="hidden md:flex items-center gap-3 w-64">
+      <div class="flex-1 bg-slate-800 h-2 rounded-full overflow-hidden border border-slate-700/50">
+        <div id="player-progress-bar" class="h-full bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full transition-all duration-500" style="width: 0%"></div>
+      </div>
+      <span id="player-progress-pct" class="text-xs font-mono text-cyan-300 font-bold">0%</span>
+    </div>
+
+    <!-- Right Quick Actions -->
+    <div class="flex items-center gap-2">
+      <a href="dashboard.html" class="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-300 transition-colors">
+        <i class="fa-solid fa-gauge-high mr-1"></i> <span class="hidden sm:inline">Dashboard</span>
+      </a>
+      <button class="theme-toggle-btn w-9 h-9 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center text-xs">
+        <i class="theme-toggle-icon fa-solid fa-sun text-amber-400"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- CLASSROOM WORKSPACE (Sidebar + Main Pane) -->
+  <div class="flex-1 flex overflow-hidden">
+    
+    <!-- LEFT SIDEBAR: Collapsible Curriculum Tree -->
+    <aside id="player-sidebar" class="w-80 bg-slate-900/90 border-r border-slate-800 flex flex-col shrink-0 overflow-hidden">
+      <div class="p-3 border-b border-slate-800 flex items-center justify-between">
+        <span class="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-2">
+          <i class="fa-solid fa-list-check text-cyan-400"></i> Curriculum Map
+        </span>
+        <span class="text-[10px] text-slate-500 font-mono">Self-Paced</span>
+      </div>
+
+      <!-- Scrollable Modules Tree -->
+      <div id="player-curriculum-tree" class="flex-1 p-3 overflow-y-auto space-y-3">
+        <!-- Injected dynamically by assets/js/controllers/PlayerController.js -->
+      </div>
+    </aside>
+
+    <!-- CENTER & RIGHT: Main Lesson Workspace -->
+    <main class="flex-1 flex flex-col bg-slate-950 overflow-hidden">
+      
+      <!-- Lesson Workspace Header & Tab Bar -->
+      <div class="p-4 border-b border-slate-800/80 bg-slate-900/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0">
+        <div>
+          <h2 id="player-lesson-title" class="text-lg font-bold text-white">Lesson Title</h2>
+        </div>
+
+        <!-- Tab Switcher -->
+        <div class="flex items-center gap-1 bg-slate-900 p-1 rounded-xl border border-slate-800 text-xs">
+          <button data-tab="reading" class="player-tab-btn px-4 py-1.5 text-xs font-bold text-cyan-400 border-b-2 border-cyan-400">
+            <i class="fa-solid fa-book-open mr-1"></i> Concept &amp; Reading
+          </button>
+          <button data-tab="code" class="player-tab-btn px-4 py-1.5 text-xs font-semibold text-slate-400 hover:text-white">
+            <i class="fa-solid fa-code mr-1"></i> Code Sandbox
+          </button>
+          <button data-tab="quiz" class="player-tab-btn px-4 py-1.5 text-xs font-semibold text-slate-400 hover:text-white">
+            <i class="fa-solid fa-brain mr-1"></i> Quiz Check
+          </button>
+        </div>
+      </div>
+
+      <!-- TAB CONTENT AREA -->
+      <div class="flex-1 overflow-y-auto p-4 sm:p-8">
+        
+        <!-- Tab 1: Reading Pane -->
+        <div id="tab-pane-reading" class="max-w-4xl mx-auto">
+          <!-- Injected by PlayerController -->
+        </div>
+
+        <!-- Tab 2: Interactive Code Challenge Pane -->
+        <div id="tab-pane-code" class="hidden h-full flex flex-col space-y-4">
+          <div class="flex items-center justify-between pb-2 border-b border-slate-800 text-xs">
+            <span class="font-bold text-slate-300"><i class="fa-solid fa-terminal text-cyan-400 mr-1.5"></i> Interactive Code Runner</span>
+            <div class="flex gap-2">
+              <button id="player-reset-code-btn" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 rounded-lg text-slate-300">Reset</button>
+              <button id="player-run-code-btn" class="px-4 py-1.5 bg-blue-600 hover:bg-blue-500 font-bold text-white rounded-lg shadow-md flex items-center gap-1.5">
+                <i class="fa-solid fa-play text-[10px]"></i> Run Code
+              </button>
+            </div>
+          </div>
+
+          <div class="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-4 min-h-[400px]">
+            <!-- Editor -->
+            <div class="code-window flex flex-col">
+              <div class="code-window-header">
+                <span class="text-xs text-slate-400">Editor</span>
+              </div>
+              <textarea id="player-code-editor" class="flex-1 w-full p-4 bg-transparent text-xs font-mono text-slate-200 resize-none focus:outline-none border-none min-h-[300px]"></textarea>
+            </div>
+            <!-- Preview -->
+            <div class="code-window flex flex-col">
+              <div class="code-window-header">
+                <span class="text-xs text-emerald-400">Live Preview</span>
+              </div>
+              <iframe id="player-code-preview" class="flex-1 w-full bg-slate-900 rounded-b-xl border-none min-h-[300px]" title="Lesson Code Preview"></iframe>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 3: Knowledge Check Quiz Pane -->
+        <div id="tab-pane-quiz" class="hidden">
+          <!-- Injected by PlayerController -->
+        </div>
+
+      </div>
+
+      <!-- BOTTOM CONTROL BAR -->
+      <div class="h-16 bg-slate-900 border-t border-slate-800 px-6 flex items-center justify-between shrink-0">
+        <button onclick="window.history.back()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-300">
+          <i class="fa-solid fa-angle-left mr-1"></i> Previous
+        </button>
+
+        <button onclick="PlayerController.markCurrentLessonComplete()" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold text-xs shadow-lg shadow-cyan-500/20 transition-all flex items-center gap-2">
+          <i class="fa-solid fa-circle-check"></i> Mark Complete &amp; Next Lesson
+        </button>
+
+        <button onclick="PlayerController.goToNextLesson()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-300">
+          Next <i class="fa-solid fa-angle-right ml-1"></i>
+        </button>
+      </div>
+
+    </main>
+
+  </div>
+
+  <script src="assets/js/models/CourseModel.js"></script>
+  <script src="assets/js/services/StorageService.js"></script>
+  <script src="assets/js/controllers/PlayerController.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

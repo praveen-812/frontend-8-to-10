@@ -1,0 +1,31 @@
+*{
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+}
+html{
+    scroll-behavior: smooth;
+}
+body{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.parent{
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    gap: 20px;
+}
+.child{
+    background-color: red;
+    color: wheat;
+    width: 100px;
+    height: 75px;
+    cursor: pointer;
+    border-radius: 20px;
+    padding: 25px;
+    margin: 20px;
+
+}
+.child:hover{
+    background-color: black;
+    color: whiteS;
+}

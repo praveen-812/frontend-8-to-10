@@ -1,0 +1,25 @@
+*{
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+}
+html{
+    scroll-behavior: smooth;
+}
+body{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.bar{
+    background-color: aqua;color: grey;
+    padding: 15px;
+    margin: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  
+}
+header{ 
+     position: sticky;
+   top: 10px;
+
+}

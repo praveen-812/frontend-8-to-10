@@ -1,0 +1,38 @@
+*{
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+}
+html{
+    scroll-behavior: smooth;
+}
+body{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+h1{
+    background-color: red;
+    color: white;
+    padding: 15px;
+    margin: 20px;
+    text-align: center;
+}
+.parent{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 20px;
+
+}
+.child{
+    background-color: aqua;
+    padding: 20px;
+    margin: 10px;
+}
+@media (max-width:576px){
+    h1{
+        background-color: green;
+    }
+    .child{
+        background-color: blueviolet;
+        font-size: 20px;
+    }
+}

@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TechNova Learning Hub | Full-Stack Development & AI Technologies</title>
+  <meta name="description" content="Master Full-Stack Development and AI Technologies from basic to intermediate with structured courses, live sandboxes, real-world projects, and recognized certificates.">
+  
+  <!-- Tailwind CSS & FontAwesome -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Custom Core Design System -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-cyan-500 selection:text-white relative">
+
+  <!-- Background Decorative Ambient Blobs -->
+  <div class="fixed top-0 left-1/4 w-96 h-96 bg-blob-blue rounded-full filter blur-3xl pointer-events-none -z-10 animate-pulse"></div>
+  <div class="fixed top-1/3 right-10 w-96 h-96 bg-blob-purple rounded-full filter blur-3xl pointer-events-none -z-10 float-anim"></div>
+  <div class="fixed bottom-10 left-10 w-96 h-96 bg-blob-cyan rounded-full filter blur-3xl pointer-events-none -z-10 float-anim-reverse"></div>
+
+  <!-- Top Announcement Bar -->
+  <aside aria-label="Announcement" class="bg-gradient-to-r from-blue-900/60 via-indigo-900/60 to-purple-900/60 border-b border-cyan-500/20 py-2 px-4 text-center text-xs text-slate-300">
+    <span class="inline-flex items-center gap-2 font-medium">
+      <span class="px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 font-bold text-[10px] tracking-wide uppercase border border-cyan-500/30">New</span>
+      <span>Autonomous AI Agents & Generative AI Masterclasses are now live!</span>
+      <a href="ai.html" class="underline text-cyan-400 hover:text-cyan-300 ml-1 font-semibold">Explore Track &rarr;</a>
+    </span>
+  </aside>
+
+  <!-- Navigation Bar -->
+  <nav class="sticky top-0 z-40 bg-slate-900/80 backdrop-blur-xl border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Brand Logo -->
+        <div class="flex items-center gap-8">
+          <a href="index.html" class="flex items-center gap-3 group">
+            <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-cyan-400 flex items-center justify-center text-xl text-white shadow-lg shadow-cyan-500/25 group-hover:scale-105 transition-transform">
+              <i class="fa-solid fa-cube"></i>
+            </div>
+            <div>
+              <span class="text-xl font-extrabold tracking-tight text-white font-display flex items-center gap-1.5">
+                NEW<span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-300">Nova</span>
+              </span>
+              <span class="block text-[10px] font-semibold text-slate-400 tracking-widest uppercase">Learning Hub</span>
+            </div>
+          </a>
+
+          <!-- Desktop Navigation Links -->
+          <div class="hidden lg:flex items-center gap-1">
+            <a href="index.html" class="nav-link px-3 py-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors rounded-lg">Home</a>
+            <a href="fullstack.html" class="nav-link px-3 py-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors rounded-lg">Full-Stack</a>
+            <a href="ai.html" class="nav-link px-3 py-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors rounded-lg">AI & Emerging</a>
+            <a href="courses.html" class="nav-link px-3 py-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors rounded-lg">Courses</a>
+            <a href="projects.html" class="nav-link px-3 py-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors rounded-lg">Projects</a>
+            <a href="dashboard.html" class="nav-link px-3 py-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors rounded-lg">Dashboard</a>
+            <a href="about.html" class="nav-link px-3 py-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors rounded-lg">About</a>
+            <a href="contact.html" class="nav-link px-3 py-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors rounded-lg">Contact</a>
+          </div>
+        </div>
+
+        <!-- Right Utilities & Auth -->
+        <div class="flex items-center gap-3">
+          
+          <!-- Search Trigger Button (Ctrl + K) -->
+          <button onclick="TechNovaMain.openSearchModal()" class="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-700/80 transition-colors text-xs">
+            <i class="fa-solid fa-magnifying-glass text-slate-400"></i>
+            <span class="hidden sm:inline">Search...</span>
+            <kbd class="hidden md:inline-block px-1.5 py-0.5 text-[10px] font-mono bg-slate-900 text-slate-400 rounded border border-slate-700">Ctrl K</kbd>
+          </button>
+
+          <!-- Theme Toggle Button -->
+          <button class="theme-toggle-btn w-10 h-10 rounded-xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 flex items-center justify-center text-slate-300 hover:text-white transition-colors" title="Toggle Theme">
+            <i class="theme-toggle-icon fa-solid fa-sun text-amber-400 text-sm"></i>
+          </button>
+
+          <!-- Dynamic Auth Container (Email & Phone Number Portal) -->
+          <div id="navbar-auth-section" class="flex items-center">
+            <!-- Injected by js/auth.js -->
+          </div>
+
+          <!-- Mobile Hamburger -->
+          <button id="mobile-menu-btn" class="lg:hidden w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-slate-300 hover:text-white border border-slate-700">
+            <i class="fa-solid fa-bars text-lg"></i>
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Navigation Drawer -->
+  <div id="mobile-menu-drawer" class="lg:hidden fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-2xl p-6 hidden flex flex-col justify-between overflow-y-auto">
+    <div>
+      <div class="flex items-center justify-between pb-6 border-b border-slate-800">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white font-bold">
+            <i class="fa-solid fa-cube"></i>
+          </div>
+          <span class="text-xl font-bold font-display text-white">TechNova</span>
+        </div>
+        <button id="mobile-menu-close-btn" class="text-slate-400 hover:text-white text-2xl">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="flex flex-col gap-2 mt-6">
+        <a href="index.html" class="px-4 py-3 rounded-xl font-semibold text-slate-200 hover:bg-slate-800">Home</a>
+        <a href="fullstack.html" class="px-4 py-3 rounded-xl font-semibold text-slate-200 hover:bg-slate-800">Full-Stack Development</a>
+        <a href="ai.html" class="px-4 py-3 rounded-xl font-semibold text-slate-200 hover:bg-slate-800">AI & Emerging Tech</a>
+        <a href="courses.html" class="px-4 py-3 rounded-xl font-semibold text-slate-200 hover:bg-slate-800">All Courses</a>
+        <a href="projects.html" class="px-4 py-3 rounded-xl font-semibold text-slate-200 hover:bg-slate-800">Projects Library</a>
+        <a href="dashboard.html" class="px-4 py-3 rounded-xl font-semibold text-slate-200 hover:bg-slate-800">My Dashboard</a>
+        <a href="about.html" class="px-4 py-3 rounded-xl font-semibold text-slate-200 hover:bg-slate-800">About Us</a>
+        <a href="contact.html" class="px-4 py-3 rounded-xl font-semibold text-slate-200 hover:bg-slate-800">Contact & Support</a>
+      </div>
+    </div>
+
+    <div id="mobile-navbar-auth-section" class="pt-6 border-t border-slate-800">
+      <!-- Injected by js/auth.js -->
+    </div>
+  </div>
+
+  <!-- Main Content Body -->
+  <main class="flex-1">
+
+    <!-- HERO SECTION -->
+    <section class="relative pt-12 pb-20 sm:pt-20 sm:pb-28 overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        
+        <!-- Live Pill Badge -->
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/90 border border-cyan-500/30 shadow-lg shadow-cyan-500/10 mb-8 float-anim">
+          <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+          <span class="text-xs font-semibold text-slate-300">Empowering 50,000+ Next-Gen Developers Worldwide</span>
+          <span class="text-slate-500">•</span>
+          <span class="text-xs text-cyan-400 font-mono font-bold">2026 Curriculum</span>
+        </div>
+
+        <!-- Main Headline -->
+        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white font-display tracking-tight max-w-5xl mx-auto leading-[1.1]">
+          Learn <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-300">Full-Stack Development</span> & <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-rose-400">AI Technologies</span>
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="mt-6 text-lg sm:text-xl text-slate-300 max-w-3xl mx-auto font-normal leading-relaxed">
+          Start from the basics, build real-world production projects, and grow your technology skills with structured curriculums in <strong class="text-cyan-300 font-semibold">HTML5, CSS3, JavaScript, Tailwind, Java, Python, SQL, Generative AI & Autonomous Agents</strong>.
+        </p>
+
+        <!-- CTA Action Buttons -->
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-4">
+          <a href="courses.html" class="px-8 py-4 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold text-base shadow-xl shadow-cyan-500/25 hover:scale-105 active:scale-95 transition-all flex items-center gap-2">
+            <i class="fa-solid fa-graduation-cap"></i> Start Learning Now
+          </a>
+          <a href="#tech-explorer-section" class="px-8 py-4 rounded-2xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 hover:text-white font-bold text-base border border-slate-700/80 hover:border-cyan-500/50 shadow-xl transition-all flex items-center gap-2">
+            <i class="fa-solid fa-compass text-cyan-400"></i> Explore Technologies
+          </a>
+          <a href="ai.html#prompt-sandbox" class="px-6 py-4 rounded-2xl bg-purple-950/40 hover:bg-purple-900/60 text-purple-300 hover:text-purple-200 font-semibold text-sm border border-purple-800/50 transition-all flex items-center gap-2">
+            <i class="fa-solid fa-wand-magic-sparkles text-pink-400"></i> Try AI Sandbox
+          </a>
+        </div>
+
+        <!-- Floating Antigravity Tech Badges Grid -->
+        <div class="mt-16 flex flex-wrap items-center justify-center gap-3 sm:gap-4 max-w-4xl mx-auto">
+          <div class="px-4 py-2 rounded-2xl bg-slate-900/80 border border-slate-800 text-xs font-semibold text-slate-300 flex items-center gap-2 shadow-lg float-anim">
+            <i class="fa-brands fa-html5 text-orange-500 text-base"></i> HTML5
+          </div>
+          <div class="px-4 py-2 rounded-2xl bg-slate-900/80 border border-slate-800 text-xs font-semibold text-slate-300 flex items-center gap-2 shadow-lg float-anim-reverse">
+            <i class="fa-brands fa-css3-alt text-blue-500 text-base"></i> CSS3
+          </div>
+          <div class="px-4 py-2 rounded-2xl bg-slate-900/80 border border-slate-800 text-xs font-semibold text-slate-300 flex items-center gap-2 shadow-lg float-anim">
+            <i class="fa-brands fa-js text-yellow-400 text-base"></i> JavaScript ES6+
+          </div>
+          <div class="px-4 py-2 rounded-2xl bg-slate-900/80 border border-slate-800 text-xs font-semibold text-slate-300 flex items-center gap-2 shadow-lg float-anim-delayed">
+            <i class="fa-solid fa-wind text-cyan-400 text-base"></i> Tailwind CSS
+          </div>
+          <div class="px-4 py-2 rounded-2xl bg-slate-900/80 border border-slate-800 text-xs font-semibold text-slate-300 flex items-center gap-2 shadow-lg float-anim-reverse">
+            <i class="fa-brands fa-python text-emerald-400 text-base"></i> Python & FastAPI
+          </div>
+          <div class="px-4 py-2 rounded-2xl bg-slate-900/80 border border-slate-800 text-xs font-semibold text-slate-300 flex items-center gap-2 shadow-lg float-anim">
+            <i class="fa-brands fa-java text-red-500 text-base"></i> Java & Spring Boot
+          </div>
+          <div class="px-4 py-2 rounded-2xl bg-slate-900/80 border border-slate-800 text-xs font-semibold text-slate-300 flex items-center gap-2 shadow-lg float-anim-delayed">
+            <i class="fa-solid fa-database text-blue-400 text-base"></i> SQL & Relational DBs
+          </div>
+          <div class="px-4 py-2 rounded-2xl bg-purple-950/80 border border-purple-700/50 text-xs font-semibold text-purple-200 flex items-center gap-2 shadow-lg glow-pulse">
+            <i class="fa-solid fa-brain text-pink-400 text-base"></i> GenAI & Autonomous Agents
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- METRICS & KEY STATS BAR -->
+    <section class="py-10 border-y border-slate-800/80 bg-slate-900/40 backdrop-blur-md">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+          <div class="p-4">
+            <span class="block text-3xl sm:text-4xl font-black text-white font-display">50,000+</span>
+            <span class="text-xs sm:text-sm font-medium text-slate-400 mt-1 block">Active Students & Learners</span>
+          </div>
+          <div class="p-4">
+            <span class="block text-3xl sm:text-4xl font-black text-cyan-400 font-display">120+</span>
+            <span class="text-xs sm:text-sm font-medium text-slate-400 mt-1 block">Structured Course Modules</span>
+          </div>
+          <div class="p-4">
+            <span class="block text-3xl sm:text-4xl font-black text-purple-400 font-display">45+</span>
+            <span class="text-xs sm:text-sm font-medium text-slate-400 mt-1 block">Real-World Production Projects</span>
+          </div>
+          <div class="p-4">
+            <span class="block text-3xl sm:text-4xl font-black text-emerald-400 font-display">98%</span>
+            <span class="text-xs sm:text-sm font-medium text-slate-400 mt-1 block">Course Completion & Satisfaction</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: TWO MAIN LEARNING DEPARTMENTS SHOWCASE -->
+    <section class="py-20 sm:py-28 relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span class="px-3.5 py-1 rounded-full bg-blue-950 text-blue-400 border border-blue-800/50 text-xs font-bold uppercase tracking-wider">Department Matrix</span>
+          <h2 class="text-3xl sm:text-5xl font-black text-white font-display mt-4">Two Flagship Learning Tracks</h2>
+          <p class="text-slate-400 text-sm sm:text-base mt-3">Choose your specialization or combine both to become a full-spectrum AI-powered software engineer.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          
+          <!-- Department 1: Full-Stack Development -->
+          <div class="glass-card p-8 sm:p-10 rounded-3xl border border-slate-800 relative overflow-hidden group hover:border-blue-500/50">
+            <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-16 h-16 rounded-2xl bg-blue-600/20 text-blue-400 flex items-center justify-center text-3xl border border-blue-500/30 shadow-lg">
+                <i class="fa-solid fa-layer-group"></i>
+              </div>
+              <div>
+                <span class="text-xs font-bold text-blue-400 uppercase tracking-widest">Department 01</span>
+                <h3 class="text-2xl sm:text-3xl font-black text-white font-display">Full-Stack Development</h3>
+              </div>
+            </div>
+
+            <p class="text-slate-300 text-sm leading-relaxed mb-6">
+              Master the entire web development lifecycle: from modern semantic markup and responsive CSS architectures to asynchronous backends, RESTful APIs, and relational SQL databases.
+            </p>
+
+            <!-- Tech Pills Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 mb-8 text-xs font-medium text-slate-300">
+              <div class="p-2 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2"><i class="fa-brands fa-html5 text-orange-400"></i> HTML5</div>
+              <div class="p-2 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2"><i class="fa-brands fa-css3-alt text-blue-400"></i> CSS3</div>
+              <div class="p-2 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2"><i class="fa-brands fa-js text-yellow-400"></i> JavaScript</div>
+              <div class="p-2 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2"><i class="fa-brands fa-bootstrap text-purple-400"></i> Bootstrap 5</div>
+              <div class="p-2 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2"><i class="fa-solid fa-wind text-cyan-400"></i> Tailwind CSS</div>
+              <div class="p-2 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2"><i class="fa-brands fa-python text-emerald-400"></i> Python & FastAPI</div>
+              <div class="p-2 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2"><i class="fa-brands fa-java text-red-400"></i> Java Spring Boot</div>
+              <div class="p-2 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2"><i class="fa-solid fa-database text-blue-400"></i> SQL Databases</div>
+              <div class="p-2 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2"><i class="fa-brands fa-github text-slate-400"></i> Git & GitHub</div>
+            </div>
+
+            <div class="flex items-center justify-between pt-6 border-t border-slate-800">
+              <span class="text-xs text-slate-400 font-semibold">13 Technologies • 8 Labs</span>
+              <a href="fullstack.html" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold shadow-lg shadow-blue-500/20 transition-all flex items-center gap-2">
+                Enter Department <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Department 2: AI & Emerging Technologies -->
+          <div class="glass-card p-8 sm:p-10 rounded-3xl border border-slate-800 relative overflow-hidden group hover:border-purple-500/50">
+            <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="flex items-center gap-4 mb-6">
+              <div class="w-16 h-16 rounded-2xl bg-purple-600/20 text-purple-400 flex items-center justify-center text-3xl border border-purple-500/30 shadow-lg">
+                <i class="fa-solid fa-brain"></i>
+              </div>
+              <div>
+                <span class="text-xs font-bold text-purple-400 uppercase tracking-widest">Department 02</span>
+                <h3 class="text-2xl sm:text-3xl font-black text-white font-display">AI & Emerging Tech</h3>
+              </div>
+            </div>
+
+            <p class="text-slate-300 text-sm leading-relaxed mb-6">
+              Dive into the frontiers of intelligence: Machine Learning algorithms, Deep Neural Networks, Large Language Models (LLMs), Prompt Engineering, and Autonomous Multi-Agent workflows.
+            </p>
+
+            <!-- AI Pills Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 mb-8 text-xs font-medium text-slate-300">
+              <div class="p-2 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2"><i class="fa-solid fa-network-wired text-cyan-400"></i> Types of AI</div>
+              <div class="p-2 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2"><i class="fa-solid fa-chart-line text-emerald-400"></i> Machine Learning</div>
+              <div class="p-2 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2"><i class="fa-solid fa-layer-group text-indigo-400"></i> Deep Learning</div>
+              <div class="p-2 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2"><i class="fa-solid fa-wand-magic-sparkles text-pink-400"></i> Generative AI</div>
+              <div class="p-2 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2"><i class="fa-solid fa-comments text-amber-400"></i> NLP & Transformers</div>
+              <div class="p-2 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2"><i class="fa-solid fa-eye text-teal-400"></i> Computer Vision</div>
+              <div class="p-2 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2"><i class="fa-solid fa-terminal text-yellow-400"></i> Prompt Engineering</div>
+              <div class="p-2 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2"><i class="fa-solid fa-robot text-rose-400"></i> AI Agents</div>
+              <div class="p-2 rounded-xl bg-slate-900/80 border border-slate-800 flex items-center gap-2"><i class="fa-solid fa-microchip text-blue-400"></i> Emerging Tools</div>
+            </div>
+
+            <div class="flex items-center justify-between pt-6 border-t border-slate-800">
+              <span class="text-xs text-slate-400 font-semibold">12 Core Topics • Live Lab</span>
+              <a href="ai.html" class="px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold shadow-lg shadow-purple-500/20 transition-all flex items-center gap-2">
+                Enter Department <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 2: INTERACTIVE TECHNOLOGY EXPLORER -->
+    <section id="tech-explorer-section" class="py-20 sm:py-28 bg-slate-900/60 border-t border-slate-800/80 relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+          <div>
+            <span class="px-3.5 py-1 rounded-full bg-cyan-950 text-cyan-400 border border-cyan-800/50 text-xs font-bold uppercase tracking-wider">Interactive Syllabus</span>
+            <h2 class="text-3xl sm:text-5xl font-black text-white font-display mt-3">Technology Explorer</h2>
+            <p class="text-slate-400 text-sm sm:text-base mt-2">Select any technology below to inspect why you should learn it, core concepts, code samples, and career outcomes.</p>
+          </div>
+          <div class="text-xs font-mono text-slate-400 bg-slate-800/80 px-4 py-2 rounded-xl border border-slate-700">
+            Click tabs below to switch ⚡
+          </div>
+        </div>
+
+        <!-- Scrollable Technology Filter Tabs Container -->
+        <div id="tech-explorer-tabs" class="flex items-center gap-2 overflow-x-auto pb-4 mb-8 scrollbar-none">
+          <!-- Injected dynamically by js/main.js -->
+        </div>
+
+        <!-- Interactive Explorer Content Canvas -->
+        <div id="tech-explorer-content" class="glass-card p-6 sm:p-10 rounded-3xl border border-slate-800">
+          <!-- Injected dynamically by js/main.js -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 3: FEATURED STRUCTURED COURSES -->
+    <section class="py-20 sm:py-28 relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+          <div>
+            <span class="px-3.5 py-1 rounded-full bg-blue-950 text-blue-400 border border-blue-800/50 text-xs font-bold uppercase tracking-wider">Beginner to Intermediate</span>
+            <h2 class="text-3xl sm:text-5xl font-black text-white font-display mt-3">Featured Learning Tracks</h2>
+            <p class="text-slate-400 text-sm sm:text-base mt-2">Hand-crafted curriculums designed to take you from foundational basics to building production systems.</p>
+          </div>
+          <a href="courses.html" class="px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-xs border border-slate-700 transition-colors flex items-center gap-2 shrink-0">
+            View All 12 Courses <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <!-- 3 Featured Course Highlights -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <!-- Course Card 1 -->
+          <div class="glass-card p-6 rounded-3xl border border-slate-800/80 hover:border-cyan-500/50 transition-all flex flex-col justify-between group">
+            <div>
+              <div class="flex items-start justify-between mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-orange-950/40 text-orange-500 flex items-center justify-center text-2xl border border-orange-800/30">
+                  <i class="fa-brands fa-html5"></i>
+                </div>
+                <span class="px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-cyan-950 text-cyan-400 border border-cyan-800/40">Best for Beginners</span>
+              </div>
+              <h3 class="text-lg font-bold text-white group-hover:text-cyan-300 transition-colors">Modern HTML5 & CSS3 Masterclass</h3>
+              <p class="text-xs text-slate-400 mt-2 line-clamp-2">Start from complete zero and master modern HTML5 semantics, CSS3 Grid, Flexbox, responsive design, and CSS variables.</p>
+              
+              <div class="flex items-center gap-4 mt-4 py-2 border-y border-slate-800/80 text-xs text-slate-400">
+                <span><i class="fa-regular fa-clock text-cyan-400 mr-1"></i> 18 Hours</span>
+                <span><i class="fa-solid fa-layer-group text-purple-400 mr-1"></i> 42 Lessons</span>
+                <span class="ml-auto text-amber-400 font-bold"><i class="fa-solid fa-star mr-1"></i> 4.9</span>
+              </div>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-800 flex items-center gap-2">
+              <a href="courses.html?id=course-html-css" class="flex-1 py-2 text-center text-xs font-semibold text-slate-300 bg-slate-800 hover:bg-slate-700 rounded-xl transition-colors">
+                View Syllabus
+              </a>
+              <button onclick="TechNovaCourses.handleEnroll('course-html-css')" class="flex-1 py-2 text-center text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl shadow-md transition-all">
+                Enroll Now
+              </button>
+            </div>
+          </div>
+
+          <!-- Course Card 2 -->
+          <div class="glass-card p-6 rounded-3xl border border-slate-800/80 hover:border-cyan-500/50 transition-all flex flex-col justify-between group">
+            <div>
+              <div class="flex items-start justify-between mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-emerald-950/40 text-emerald-400 flex items-center justify-center text-2xl border border-emerald-800/30">
+                  <i class="fa-brands fa-python"></i>
+                </div>
+                <span class="px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800/40">High Demand</span>
+              </div>
+              <h3 class="text-lg font-bold text-white group-hover:text-emerald-300 transition-colors">Full-Stack Python & FastAPI Backend API</h3>
+              <p class="text-xs text-slate-400 mt-2 line-clamp-2">Build production-ready asynchronous REST APIs with Python, FastAPI, Pydantic validation, JWT authentication, and SQLAlchemy.</p>
+              
+              <div class="flex items-center gap-4 mt-4 py-2 border-y border-slate-800/80 text-xs text-slate-400">
+                <span><i class="fa-regular fa-clock text-cyan-400 mr-1"></i> 32 Hours</span>
+                <span><i class="fa-solid fa-layer-group text-purple-400 mr-1"></i> 64 Lessons</span>
+                <span class="ml-auto text-amber-400 font-bold"><i class="fa-solid fa-star mr-1"></i> 4.9</span>
+              </div>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-800 flex items-center gap-2">
+              <a href="courses.html?id=course-python-fastapi" class="flex-1 py-2 text-center text-xs font-semibold text-slate-300 bg-slate-800 hover:bg-slate-700 rounded-xl transition-colors">
+                View Syllabus
+              </a>
+              <button onclick="TechNovaCourses.handleEnroll('course-python-fastapi')" class="flex-1 py-2 text-center text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-cyan-500 rounded-xl shadow-md transition-all">
+                Enroll Now
+              </button>
+            </div>
+          </div>
+
+          <!-- Course Card 3 -->
+          <div class="glass-card p-6 rounded-3xl border border-slate-800/80 hover:border-purple-500/50 transition-all flex flex-col justify-between group">
+            <div>
+              <div class="flex items-start justify-between mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-purple-950/40 text-pink-400 flex items-center justify-center text-2xl border border-purple-800/30">
+                  <i class="fa-solid fa-wand-magic-sparkles"></i>
+                </div>
+                <span class="px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-purple-950 text-pink-400 border border-purple-800/40">Flagship AI</span>
+              </div>
+              <h3 class="text-lg font-bold text-white group-hover:text-purple-300 transition-colors">Generative AI, LLMs & Prompting</h3>
+              <p class="text-xs text-slate-400 mt-2 line-clamp-2">Learn to build cutting-edge applications using Large Language Models, RAG with Vector Databases, OpenAI APIs, and prompt techniques.</p>
+              
+              <div class="flex items-center gap-4 mt-4 py-2 border-y border-slate-800/80 text-xs text-slate-400">
+                <span><i class="fa-regular fa-clock text-cyan-400 mr-1"></i> 30 Hours</span>
+                <span><i class="fa-solid fa-layer-group text-purple-400 mr-1"></i> 55 Lessons</span>
+                <span class="ml-auto text-amber-400 font-bold"><i class="fa-solid fa-star mr-1"></i> 5.0</span>
+              </div>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-800 flex items-center gap-2">
+              <a href="courses.html?id=course-genai-llm" class="flex-1 py-2 text-center text-xs font-semibold text-slate-300 bg-slate-800 hover:bg-slate-700 rounded-xl transition-colors">
+                View Syllabus
+              </a>
+              <button onclick="TechNovaCourses.handleEnroll('course-genai-llm')" class="flex-1 py-2 text-center text-xs font-bold text-white bg-gradient-to-r from-purple-600 to-pink-500 rounded-xl shadow-md transition-all">
+                Enroll Now
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 4: PRODUCTION PROJECTS SHOWCASE -->
+    <section class="py-20 sm:py-28 bg-slate-900/50 border-t border-slate-800 relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span class="px-3.5 py-1 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800/50 text-xs font-bold uppercase tracking-wider">Portfolio Ready</span>
+          <h2 class="text-3xl sm:text-5xl font-black text-white font-display mt-3">Build Real-World Projects</h2>
+          <p class="text-slate-400 text-sm sm:text-base mt-2">Nothing proves capability like shipping working code. Explore complete full-stack and AI project blueprints.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          
+          <!-- Project 1 -->
+          <div class="glass-card p-6 rounded-3xl border border-slate-800 hover:border-cyan-500/50 transition-all flex flex-col justify-between group">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-slate-800 flex items-center justify-center text-2xl text-cyan-400">
+                  <i class="fa-solid fa-id-badge"></i>
+                </div>
+                <span class="px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800/40">Beginner</span>
+              </div>
+              <h3 class="text-lg font-bold text-white group-hover:text-cyan-300 transition-colors">Personal Developer Portfolio</h3>
+              <p class="text-xs text-slate-400 mt-2">Futuristic developer portfolio with glassmorphism, project filters, dark theme, and animated contact modal.</p>
+              <div class="flex flex-wrap gap-1.5 mt-4">
+                <span class="px-2 py-0.5 bg-slate-800 rounded text-[11px] text-slate-300 font-mono">HTML5</span>
+                <span class="px-2 py-0.5 bg-slate-800 rounded text-[11px] text-slate-300 font-mono">Tailwind CSS</span>
+                <span class="px-2 py-0.5 bg-slate-800 rounded text-[11px] text-slate-300 font-mono">JavaScript</span>
+              </div>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between">
+              <span class="text-xs text-slate-500">Frontend Track</span>
+              <a href="projects.html?id=proj-portfolio" class="text-xs font-bold text-cyan-400 hover:text-cyan-300 flex items-center gap-1">
+                View Architecture <i class="fa-solid fa-arrow-right text-[10px]"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Project 2 -->
+          <div class="glass-card p-6 rounded-3xl border border-slate-800 hover:border-cyan-500/50 transition-all flex flex-col justify-between group">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-slate-800 flex items-center justify-center text-2xl text-purple-400">
+                  <i class="fa-solid fa-robot"></i>
+                </div>
+                <span class="px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-purple-950 text-purple-400 border border-purple-800/40">Intermediate</span>
+              </div>
+              <h3 class="text-lg font-bold text-white group-hover:text-purple-300 transition-colors">Autonomous AI Customer Bot</h3>
+              <p class="text-xs text-slate-400 mt-2">RAG-powered conversational assistant with context memory, code rendering, and streaming replies.</p>
+              <div class="flex flex-wrap gap-1.5 mt-4">
+                <span class="px-2 py-0.5 bg-slate-800 rounded text-[11px] text-slate-300 font-mono">Python</span>
+                <span class="px-2 py-0.5 bg-slate-800 rounded text-[11px] text-slate-300 font-mono">GenAI</span>
+                <span class="px-2 py-0.5 bg-slate-800 rounded text-[11px] text-slate-300 font-mono">NLP</span>
+              </div>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between">
+              <span class="text-xs text-slate-500">AI Track</span>
+              <a href="projects.html?id=proj-ai-chatbot" class="text-xs font-bold text-purple-400 hover:text-purple-300 flex items-center gap-1">
+                View Architecture <i class="fa-solid fa-arrow-right text-[10px]"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Project 3 -->
+          <div class="glass-card p-6 rounded-3xl border border-slate-800 hover:border-cyan-500/50 transition-all flex flex-col justify-between group">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 rounded-2xl bg-slate-800 flex items-center justify-center text-2xl text-blue-400">
+                  <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <span class="px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-purple-950 text-purple-400 border border-purple-800/40">Intermediate</span>
+              </div>
+              <h3 class="text-lg font-bold text-white group-hover:text-blue-300 transition-colors">Student Academic Portal & SQL API</h3>
+              <p class="text-xs text-slate-400 mt-2">Institutional portal for student records, enrollment management, GPA analytics, and transcript generation.</p>
+              <div class="flex flex-wrap gap-1.5 mt-4">
+                <span class="px-2 py-0.5 bg-slate-800 rounded text-[11px] text-slate-300 font-mono">FastAPI</span>
+                <span class="px-2 py-0.5 bg-slate-800 rounded text-[11px] text-slate-300 font-mono">SQL</span>
+                <span class="px-2 py-0.5 bg-slate-800 rounded text-[11px] text-slate-300 font-mono">Tailwind</span>
+              </div>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-800 flex items-center justify-between">
+              <span class="text-xs text-slate-500">Full-Stack Track</span>
+              <a href="projects.html?id=proj-student-mgmt" class="text-xs font-bold text-blue-400 hover:text-blue-300 flex items-center gap-1">
+                View Architecture <i class="fa-solid fa-arrow-right text-[10px]"></i>
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="text-center mt-12">
+          <a href="projects.html" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm shadow-lg shadow-blue-500/20 transition-all">
+            Explore All 10 Production Projects <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 5: EXPLORE NEW & EMERGING TECHNOLOGIES -->
+    <section class="py-20 sm:py-28 relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span class="px-3.5 py-1 rounded-full bg-cyan-950 text-cyan-400 border border-cyan-800/50 text-xs font-bold uppercase tracking-wider">Future Horizon</span>
+          <h2 class="text-3xl sm:text-5xl font-black text-white font-display mt-3">Explore New Technologies</h2>
+          <p class="text-slate-400 text-sm sm:text-base mt-2">Stay ahead of the curve by exploring emerging frameworks, local LLM runners, cloud tools, and developer platforms.</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          
+          <div class="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 transition-all group">
+            <span class="px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-cyan-950 text-cyan-400 border border-cyan-800/40">AI Framework</span>
+            <h4 class="text-lg font-bold text-white group-hover:text-cyan-300 mt-3">LangGraph & Agents</h4>
+            <p class="text-xs text-slate-400 mt-1 leading-relaxed">Stateful graph orchestration for multi-agent cyclical LLM loops and tool integration.</p>
+          </div>
+
+          <div class="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 transition-all group">
+            <span class="px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-purple-950 text-purple-400 border border-purple-800/40">Open Source AI</span>
+            <h4 class="text-lg font-bold text-white group-hover:text-purple-300 mt-3">Ollama & Local LLMs</h4>
+            <p class="text-xs text-slate-400 mt-1 leading-relaxed">Run open-weight models like Llama 3 and DeepSeek V3 locally on consumer hardware.</p>
+          </div>
+
+          <div class="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 transition-all group">
+            <span class="px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-blue-950 text-blue-400 border border-blue-800/40">Web Tech</span>
+            <h4 class="text-lg font-bold text-white group-hover:text-blue-300 mt-3">Next.js 15 & React 19</h4>
+            <p class="text-xs text-slate-400 mt-1 leading-relaxed">Server Actions, async request handlers, and hybrid static rendering.</p>
+          </div>
+
+          <div class="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 transition-all group">
+            <span class="px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800/40">Database</span>
+            <h4 class="text-lg font-bold text-white group-hover:text-emerald-300 mt-3">Supabase & pgvector</h4>
+            <p class="text-xs text-slate-400 mt-1 leading-relaxed">PostgreSQL backend with built-in vector similarity search and instant authentication.</p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 6: FAQ ACCORDION -->
+    <section class="py-20 sm:py-28 bg-slate-900/50 border-t border-slate-800 relative">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center mb-16">
+          <span class="px-3.5 py-1 rounded-full bg-blue-950 text-blue-400 border border-blue-800/50 text-xs font-bold uppercase tracking-wider">Frequently Asked Questions</span>
+          <h2 class="text-3xl sm:text-5xl font-black text-white font-display mt-3">Got Questions? We Have Answers.</h2>
+        </div>
+
+        <div class="space-y-4">
+          
+          <div class="faq-item p-6 rounded-2xl bg-slate-900/80 border border-slate-800 transition-all open">
+            <button class="faq-header w-full flex items-center justify-between text-left font-bold text-base text-white">
+              <span>Do I need prior coding experience to start learning on TechNova?</span>
+              <i class="faq-icon fa-solid fa-chevron-down text-slate-400 text-xs transition-transform"></i>
+            </button>
+            <div class="faq-content text-xs sm:text-sm text-slate-300 mt-3 leading-relaxed">
+              Not at all! Our courses are structured with clear level progressions. Beginner courses start with fundamental principles (HTML5, CSS3, basic JavaScript, and introductory AI concepts) before advancing into intermediate system architecture and projects.
+            </div>
+          </div>
+
+          <div class="faq-item p-6 rounded-2xl bg-slate-900/80 border border-slate-800 transition-all">
+            <button class="faq-header w-full flex items-center justify-between text-left font-bold text-base text-white">
+              <span>How do I authenticate using my Email and Phone Number?</span>
+              <i class="faq-icon fa-solid fa-chevron-down text-slate-400 text-xs transition-transform"></i>
+            </button>
+            <div class="faq-content text-xs sm:text-sm text-slate-300 mt-3 leading-relaxed">
+              TechNova requires both a valid Email address and an international Phone Number during registration. You can log in using either identifier with your password or OTP code to access your personalized learning dashboard, live progress tracking, and certificates.
+            </div>
+          </div>
+
+          <div class="faq-item p-6 rounded-2xl bg-slate-900/80 border border-slate-800 transition-all">
+            <button class="faq-header w-full flex items-center justify-between text-left font-bold text-base text-white">
+              <span>Can I get a verified certificate upon course completion?</span>
+              <i class="faq-icon fa-solid fa-chevron-down text-slate-400 text-xs transition-transform"></i>
+            </button>
+            <div class="faq-content text-xs sm:text-sm text-slate-300 mt-3 leading-relaxed">
+              Yes! Once you achieve 100% completion in any structured course track, an authenticated TechNova Certificate of Technical Mastery is generated in your dashboard with a unique verification ID, which you can preview, print, or export as PDF.
+            </div>
+          </div>
+
+          <div class="faq-item p-6 rounded-2xl bg-slate-900/80 border border-slate-800 transition-all">
+            <button class="faq-header w-full flex items-center justify-between text-left font-bold text-base text-white">
+              <span>How are the Python, Java, and SQL backends structured?</span>
+              <i class="faq-icon fa-solid fa-chevron-down text-slate-400 text-xs transition-transform"></i>
+            </button>
+            <div class="faq-content text-xs sm:text-sm text-slate-300 mt-3 leading-relaxed">
+              TechNova provides complete backend blueprints in both Python (FastAPI with Pydantic & SQLAlchemy) and Java (Spring Boot 3 with JPA & Spring Security), mapped to normalized SQL relational database schemas located in the project's backend and database directories.
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 7: CTA BANNER -->
+    <section class="py-20 relative overflow-hidden">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="p-10 sm:p-16 rounded-3xl bg-gradient-to-r from-blue-900/80 via-indigo-900/80 to-purple-900/80 border border-cyan-500/30 text-center relative shadow-2xl">
+          <h2 class="text-3xl sm:text-5xl font-black text-white font-display">Ready to Elevate Your Tech Career?</h2>
+          <p class="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto mt-4">
+            Join 50,000+ ambitious developers mastering Full-Stack architectures and cutting-edge AI technologies on TechNova Learning Hub today.
+          </p>
+          <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+            <a href="login.html?tab=register" class="px-8 py-4 rounded-2xl bg-white hover:bg-slate-100 text-slate-950 font-extrabold text-sm shadow-xl hover:scale-105 transition-all">
+              Create Free Account (Email & Phone)
+            </a>
+            <a href="courses.html" class="px-8 py-4 rounded-2xl bg-slate-900/80 hover:bg-slate-900 text-white font-bold text-sm border border-slate-700 transition-all">
+              Browse Course Catalog
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-slate-950 border-t border-slate-800 text-slate-400 text-xs py-14">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 pb-12 border-b border-slate-800">
+        
+        <!-- Brand Info -->
+        <div class="lg:col-span-2">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-cyan-400 flex items-center justify-center text-white font-bold">
+              <i class="fa-solid fa-cube"></i>
+            </div>
+            <span class="text-xl font-bold font-display text-white">TechNova Learning Hub</span>
+          </div>
+          <p class="text-slate-400 leading-relaxed max-w-sm mb-4">
+            The premier learning platform bridging modern Full-Stack Web Development, enterprise backends in Python & Java, relational SQL engineering, and cutting-edge Artificial Intelligence.
+          </p>
+          <div class="flex items-center gap-3 text-slate-400">
+            <a href="#" class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center hover:text-white hover:border-cyan-500"><i class="fa-brands fa-github"></i></a>
+            <a href="#" class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center hover:text-white hover:border-cyan-500"><i class="fa-brands fa-discord"></i></a>
+            <a href="#" class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center hover:text-white hover:border-cyan-500"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#" class="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center hover:text-white hover:border-cyan-500"><i class="fa-brands fa-linkedin"></i></a>
+          </div>
+        </div>
+
+        <!-- Full-Stack Links -->
+        <div>
+          <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Full-Stack Tracks</h4>
+          <ul class="space-y-2">
+            <li><a href="fullstack.html#html5" class="hover:text-cyan-400 transition-colors">HTML5 & CSS3 Standards</a></li>
+            <li><a href="fullstack.html#javascript" class="hover:text-cyan-400 transition-colors">JavaScript ES6+ & DOM</a></li>
+            <li><a href="fullstack.html#tailwind" class="hover:text-cyan-400 transition-colors">Tailwind CSS v3/v4</a></li>
+            <li><a href="fullstack.html#python" class="hover:text-cyan-400 transition-colors">Python & FastAPI</a></li>
+            <li><a href="fullstack.html#java" class="hover:text-cyan-400 transition-colors">Java & Spring Boot</a></li>
+            <li><a href="fullstack.html#sql" class="hover:text-cyan-400 transition-colors">SQL & PostgreSQL</a></li>
+          </ul>
+        </div>
+
+        <!-- AI Links -->
+        <div>
+          <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">AI Technologies</h4>
+          <ul class="space-y-2">
+            <li><a href="ai.html#ai-fundamentals" class="hover:text-purple-400 transition-colors">What is AI?</a></li>
+            <li><a href="ai.html#types-of-ai" class="hover:text-purple-400 transition-colors">Types of AI (ANI, AGI, ASI)</a></li>
+            <li><a href="ai.html#generative-ai" class="hover:text-purple-400 transition-colors">Generative AI & LLMs</a></li>
+            <li><a href="ai.html#prompt-engineering" class="hover:text-purple-400 transition-colors">Prompt Engineering Lab</a></li>
+            <li><a href="ai.html#ai-agents" class="hover:text-purple-400 transition-colors">Autonomous AI Agents</a></li>
+            <li><a href="ai.html#computer-vision" class="hover:text-purple-400 transition-colors">Computer Vision</a></li>
+          </ul>
+        </div>
+
+        <!-- Platform Links -->
+        <div>
+          <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Platform</h4>
+          <ul class="space-y-2">
+            <li><a href="dashboard.html" class="hover:text-white transition-colors">Learning Dashboard</a></li>
+            <li><a href="courses.html" class="hover:text-white transition-colors">Course Catalog</a></li>
+            <li><a href="projects.html" class="hover:text-white transition-colors">Production Projects</a></li>
+            <li><a href="about.html" class="hover:text-white transition-colors">About TechNova</a></li>
+            <li><a href="contact.html" class="hover:text-white transition-colors">Support & Contact</a></li>
+            <li><a href="login.html" class="hover:text-white transition-colors">Login / Register</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-slate-500 text-xs">
+        <p>&copy; 2026 TechNova Learning Hub. All rights reserved. Built with HTML5, CSS3, Tailwind, JavaScript, Python, Java & SQL.</p>
+        <div class="flex gap-4 mt-4 sm:mt-0">
+          <a href="#" class="hover:text-slate-400">Privacy Policy</a>
+          <a href="#" class="hover:text-slate-400">Terms of Service</a>
+          <a href="#" class="hover:text-slate-400">Security</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/courses.js"></script>
+  <script src="js/projects.js"></script>
+</body>
+</html>

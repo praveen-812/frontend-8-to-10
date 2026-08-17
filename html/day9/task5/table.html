@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>table</title>
+</head>
+
+<body>
+    <center>
+
+        <section>
+            <h3>Product Registration</h3>
+            <div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><label for="id">Product ID</label></td>
+                            <td><input type="text" placeholder="enter your ID" id="id" required></td>
+                        </tr>
+                        <tr>
+                            <td><label for="name">Prodcut Name</label></td>
+                            <td><input type="text" placeholder="enter your product name" required id="name"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="brand">Brand</label></td>
+                            <td><input type="text" id="brand" placeholder="enter your brand name" required></td>
+                        </tr>
+                        <tr>
+                            <td><label for="category">Categroy</label></td>
+                            <td>
+                                <select id="category">
+
+                                    <option value="" disabled selected>Select one..</option>
+                                    <option value="tomato">tomato</option>
+                                    <option value="carrot">carrot</option>
+                                    <option value="rice">rice</option>
+                                    <option value="wheat">wheat</option>
+                                    <option value="sugar">sugar</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="price">Price</label></td>
+                            <td><input type="number" placeholder="enter your price" required id="Price"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="quantity">Quantity</label></td>
+                            <td><input type="number" id="quantity" required></td>
+                        </tr>
+                        <tr>
+                            <td><label for="supplier">Supplier</label></td>
+                            <td><input type="text" required id="supplier"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="image">Product image</label></td>
+                            <td><input type="file"></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><input type="submit"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </center>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+*{
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+}
+html{
+    scroll-behavior: smooth;
+}
+body{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.parent{
+    margin: 20px;
+    margin: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+.child{
+    background-color: aqua;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 300px;
+    height: 350px;
+    border-radius: 20px;  
+    transition: all 0.5s  ease;
+    cursor: pointer;
+}
+.child> img{
+    width: 150px;
+    height: 200px;
+
+}
+.child:hover{
+    transform: scale(1.05)  translateY(-8px);
+
+}

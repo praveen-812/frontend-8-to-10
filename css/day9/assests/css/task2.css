@@ -1,0 +1,32 @@
+*{
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+}
+html{
+    scroll-behavior: smooth;
+}
+body{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.parent{
+    background-color: aliceblue;
+    color: rgb(5, 5, 5);
+    width: 350px;
+    border: 2px solid rgb(3, 7, 14);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px;
+  
+}
+input{
+    padding: 10px;
+
+}
+input:focus{
+    border-color: yellow;
+    background-color: rgb(17, 206, 196);
+    color: white;
+    outline: none;
+}
+

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>form</title>
+</head>
+
+<body>
+    <center>
+        <section>
+            <h3>SLA ID</h3>
+            <div>
+                <form>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><label for="student">Student Name:</label></td>
+                                <td><input type="text" placeholder="enter your name" required id="student"></td>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="course">Course</label>
+                                </td>
+                                <td>
+                                    <select>
+                                        <option value="" disabled selected>select one...</option>
+                                        <option value="html">html</option>
+                                        <option value="css">css</option>
+                                        <option value="js">js</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="email">Email</label></td>
+                                <td><input type="email" placeholder="enter your email" required id="email"></td>
+                            </tr>
+                            <tr>
+                                <td><label for=" number">Mobile Number</label></td>
+                                <td><input type="tel" placeholder="enter your number" required maxlength="10"
+                                        minlength="10" id="number"></td>
+                            </tr>
+                            <tr>
+                                <td><label for="status">Status</label></td>
+                                <td><textarea name="stauts" id="status" placeholder="text current status"
+                                        required></textarea></td>
+                            </tr>
+                            <tr>
+                                <td></td><td><button>login</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </form>
+            </div>
+        </section>
+    </center>
+</body>
+
+</html>

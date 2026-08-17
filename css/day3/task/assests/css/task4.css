@@ -1,0 +1,26 @@
+*{
+    padding: 0;
+    margin: 0%;
+    box-sizing: border-box;
+}
+html{
+    scroll-behavior: smooth;
+}
+body{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+a{
+    text-decoration: none;
+}
+h1{
+font-size: xx-large; text-align: center; border: double 7px;padding: 5px; margin: 10px;
+}
+img{
+
+    width: 600px; height: 350px;text-align: center; padding: 10px; margin-left: 70px;
+}
+.full{
+
+background-color:whitesmoke; color: black;text-align: text; width: 800px; height: 900px;
+padding: 10px; margin: 20px;
+}

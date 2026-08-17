@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Details | TechNova Learning Hub</title>
+  <meta name="description" content="Detailed curriculum, syllabus modules, code challenges, and learning outcomes.">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-cyan-500 selection:text-white">
+
+  <!-- Ambient Glow -->
+  <div class="fixed top-0 left-1/4 w-96 h-96 bg-blob-blue rounded-full filter blur-3xl pointer-events-none -z-10 animate-pulse"></div>
+
+  <!-- Navigation Bar -->
+  <nav class="sticky top-0 z-40 bg-slate-900/80 backdrop-blur-xl border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <div class="flex items-center gap-8">
+          <a href="index.html" class="flex items-center gap-3 group">
+            <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-cyan-400 flex items-center justify-center text-xl text-white shadow-lg shadow-cyan-500/25 group-hover:scale-105 transition-transform">
+              <i class="fa-solid fa-cube"></i>
+            </div>
+            <div>
+              <span class="text-xl font-extrabold tracking-tight text-white font-display flex items-center gap-1.5">
+                Tech<span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-300">Nova</span>
+              </span>
+              <span class="block text-[10px] font-semibold text-slate-400 tracking-widest uppercase">Learning Hub</span>
+            </div>
+          </a>
+
+          <div class="hidden lg:flex items-center gap-1">
+            <a href="index.html" class="nav-link px-3 py-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors rounded-lg">Home</a>
+            <a href="fullstack.html" class="nav-link px-3 py-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors rounded-lg">Full-Stack</a>
+            <a href="ai.html" class="nav-link px-3 py-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors rounded-lg">AI & Emerging</a>
+            <a href="courses.html" class="nav-link px-3 py-2 text-sm font-semibold text-cyan-400 font-bold transition-colors rounded-lg">Courses</a>
+            <a href="projects.html" class="nav-link px-3 py-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors rounded-lg">Projects</a>
+            <a href="dashboard.html" class="nav-link px-3 py-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors rounded-lg">Dashboard</a>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button class="theme-toggle-btn w-10 h-10 rounded-xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 flex items-center justify-center text-slate-300">
+            <i class="theme-toggle-icon fa-solid fa-sun text-amber-400 text-sm"></i>
+          </button>
+          <div id="navbar-auth-section" class="flex items-center"></div>
+        </div>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Course Detail Hero -->
+  <main class="flex-1 py-10 sm:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Breadcrumb -->
+      <nav class="flex items-center gap-2 text-xs text-slate-400 mb-6">
+        <a href="courses.html" class="hover:text-white">Courses</a>
+        <i class="fa-solid fa-angle-right text-[10px]"></i>
+        <span id="breadcrumb-category" class="text-slate-400">Full-Stack</span>
+        <i class="fa-solid fa-angle-right text-[10px]"></i>
+        <span id="breadcrumb-title" class="text-cyan-400 font-semibold truncate">Course Details</span>
+      </nav>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Left 8 Columns: Details & Syllabus -->
+        <div class="lg:col-span-8 space-y-8">
+          
+          <div>
+            <div class="flex items-center gap-2 mb-3">
+              <span id="detail-badge" class="px-2.5 py-0.5 text-xs font-bold rounded-full bg-cyan-950 text-cyan-400 border border-cyan-800/40">Best for Beginners</span>
+              <span id="detail-level" class="text-xs text-slate-400 font-medium">Beginner Level</span>
+            </div>
+            <h1 id="detail-title" class="text-3xl sm:text-5xl font-black text-white font-display leading-tight">Course Title</h1>
+            <p id="detail-summary" class="text-slate-300 text-sm sm:text-base mt-3 leading-relaxed">Detailed summary...</p>
+            
+            <div class="flex flex-wrap items-center gap-6 mt-6 pt-4 border-t border-slate-800 text-xs text-slate-400">
+              <div class="flex items-center gap-1.5"><i class="fa-regular fa-clock text-cyan-400"></i> <span id="detail-duration">18 Hours</span></div>
+              <div class="flex items-center gap-1.5"><i class="fa-solid fa-layer-group text-purple-400"></i> <span id="detail-lessons">42 Lessons</span></div>
+              <div class="flex items-center gap-1 text-amber-400 font-bold"><i class="fa-solid fa-star"></i> <span id="detail-rating">4.9 / 5.0</span></div>
+              <div class="flex items-center gap-1.5"><i class="fa-solid fa-users text-emerald-400"></i> <span id="detail-students">14,200+ Students</span></div>
+            </div>
+          </div>
+
+          <!-- What You'll Learn -->
+          <div class="p-6 rounded-3xl bg-slate-900/80 border border-slate-800">
+            <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+              <i class="fa-solid fa-circle-check text-cyan-400"></i> What You'll Learn &amp; Build
+            </h3>
+            <ul id="detail-outcomes" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-300">
+              <!-- Injected by script -->
+            </ul>
+          </div>
+
+          <!-- Complete Curriculum Modules List -->
+          <div class="space-y-4">
+            <h3 class="text-xl font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-book-open text-purple-400"></i> Course Curriculum Breakdown
+            </h3>
+            <div id="detail-modules-list" class="space-y-3">
+              <!-- Injected by script -->
+            </div>
+          </div>
+
+          <!-- Instructor Profile -->
+          <div class="p-6 rounded-3xl bg-slate-900/80 border border-slate-800 flex items-center gap-4">
+            <div class="w-14 h-14 rounded-2xl bg-blue-600/20 text-cyan-400 flex items-center justify-center text-3xl shrink-0">
+              <i class="fa-solid fa-user-tie"></i>
+            </div>
+            <div>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-cyan-400">Course Instructor</span>
+              <h4 id="detail-instructor" class="text-base font-bold text-white">Marcus Vance</h4>
+              <p class="text-xs text-slate-400 mt-0.5">Senior Staff Engineer & Curriculum Architect at TechNova.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right 4 Columns: Sticky Enrollment Card -->
+        <div class="lg:col-span-4 sticky top-28">
+          <div class="glass-card p-6 rounded-3xl border border-slate-800 space-y-6">
+            <img id="detail-thumb-img" src="assets/images/courses/html-css-thumb.svg" alt="Course Thumbnail" class="w-full rounded-2xl border border-slate-700/80 shadow-xl object-cover">
+            
+            <div class="space-y-3">
+              <div class="flex items-baseline justify-between">
+                <span class="text-2xl font-black text-white font-display">100% Free</span>
+                <span class="text-xs text-emerald-400 font-semibold"><i class="fa-solid fa-award mr-1"></i> Includes Verified Certificate</span>
+              </div>
+              
+              <a id="detail-player-cta" href="course-player.html" class="block w-full py-3.5 text-center font-extrabold text-sm text-white bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 rounded-xl shadow-xl shadow-cyan-500/20 transition-all hover:scale-105 active:scale-95">
+                <i class="fa-solid fa-play mr-2"></i> Start Interactive Course
+              </a>
+            </div>
+
+            <div class="pt-4 border-t border-slate-800 text-xs text-slate-400 space-y-2">
+              <div class="flex items-center justify-between"><span>Access:</span> <strong class="text-white">Lifetime &amp; Self-Paced</strong></div>
+              <div class="flex items-center justify-between"><span>Skill Level:</span> <strong class="text-white" id="detail-side-level">Beginner</strong></div>
+              <div class="flex items-center justify-between"><span>Interactive Labs:</span> <strong class="text-white">In-Browser Code Runner</strong></div>
+              <div class="flex items-center justify-between"><span>Prerequisites:</span> <strong class="text-white">None</strong></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-slate-950 border-t border-slate-800 text-slate-400 text-xs py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p>&copy; 2026 TechNova Learning Hub. Course Syllabus Studio.</p>
+      <div class="flex gap-4">
+        <a href="index.html" class="hover:text-white">Home</a>
+        <a href="courses.html" class="hover:text-white">Courses</a>
+        <a href="dashboard.html" class="hover:text-white">Dashboard</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/models/CourseModel.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      const courseId = params.get("id") || "course-html-css";
+      const course = window.CourseModel ? CourseModel.getById(courseId) : null;
+
+      if (!course) return;
+
+      document.getElementById("breadcrumb-category").textContent = course.category === "ai" ? "AI & Emerging Tech" : "Full-Stack Development";
+      document.getElementById("breadcrumb-title").textContent = course.title;
+      document.getElementById("detail-title").textContent = course.title;
+      document.getElementById("detail-summary").textContent = course.summary;
+      document.getElementById("detail-badge").textContent = course.badge;
+      document.getElementById("detail-level").textContent = course.level;
+      document.getElementById("detail-duration").textContent = course.duration;
+      document.getElementById("detail-lessons").textContent = `${course.lessonsCount} Lessons`;
+      document.getElementById("detail-rating").textContent = `${course.rating} / 5.0`;
+      document.getElementById("detail-students").textContent = `${course.studentsCount.toLocaleString()}+ Students`;
+      document.getElementById("detail-instructor").textContent = course.instructor;
+      document.getElementById("detail-side-level").textContent = course.level;
+      document.getElementById("detail-player-cta").href = `course-player.html?courseId=${course.id}`;
+      
+      if (course.imageThumb) {
+        document.getElementById("detail-thumb-img").src = course.imageThumb;
+      }
+
+      // Outcomes
+      const outcomesEl = document.getElementById("detail-outcomes");
+      if (outcomesEl && course.outcomes) {
+        outcomesEl.innerHTML = course.outcomes.map(o => `
+          <li class="flex items-start gap-2">
+            <i class="fa-solid fa-check text-cyan-400 mt-0.5 text-xs"></i>
+            <span>${o}</span>
+          </li>
+        `).join("");
+      }
+
+      // Modules list
+      const modulesEl = document.getElementById("detail-modules-list");
+      if (modulesEl) {
+        modulesEl.innerHTML = course.modules.map((mod, idx) => `
+          <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800">
+            <h4 class="text-sm font-bold text-white flex items-center gap-2">
+              <span class="w-6 h-6 rounded-lg bg-blue-600/30 text-cyan-400 flex items-center justify-center text-xs font-bold">${idx + 1}</span>
+              ${mod.title}
+            </h4>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3 text-xs text-slate-300">
+              ${mod.lessons.map(l => `
+                <a href="course-player.html?courseId=${course.id}&lessonId=${l.id}" class="flex items-center justify-between p-2 rounded-xl bg-slate-800/50 hover:bg-slate-800 border border-slate-700/60 transition-colors group">
+                  <span class="truncate group-hover:text-cyan-300">${l.title}</span>
+                  <span class="text-[10px] text-slate-500 font-mono shrink-0 ml-2">${l.duration}</span>
+                </a>
+              `).join("")}
+            </div>
+          </div>
+        `).join("");
+      }
+    });
+  </script>
+</body>
+</html>

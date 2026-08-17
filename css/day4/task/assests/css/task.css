@@ -1,0 +1,36 @@
+* {
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+
+}
+
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+a {
+    text-decoration: none;
+}
+div{
+    height: 100px;
+    text-align: center;
+
+    background-color: red;color: white;
+
+}
+.box1{
+    background-color:pink ;
+
+}
+.box2{
+    background-color: blue;
+    visibility: hidden;
+}
+.box3{
+    background-color: green;
+}

@@ -1,0 +1,34 @@
+*{
+    padding: 0;
+    margin: 0%;
+    box-sizing: border-box;
+}
+html{
+    scroll-behavior: smooth;
+}
+body{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+a{
+    text-decoration: none;
+}
+h1{
+    background-color: pink;color: black;text-align: center;
+    padding: 5px; margin: 10px; border: groove 10px;
+}
+img{
+    width: 250px; height: 250px; 
+}
+.main{
+    background-color: aqua; width: 300px; padding: 23px;margin: 20px;  
+
+}
+.product{
+    text-align: center; 
+}
+button{
+    width: 75px; background-color: bisque;color: darkblue;
+}
+#full{
+    display: flex; text-align: center;
+}

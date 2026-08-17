@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI & Emerging Technologies Department | TechNova Learning Hub</title>
+  <meta name="description" content="Explore Artificial Intelligence, Machine Learning, Deep Neural Networks, Generative AI, LLMs, NLP, Computer Vision, and Autonomous AI Agents.">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col antialiased selection:bg-purple-500 selection:text-white">
+
+  <!-- Ambient Blobs -->
+  <div class="fixed top-0 right-1/4 w-96 h-96 bg-blob-purple rounded-full filter blur-3xl pointer-events-none -z-10 animate-pulse"></div>
+  <div class="fixed bottom-10 left-10 w-96 h-96 bg-blob-cyan rounded-full filter blur-3xl pointer-events-none -z-10 float-anim"></div>
+
+  <!-- Navigation Bar -->
+  <nav class="sticky top-0 z-40 bg-slate-900/80 backdrop-blur-xl border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <div class="flex items-center gap-8">
+          <a href="index.html" class="flex items-center gap-3 group">
+            <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-cyan-400 flex items-center justify-center text-xl text-white shadow-lg shadow-cyan-500/25 group-hover:scale-105 transition-transform">
+              <i class="fa-solid fa-cube"></i>
+            </div>
+            <div>
+              <span class="text-xl font-extrabold tracking-tight text-white font-display flex items-center gap-1.5">
+                Tech<span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-300">Nova</span>
+              </span>
+              <span class="block text-[10px] font-semibold text-slate-400 tracking-widest uppercase">Learning Hub</span>
+            </div>
+          </a>
+
+          <div class="hidden lg:flex items-center gap-1">
+            <a href="index.html" class="nav-link px-3 py-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors rounded-lg">Home</a>
+            <a href="fullstack.html" class="nav-link px-3 py-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors rounded-lg">Full-Stack</a>
+            <a href="ai.html" class="nav-link px-3 py-2 text-sm font-semibold text-purple-400 font-bold transition-colors rounded-lg">AI & Emerging</a>
+            <a href="courses.html" class="nav-link px-3 py-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors rounded-lg">Courses</a>
+            <a href="projects.html" class="nav-link px-3 py-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors rounded-lg">Projects</a>
+            <a href="dashboard.html" class="nav-link px-3 py-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors rounded-lg">Dashboard</a>
+            <a href="about.html" class="nav-link px-3 py-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors rounded-lg">About</a>
+            <a href="contact.html" class="nav-link px-3 py-2 text-sm font-semibold text-slate-300 hover:text-cyan-400 transition-colors rounded-lg">Contact</a>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button onclick="TechNovaMain.openSearchModal()" class="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-700/80 text-xs">
+            <i class="fa-solid fa-magnifying-glass text-slate-400"></i>
+            <span class="hidden sm:inline">Search...</span>
+            <kbd class="hidden md:inline-block px-1.5 py-0.5 text-[10px] font-mono bg-slate-900 text-slate-400 rounded border border-slate-700">Ctrl K</kbd>
+          </button>
+          <button class="theme-toggle-btn w-10 h-10 rounded-xl bg-slate-800/80 hover:bg-slate-800 border border-slate-700/80 flex items-center justify-center text-slate-300">
+            <i class="theme-toggle-icon fa-solid fa-sun text-amber-400 text-sm"></i>
+          </button>
+          <div id="navbar-auth-section" class="flex items-center"></div>
+          <button id="mobile-menu-btn" class="lg:hidden w-10 h-10 rounded-xl bg-slate-800 flex items-center justify-center text-slate-300 border border-slate-700">
+            <i class="fa-solid fa-bars text-lg"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="flex-1">
+
+    <!-- Header -->
+    <header class="py-14 sm:py-20 border-b border-slate-800/80 bg-slate-900/40 relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <span class="px-3.5 py-1 rounded-full bg-purple-950 text-purple-400 border border-purple-800/50 text-xs font-bold uppercase tracking-wider">Department 02</span>
+        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white font-display mt-4">AI & Emerging Technologies</h1>
+        <p class="text-slate-300 text-base sm:text-lg max-w-3xl mx-auto mt-3">
+          Explore Machine Learning, Deep Neural Networks, Large Language Models, Prompt Engineering, Computer Vision, and Autonomous AI Agents from foundational theory to real-world code.
+        </p>
+      </div>
+    </header>
+
+    <!-- SECTION: TYPES OF AI BREAKDOWN -->
+    <section class="py-16 bg-slate-900/60 border-b border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-12">
+          <span class="text-xs font-bold uppercase tracking-wider text-cyan-400">Taxonomy of Intelligence</span>
+          <h2 class="text-2xl sm:text-4xl font-black text-white font-display mt-2">The 3 Major Types of AI</h2>
+          <p class="text-slate-400 text-xs sm:text-sm mt-1">Understanding current capabilities vs future frontiers of artificial intelligence.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <!-- Narrow AI -->
+          <div class="glass-card p-8 rounded-3xl border border-cyan-500/30 relative">
+            <div class="w-12 h-12 rounded-2xl bg-cyan-950/60 text-cyan-400 flex items-center justify-center text-2xl border border-cyan-800/50 mb-4">
+              <i class="fa-solid fa-crosshairs"></i>
+            </div>
+            <span class="px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800/50">Current Reality (Active)</span>
+            <h3 class="text-xl font-bold text-white mt-3">Artificial Narrow Intelligence (ANI)</h3>
+            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+              Specialized systems engineered to excel at single tasks (e.g. ChatGPT text generation, Tesla Autopilot vision, AlphaFold protein folding, Siri voice parsing).
+            </p>
+            <ul class="mt-4 pt-4 border-t border-slate-800 text-xs text-slate-400 space-y-1.5">
+              <li><i class="fa-solid fa-check text-cyan-400 mr-1.5"></i> Domain-specific precision</li>
+              <li><i class="fa-solid fa-check text-cyan-400 mr-1.5"></i> Cannot transfer knowledge to unrelated domains</li>
+            </ul>
+          </div>
+
+          <!-- General AI -->
+          <div class="glass-card p-8 rounded-3xl border border-purple-500/40 relative">
+            <div class="w-12 h-12 rounded-2xl bg-purple-950/60 text-purple-400 flex items-center justify-center text-2xl border border-purple-800/50 mb-4">
+              <i class="fa-solid fa-brain"></i>
+            </div>
+            <span class="px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-purple-950 text-purple-300 border border-purple-800/50">Active Research Frontier</span>
+            <h3 class="text-xl font-bold text-white mt-3">Artificial General Intelligence (AGI)</h3>
+            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+              Hypothetical systems capable of understanding, learning, and applying cognitive intelligence across any human intellectual task with zero-shot adaptability.
+            </p>
+            <ul class="mt-4 pt-4 border-t border-slate-800 text-xs text-slate-400 space-y-1.5">
+              <li><i class="fa-solid fa-spinner fa-spin text-purple-400 mr-1.5"></i> Cross-domain cognitive generalization</li>
+              <li><i class="fa-solid fa-spinner fa-spin text-purple-400 mr-1.5"></i> Reasoning & continuous self-learning</li>
+            </ul>
+          </div>
+
+          <!-- Super AI -->
+          <div class="glass-card p-8 rounded-3xl border border-rose-500/30 relative">
+            <div class="w-12 h-12 rounded-2xl bg-rose-950/60 text-rose-400 flex items-center justify-center text-2xl border border-rose-800/50 mb-4">
+              <i class="fa-solid fa-infinity"></i>
+            </div>
+            <span class="px-2.5 py-0.5 text-[10px] font-bold rounded-full bg-rose-950 text-rose-300 border border-rose-800/50">Theoretical Horizon</span>
+            <h3 class="text-xl font-bold text-white mt-3">Artificial Superintelligence (ASI)</h3>
+            <p class="text-xs text-slate-300 mt-2 leading-relaxed">
+              Intellect that surpasses the collective cognitive capacity of all human minds combined across scientific creativity, wisdom, and problem-solving.
+            </p>
+            <ul class="mt-4 pt-4 border-t border-slate-800 text-xs text-slate-400 space-y-1.5">
+              <li><i class="fa-solid fa-atom text-rose-400 mr-1.5"></i> Exponential algorithmic self-improvement</li>
+              <li><i class="fa-solid fa-atom text-rose-400 mr-1.5"></i> AI Safety & Alignment requirement</li>
+            </ul>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- INTERACTIVE PROMPT ENGINEERING & LLM SANDBOX -->
+    <section id="prompt-sandbox" class="py-16 bg-slate-950 border-b border-slate-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-pink-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> Interactive Lab
+            </span>
+            <h2 class="text-2xl font-bold text-white mt-1">Prompt Engineering & LLM Playground</h2>
+            <p class="text-xs text-slate-400">Test different prompt patterns (Zero-shot, Few-shot, Chain-of-Thought) with streaming simulation.</p>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <select id="prompt-preset-select" class="px-3 py-2 rounded-xl bg-slate-800 border border-slate-700 text-xs text-white focus:outline-none focus:border-purple-400">
+              <option value="zero_shot">Preset 1: Zero-Shot Prompting (RAG)</option>
+              <option value="few_shot">Preset 2: Few-Shot Prompting (SQL Generator)</option>
+              <option value="chain_of_thought">Preset 3: Chain-of-Thought (Architecture)</option>
+              <option value="code_generation">Preset 4: Code Gen (FastAPI + Pydantic)</option>
+            </select>
+            <button id="prompt-run-btn" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shadow-lg shadow-purple-500/20 transition-all flex items-center gap-1.5">
+              <i class="fa-solid fa-play"></i> Execute Prompt
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          <!-- Prompt Config & Input (Left) -->
+          <div class="lg:col-span-5 space-y-4">
+            
+            <div class="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold text-slate-300">Model Selector</span>
+                <select id="prompt-model-select" class="px-2 py-1 bg-slate-800 border border-slate-700 rounded-lg text-[11px] text-white">
+                  <option value="gpt-4o">GPT-4o (Omni Reasoning)</option>
+                  <option value="claude-3-5">Claude 3.5 Sonnet</option>
+                  <option value="llama-3-3">Llama 3.3 70B (Open-Weight)</option>
+                  <option value="deepseek-v3">DeepSeek V3 / R1</option>
+                </select>
+              </div>
+
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold text-slate-300">Temperature</span>
+                <input id="prompt-temp-slider" type="range" min="0" max="1" step="0.1" value="0.7" class="w-32 accent-purple-500">
+              </div>
+            </div>
+
+            <!-- System Prompt -->
+            <div class="code-window">
+              <div class="code-window-header">
+                <span class="text-xs font-bold text-purple-400"><i class="fa-solid fa-shield-halved mr-1"></i> System Instructions</span>
+                <span class="text-[10px] text-slate-500">Context Persona</span>
+              </div>
+              <textarea id="prompt-system-input" rows="3" class="w-full p-3 bg-transparent text-xs font-mono text-slate-200 resize-none focus:outline-none border-none"></textarea>
+            </div>
+
+            <!-- User Prompt -->
+            <div class="code-window">
+              <div class="code-window-header">
+                <span class="text-xs font-bold text-cyan-400"><i class="fa-solid fa-terminal mr-1"></i> User Prompt Payload</span>
+                <span class="text-[10px] text-slate-500">Natural Language</span>
+              </div>
+              <textarea id="prompt-user-input" rows="5" class="w-full p-3 bg-transparent text-xs font-mono text-slate-200 resize-y focus:outline-none border-none"></textarea>
+            </div>
+
+          </div>
+
+          <!-- Streaming Response Output (Right) -->
+          <div class="lg:col-span-7 flex flex-col">
+            <div class="code-window flex-1 flex flex-col">
+              <div class="code-window-header">
+                <div class="code-dots">
+                  <span class="code-dot red"></span>
+                  <span class="code-dot yellow"></span>
+                  <span class="code-dot green"></span>
+                </div>
+                <span class="text-xs font-mono text-slate-300">Model Output Stream</span>
+                <span id="prompt-token-speed" class="text-[10px] text-purple-400 font-mono">Ready</span>
+              </div>
+              <div id="prompt-response-output" class="flex-1 p-5 bg-slate-900/90 text-xs font-mono text-slate-200 leading-relaxed overflow-y-auto min-h-[380px] max-h-[460px]">
+                <span class="text-slate-500 italic">Click "Execute Prompt" to simulate real-time AI generation...</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- AI CONCEPTS GRID -->
+    <section class="py-20 sm:py-28">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <span class="px-3.5 py-1 rounded-full bg-purple-950 text-purple-400 border border-purple-800/50 text-xs font-bold uppercase tracking-wider">Comprehensive Tracks</span>
+          <h2 class="text-3xl sm:text-5xl font-black text-white font-display mt-3">AI & Emerging Tech Modules</h2>
+          <p class="text-slate-400 text-sm sm:text-base mt-2">Deep dive into individual AI domains, toolings, and real-world implementation techniques.</p>
+        </div>
+
+        <div id="ai-concepts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Injected dynamically by js/ai-sandbox.js -->
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-slate-950 border-t border-slate-800 text-slate-400 text-xs py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p>&copy; 2026 TechNova Learning Hub. AI & Emerging Technologies Department.</p>
+      <div class="flex gap-4">
+        <a href="index.html" class="hover:text-white">Home</a>
+        <a href="fullstack.html" class="hover:text-white">Full-Stack</a>
+        <a href="courses.html" class="hover:text-white">Courses</a>
+        <a href="dashboard.html" class="hover:text-white">Dashboard</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/fullstack.js"></script>
+  <script src="js/ai-sandbox.js"></script>
+</body>
+</html>

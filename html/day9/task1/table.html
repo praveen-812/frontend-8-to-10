@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>table</title>
+</head>
+
+<body>
+    <center>
+    <section>
+        <h3>Student Registration</h3>
+        <div>
+            <table>
+
+
+                <tbody>
+                    <tr>
+                        <td><label for="user name">
+                                Student Name:</label></td>
+                        <td><input type="text" id="user name" placeholder="enter your name" required></td>
+
+                    </tr>
+                    <tr>
+                        <td><label for="email">Email:</label></td>
+                        <td><input type="email" placeholder="enter your email" required id="email"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="password">Password:</label></td>
+                        <td><input type="password" placeholder="enter your password" required id="password"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="mobile number">Mobile number:</label></td>
+                        <td><input type="tel" placeholder="enter your number" maxlength="10" minlength="10" required
+                                id="mobile number"></td>
+                    </tr>
+                    <tr>
+                        <td><label for="age">Age:</label></td>
+                        <td><input type="number" placeholder="entery your number" required></td>
+                    </tr>
+                    <tr>
+                        <td><label for="gender">Gender:</label></td>
+                        <td><input type="radio" name="gender" >male
+                        <input type="radio" name="gender">Female</td>
+
+                    </tr>
+                    <tr>
+                        <td><label for="skills" >Skills:</label></td>
+                        <td>
+                            <input type="checkbox" required>foorball
+                             <input type="checkbox">hockey
+                              <input type="checkbox">html
+                               <input type="checkbox">chess
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="course">Course</label></td>
+                        <td>
+                            <select  > 
+                                <option value="" disabled selected >select one...</option>
+                                <option value="html">html</option>
+                                <option value="css">css</option>
+                                <option value="js">js</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="address">Address</label></td><td><textarea name="address" id="address" placeholder="enter your address"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td><label for="upload">Profile image upload</label></td><td><input type="file"></td>
+                    </tr>
+                    <tr>
+                        <td></td><td><input type="submit"> <input type="reset"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+    </center>
+</body>
+
+</html>

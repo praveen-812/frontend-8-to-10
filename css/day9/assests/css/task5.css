@@ -1,0 +1,27 @@
+*{
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+}
+html{
+    scroll-behavior: smooth;
+}
+body{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+p{
+    font-size: 16px;
+    line-height: 1.6;
+}
+p::first-letter{
+    font-size: 40px;
+    color: red;
+    font-weight: bold;
+}
+p::first-line{
+    color: blue;
+}
+p::selection{
+    background-color: yellow;
+    color: black;
+}

@@ -1,0 +1,30 @@
+*{
+    padding: 0;
+    margin: 0%;
+    box-sizing: border-box;
+}
+html{
+    scroll-behavior: smooth;
+}
+body{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+a{
+    text-decoration: none;
+}
+.images{
+    width: 200px;
+}
+h1{
+    background-color: black; color: aliceblue; border: dashed blueviolet;
+    padding: 5px; margin: 15px;
+}
+img{
+    width: 200px; height:200px;
+}
+h2{
+    margin: 5px; border: 5px; text-align: center; background-color: black;color: lightpink; border-radius: 5px;
+}
+.full{
+    background-color: lightpink; color: black; width: 270px; padding: 30px; margin: 15px;
+}
