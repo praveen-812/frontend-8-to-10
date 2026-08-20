@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,27 +6,325 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>task</title>
+    <title>HTML 5 Task</title>
 </head>
 
-<body>
-    <h1>task</h1>
-    <div>
-        <div>
-            <a href="../../../html/day9/form.html">form task1</a>
-            <a href="../../../html/day9/table.html">table task1</a>
-            <a href="../../../html/day9/task2/form.html">form task2</a>
-            <a href="../../../html/day9/task2/table.html">table task2</a>
-            <a href="../../../html/day9/task3/form.html">form task3</a>
-            <a href="../../../html/day9/task3/table.html">table task3</a>
-            <a href="../../../html/day9/task4/form.html">form task4</a>
-            <a href="../../../html/day9/task4/table.html">table task4</a>
-            <a href="../../../html/day9/task5/form.html">form task5</a>
-            <a href="../../../html/day9/task5/table.html">table task5</a>
-        </div>
+<body class="min-h-screen bg-slate-950 text-white">
+
+    <!-- Background -->
+    <div class="fixed inset-0 bg-gradient-to-br from-slate-950 via-blue-950 to-black"></div>
+    <div class="fixed -top-40 -left-40 w-80 h-80 bg-cyan-500/20 rounded-full blur-3xl"></div>
+    <div class="fixed -bottom-40 -right-40 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl"></div>
+
+    <div class="relative z-10 min-h-screen">
+
+        <!-- Navbar -->
+        <nav class="border-b border-white/10 bg-black/30 backdrop-blur-xl">
+            <div class="max-w-6xl mx-auto px-6 py-5 flex justify-between items-center">
+
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-400 to-red-600
+                                flex items-center justify-center font-black text-xl">
+                        H
+                    </div>
+
+                    <div>
+                        <h2 class="font-bold">MY DAILY TASK</h2>
+                        <p class="text-xs text-gray-400">Learning Dashboard</p>
+                    </div>
+                </div>
+
+                <span class="hidden sm:block text-sm text-green-300">
+                    ● Learning Mode
+                </span>
+
+            </div>
+        </nav>
+
+
+        <!-- Header -->
+        <header class="text-center px-6 py-14">
+
+            <span class="px-4 py-2 rounded-full bg-orange-400/10 border border-orange-400/30
+                         text-orange-300 text-sm">
+                🚀 HTML LEARNING
+            </span>
+
+            <h1 class="text-4xl md:text-6xl font-black mt-6">
+                HTML 5
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500">
+                    TASKS
+                </span>
+            </h1>
+
+            <p class="text-gray-400 mt-4 max-w-xl mx-auto">
+                Practice HTML every day and improve your web development skills.
+            </p>
+
+        </header>
+
+
+        <!-- Tasks -->
+        <main class="max-w-6xl mx-auto px-6 pb-16">
+
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 class="text-2xl font-bold">Day 9 Tasks</h2>
+                    <p class="text-gray-500 text-sm">Select a task to continue.</p>
+                </div>
+
+                <span class="hidden sm:block px-4 py-2 rounded-xl bg-white/5 border border-white/10">
+                    10 TASK
+                </span>
+            </div>
+
+
+            <!-- task Cards -->
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+                <!-- TAsk 1 -->
+                <a href="../../html/day9/form.html"
+                    class="group p-5 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl
+                           hover:border-orange-400/50 hover:-translate-y-2 transition duration-300">
+
+                    <div class="flex justify-between">
+                        <span class="w-11 h-11 rounded-xl bg-orange-500/10 border border-orange-400/20
+                                     flex items-center justify-center text-orange-300 font-bold">
+                            01
+                        </span>
+                        <span class="text-gray-500 group-hover:text-orange-300">→</span>
+                    </div>
+
+                    <h3 class="text-lg font-bold mt-4">Task 1</h3>
+                    <p class="text-gray-400 text-sm">form 1 </p>
+
+                </a>
+
+
+                <!-- Task 2 -->
+                <a href="../../html/day9/table.html"
+                    class="group p-5 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl
+                           hover:border-orange-400/50 hover:-translate-y-2 transition duration-300">
+
+                    <div class="flex justify-between">
+                        <span class="w-11 h-11 rounded-xl bg-orange-500/10 border border-orange-400/20
+                                     flex items-center justify-center text-orange-300 font-bold">
+                            02
+                        </span>
+                        <span class="text-gray-500 group-hover:text-orange-300">→</span>
+                    </div>
+
+                    <h3 class="text-lg font-bold mt-4">Task 2</h3>
+                    <p class="text-gray-400 text-sm">table 1</p>
+
+                </a>
+
+
+                <!-- Task 3 -->
+                <a href="../../html/day9/task1/form.html"
+                    class="group p-5 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl
+                           hover:border-orange-400/50 hover:-translate-y-2 transition duration-300">
+
+                    <div class="flex justify-between">
+                        <span class="w-11 h-11 rounded-xl bg-orange-500/10 border border-orange-400/20
+                                     flex items-center justify-center text-orange-300 font-bold">
+                            03
+                        </span>
+                        <span class="text-gray-500 group-hover:text-orange-300">→</span>
+                    </div>
+
+                    <h3 class="text-lg font-bold mt-4">Task 3</h3>
+                    <p class="text-gray-400 text-sm">form 2</p>
+
+                </a>
+
+                 <!-- Task 4 -->
+                <a href="../../html/day9/task1/table.html"
+                    class="group p-5 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl
+                           hover:border-orange-400/50 hover:-translate-y-2 transition duration-300">
+
+                    <div class="flex justify-between">
+                        <span class="w-11 h-11 rounded-xl bg-orange-500/10 border border-orange-400/20
+                                     flex items-center justify-center text-orange-300 font-bold">
+                            04
+                        </span>
+                        <span class="text-gray-500 group-hover:text-orange-300">→</span>
+                    </div>
+
+                    <h3 class="text-lg font-bold mt-4">Task 4</h3>
+                    <p class="text-gray-400 text-sm">table 2</p>
+
+                </a>
+
+                 <!-- Task 5 -->
+                <a href="../../html/day9/task2/form.html"
+                    class="group p-5 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl
+                           hover:border-orange-400/50 hover:-translate-y-2 transition duration-300">
+
+                    <div class="flex justify-between">
+                        <span class="w-11 h-11 rounded-xl bg-orange-500/10 border border-orange-400/20
+                                     flex items-center justify-center text-orange-300 font-bold">
+                            05
+                        </span>
+                        <span class="text-gray-500 group-hover:text-orange-300">→</span>
+                    </div>
+
+                    <h3 class="text-lg font-bold mt-4">Task 5</h3>
+                    <p class="text-gray-400 text-sm">form 3</p>
+
+                </a>       
+
+                
+                 <!-- Task 6 -->
+                <a href="../../html/day9/task2/table.html"
+                    class="group p-5 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl
+                           hover:border-orange-400/50 hover:-translate-y-2 transition duration-300">
+
+                    <div class="flex justify-between">
+                        <span class="w-11 h-11 rounded-xl bg-orange-500/10 border border-orange-400/20
+                                     flex items-center justify-center text-orange-300 font-bold">
+                            06
+                        </span>
+                        <span class="text-gray-500 group-hover:text-orange-300">→</span>
+                    </div>
+
+                    <h3 class="text-lg font-bold mt-4">Task 6</h3>
+                    <p class="text-gray-400 text-sm">table 3</p>
+
+                </a> 
+
+                
+                 <!-- Task 7 -->
+                <a href="../../html/day9/task3/form.html"
+                    class="group p-5 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl
+                           hover:border-orange-400/50 hover:-translate-y-2 transition duration-300">
+
+                    <div class="flex justify-between">
+                        <span class="w-11 h-11 rounded-xl bg-orange-500/10 border border-orange-400/20
+                                     flex items-center justify-center text-orange-300 font-bold">
+                            07
+                        </span>
+                        <span class="text-gray-500 group-hover:text-orange-300">→</span>
+                    </div>
+
+                    <h3 class="text-lg font-bold mt-4">Task 7</h3>
+                    <p class="text-gray-400 text-sm">form 4</p>
+
+                </a> 
+
+                
+                 <!-- Task 8 -->
+                <a href="../../html/day9/task3/table.html"
+                    class="group p-5 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl
+                           hover:border-orange-400/50 hover:-translate-y-2 transition duration-300">
+
+                    <div class="flex justify-between">
+                        <span class="w-11 h-11 rounded-xl bg-orange-500/10 border border-orange-400/20
+                                     flex items-center justify-center text-orange-300 font-bold">
+                            08
+                        </span>
+                        <span class="text-gray-500 group-hover:text-orange-300">→</span>
+                    </div>
+
+                    <h3 class="text-lg font-bold mt-4">Task 8</h3>
+                    <p class="text-gray-400 text-sm">table 4</p>
+
+                </a> 
+                
+                 <!-- Task 9 -->
+                <a href="../../html/day9/task4/form.html"
+                    class="group p-5 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl
+                           hover:border-orange-400/50 hover:-translate-y-2 transition duration-300">
+
+                    <div class="flex justify-between">
+                        <span class="w-11 h-11 rounded-xl bg-orange-500/10 border border-orange-400/20
+                                     flex items-center justify-center text-orange-300 font-bold">
+                            09
+                        </span>
+                        <span class="text-gray-500 group-hover:text-orange-300">→</span>
+                    </div>
+
+                    <h3 class="text-lg font-bold mt-4">Task 9</h3>
+                    <p class="text-gray-400 text-sm">form 5</p>
+
+                </a> 
+
+                
+                 <!-- Task 10-->
+                <a href="../../html/day9/task4/table.html"
+                    class="group p-5 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl
+                           hover:border-orange-400/50 hover:-translate-y-2 transition duration-300">
+
+                    <div class="flex justify-between">
+                        <span class="w-11 h-11 rounded-xl bg-orange-500/10 border border-orange-400/20
+                                     flex items-center justify-center text-orange-300 font-bold">
+                            10
+                        </span>
+                        <span class="text-gray-500 group-hover:text-orange-300">→</span>
+                    </div>
+
+                    <h3 class="text-lg font-bold mt-4">Task 10</h3>
+                    <p class="text-gray-400 text-sm">table 5</p>
+
+                </a> 
+
+                
+                 <!-- Task 11 -->
+                <a href="../../html/day9/task5/form.html"
+                    class="group p-5 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl
+                           hover:border-orange-400/50 hover:-translate-y-2 transition duration-300">
+
+                    <div class="flex justify-between">
+                        <span class="w-11 h-11 rounded-xl bg-orange-500/10 border border-orange-400/20
+                                     flex items-center justify-center text-orange-300 font-bold">
+                            11
+                        </span>
+                        <span class="text-gray-500 group-hover:text-orange-300">→</span>
+                    </div>
+
+                    <h3 class="text-lg font-bold mt-4">Task 11</h3>
+                    <p class="text-gray-400 text-sm">form 6</p>
+
+                </a> 
+                
+                 <!-- Task 12 -->
+                <a href="../../html/day9/task5/table.html"
+                    class="group p-5 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl
+                           hover:border-orange-400/50 hover:-translate-y-2 transition duration-300">
+
+                    <div class="flex justify-between">
+                        <span class="w-11 h-11 rounded-xl bg-orange-500/10 border border-orange-400/20
+                                     flex items-center justify-center text-orange-300 font-bold">
+                            12
+                        </span>
+                        <span class="text-gray-500 group-hover:text-orange-300">→</span>
+                    </div>
+
+                    <h3 class="text-lg font-bold mt-4">Task 12</h3>
+                    <p class="text-gray-400 text-sm">table 6</p>
+
+                </a> 
+
+            </div>
+
+        </main>
+
+
+        <!-- Footer -->
+        <footer class="border-t border-white/10 text-center py-6">
+
+            <p class="text-gray-400 text-sm">
+                © 2026 My Daily Task
+            </p>
+
+            <p class="text-gray-600 text-xs mt-1">
+                HTML • Practice • Learning • Growing
+            </p>
+
+        </footer>
 
     </div>
 
 </body>
-
 </html>
+```

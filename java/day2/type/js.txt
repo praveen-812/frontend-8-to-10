@@ -1,0 +1,114 @@
+1.var userName="pravaen"
+  console.log(userName)
+2.var userEmail="praveen@gmail.com"
+  console.log(userEmail)
+3.var userPassword="12345"
+  console.log(userPassword)
+4.var userFile="file"
+  console.log(userFile)
+5.var userAddress="no.3,velu,mgr,chennai"
+  console.log(userAddress)
+6.var userLanguage="tamil"
+  console.log(userLanguage)
+7.var userTiming="12.00 to 1.00"
+  console.log(userTiming)
+8.var userWork="coding"
+  console.log(userWork)
+9.var userloverName="my mother"
+  console.log(userloverName)
+10.var userContact="l,k,j,f,c"
+  console.log(userContact)
+11.var userMessage="hi hello"
+  console.log(userMessage)
+12.var userBike="avenger"
+  console.log(userBike)
+13.var userFavfood="Briyani"
+  console.log(userFavfood)
+14.var userDrink="juno"
+  console.log(userDrink)
+15.var userMam="communication"
+  console.log(userMam)
+16.var userSir="munkund"
+  console.log(userSir)
+17.var userInstitution="sla"
+  console.log(userInstitution)
+18.var usergoodFriend="suva,gopi"
+  console.log(usergoodFriend)
+ 
+LET
+
+1.let userMoney=100
+  console.log(userMoney)
+2.let userSalary=12,000
+  console.log(userSalary)
+3.let userPaid=20
+  console.log(userPaid)
+4.let userLoan=1,00,000
+  console.log(userLoan)
+5.let userHome=3
+  console.log(userHome)
+6.let userBike=5665
+  console.log(userBike)
+7.let userPayment=1000
+  console.log(userPayment)
+8.let userWork=15
+  console.log(userWork)
+9.let userNumber=12345456
+  console.log(userNumber)
+10.let userSaving=1900
+   console.log(userSaving)
+11.let userSales=1.1
+   console.log(userSales)
+12.let userMarks=15
+   console.log(userMarks)
+13.let userScore=1
+   console.log(userScore)
+14.let userCount=10
+   console.log(userCount)
+15.let usersibilings=1
+   console.log(usersibilings)
+16.let userTime=1.30
+   console.log(userTime)
+17.let userTotal=10
+   console.log(userTotal)
+18.let userUse=2
+   console.log(userUse)
+
+const
+
+1.const userWork=true
+  console.log(userWork)
+2.const userPassword=true
+  console.log(userPassword)
+3.const userSalary=true
+  console.log(userSalary)
+4.const userTime=true
+  console.log(userTime)
+5.const userSaving=true
+  console.log(userSaving)
+6.const userWork=flase
+  console.log(userWork)
+7.const userBalance=flase
+  console.log(userBalance)
+8.const acBooking=flase
+  console.log(acBooking)
+9.const debitCard=flase
+  console.log(debitCard)
+10.cosnt creditCard=flase
+   console.log(creditCard)
+
+null
+1.var dataEntry=null
+  console.log(dataEntry)
+2.var outPut=null
+  console.log(outPut)
+3.var informationId=null
+  console.log(informationId)
+ 
+undefined
+1.let userName;
+  console.log(username)
+2.let userEmail;
+  console.log(userEmail)
+3.let userWork;
+  console.log(userWork)
