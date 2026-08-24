@@ -1,0 +1,347 @@
+/* ===================================================================
+   VehicleGuard AI - Custom Stylesheet
+   Theme: Police IT Tactical Dark Mode & Administrative Light Mode
+   =================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+Tamil:wght@400;500;600;700&display=swap');
+
+:root {
+    --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-tamil: 'Noto Sans Tamil', 'Inter', sans-serif;
+    
+    /* Light Mode Variables */
+    --bg-primary: #f8fafc;
+    --bg-secondary: #ffffff;
+    --bg-tertiary: #f1f5f9;
+    --bg-card: #ffffff;
+    --border-color: #e2e8f0;
+    --text-primary: #0f172a;
+    --text-secondary: #334155;
+    --text-muted: #64748b;
+    --navbar-bg: rgba(255, 255, 255, 0.98);
+    --card-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+}
+
+/* Dark Mode Variables (Default for Police IT Tactical System) */
+.dark {
+    --bg-primary: #070d18;
+    --bg-secondary: #0d1527;
+    --bg-tertiary: #132038;
+    --bg-card: #0f1b33;
+    --border-color: #1e293b;
+    --border-highlight: #334155;
+    --text-primary: #f8fafc;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --navbar-bg: rgba(13, 21, 39, 0.94);
+    --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+}
+
+body {
+    font-family: var(--font-main);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.25s ease, color 0.25s ease;
+    overflow-x: hidden;
+}
+
+/* Language specific font adjustment */
+[lang="ta"] body, body.lang-tamil {
+    font-family: var(--font-tamil);
+}
+
+.font-mono {
+    font-family: var(--font-mono);
+}
+
+/* ===================================================================
+   Light Mode Overrides (Crisp White Government Administration Style)
+   =================================================================== */
+html:not(.dark) body, body:not(.dark) {
+    background-color: #f8fafc !important;
+    color: #0f172a !important;
+}
+
+html:not(.dark) header {
+    background-color: rgba(255, 255, 255, 0.98) !important;
+    border-color: #e2e8f0 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+html:not(.dark) header a.text-white,
+html:not(.dark) header .text-white {
+    color: #0f172a !important;
+}
+
+html:not(.dark) .bg-slate-900,
+html:not(.dark) .bg-slate-900\/95,
+html:not(.dark) .bg-slate-900\/90,
+html:not(.dark) .bg-slate-900\/80,
+html:not(.dark) .bg-slate-950,
+html:not(.dark) .bg-slate-950\/60,
+html:not(.dark) .bg-slate-950\/40,
+html:not(.dark) .bg-\[\#070d18\],
+html:not(.dark) .bg-\[\#0d162a\],
+html:not(.dark) .bg-\[\#090f1d\] {
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important;
+    color: #0f172a !important;
+    box-shadow: 0 4px 15px -1px rgba(0, 0, 0, 0.06);
+}
+
+html:not(.dark) .bg-slate-800,
+html:not(.dark) .bg-slate-800\/50,
+html:not(.dark) .bg-slate-800\/60,
+html:not(.dark) .bg-slate-800\/80,
+html:not(.dark) .bg-slate-800\/90 {
+    background-color: #f1f5f9 !important;
+    border-color: #cbd5e1 !important;
+    color: #1e293b !important;
+}
+
+html:not(.dark) .text-white {
+    color: #0f172a !important;
+}
+
+html:not(.dark) .text-slate-100 {
+    color: #0f172a !important;
+}
+
+html:not(.dark) .text-slate-200 {
+    color: #1e293b !important;
+}
+
+html:not(.dark) .text-slate-300 {
+    color: #334155 !important;
+}
+
+html:not(.dark) .text-slate-400 {
+    color: #475569 !important;
+}
+
+html:not(.dark) .border-slate-800,
+html:not(.dark) .border-slate-700 {
+    border-color: #e2e8f0 !important;
+}
+
+html:not(.dark) input,
+html:not(.dark) select,
+html:not(.dark) textarea {
+    background-color: #ffffff !important;
+    border-color: #cbd5e1 !important;
+    color: #0f172a !important;
+}
+
+html:not(.dark) input::placeholder,
+html:not(.dark) textarea::placeholder {
+    color: #94a3b8 !important;
+}
+
+html:not(.dark) .police-grid-bg {
+    background-image: 
+        linear-gradient(to right, rgba(30, 58, 138, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(30, 58, 138, 0.05) 1px, transparent 1px) !important;
+}
+
+html:not(.dark) footer {
+    background-color: #0f172a !important;
+    color: #94a3b8 !important;
+}
+html:not(.dark) footer .text-white {
+    color: #ffffff !important;
+}
+html:not(.dark) footer .bg-slate-900\/80 {
+    background-color: #1e293b !important;
+    border-color: #334155 !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+}
+
+/* Scanner HUD & Animations */
+.scanner-viewport {
+    position: relative;
+    overflow: hidden;
+    background: #000000 !important;
+    border-radius: 0.75rem;
+}
+
+.scanner-laser {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #38bdf8, #60a5fa, #38bdf8, transparent);
+    box-shadow: 0 0 15px #38bdf8, 0 0 25px #3b82f6;
+    animation: scanAnimation 2.2s infinite ease-in-out;
+    z-index: 20;
+}
+
+.scanner-laser.stolen-mode {
+    background: linear-gradient(90deg, transparent, #ef4444, #f87171, #ef4444, transparent);
+    box-shadow: 0 0 15px #ef4444, 0 0 25px #dc2626;
+}
+
+@keyframes scanAnimation {
+    0% {
+        top: 4%;
+        opacity: 0.8;
+    }
+    50% {
+        top: 94%;
+        opacity: 1;
+    }
+    100% {
+        top: 4%;
+        opacity: 0.8;
+    }
+}
+
+/* Radar & Grid Background Effects */
+.police-grid-bg {
+    background-size: 30px 30px;
+    background-image: 
+        linear-gradient(to right, rgba(56, 189, 248, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
+}
+
+.radar-sweep {
+    position: relative;
+}
+.radar-sweep::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, rgba(56, 189, 248, 0.2) 0deg, transparent 60deg);
+    animation: radarRotate 4s linear infinite;
+    pointer-events: none;
+}
+@keyframes radarRotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* HUD Corner Brackets */
+.hud-corner {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-color: #38bdf8;
+    z-index: 15;
+    pointer-events: none;
+}
+.hud-corner-tl {
+    top: 12px;
+    left: 12px;
+    border-top: 3px solid;
+    border-left: 3px solid;
+}
+.hud-corner-tr {
+    top: 12px;
+    right: 12px;
+    border-top: 3px solid;
+    border-right: 3px solid;
+}
+.hud-corner-bl {
+    bottom: 12px;
+    left: 12px;
+    border-bottom: 3px solid;
+    border-left: 3px solid;
+}
+.hud-corner-br {
+    bottom: 12px;
+    right: 12px;
+    border-bottom: 3px solid;
+    border-right: 3px solid;
+}
+
+/* Number Plate Style Box */
+.ind-number-plate {
+    display: inline-flex;
+    align-items: center;
+    background: #ffffff !important;
+    color: #111827 !important;
+    border: 3px solid #111827;
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-family: var(--font-mono);
+    font-weight: 800;
+    letter-spacing: 2px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.25);
+    position: relative;
+}
+.ind-number-plate .ind-side {
+    border-right: 2px solid #1e3a8a;
+    padding-right: 8px;
+    margin-right: 8px;
+    font-size: 0.65rem;
+    line-height: 1;
+    color: #1e3a8a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Pulse Glow Effects */
+.glow-red {
+    box-shadow: 0 0 25px rgba(239, 68, 68, 0.4), 0 0 50px rgba(220, 38, 38, 0.2);
+}
+.glow-green {
+    box-shadow: 0 0 25px rgba(34, 197, 94, 0.35), 0 0 50px rgba(22, 163, 74, 0.15);
+}
+.glow-blue {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+/* Strobe Alert Animation for Stolen Hits */
+@keyframes redStrobe {
+    0%, 100% {
+        border-color: rgba(239, 68, 68, 1);
+        box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+    }
+    50% {
+        border-color: rgba(239, 68, 68, 0.4);
+        box-shadow: 0 0 8px rgba(239, 68, 68, 0.2);
+    }
+}
+.strobe-alert {
+    animation: redStrobe 1.5s infinite ease-in-out;
+}
+
+/* Print Styles for Police Official Dossier */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    .print-area, .print-area * {
+        visibility: visible;
+    }
+    .print-area {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        color: #000 !important;
+        background: #fff !important;
+    }
+    .no-print {
+        display: none !important;
+    }
+}

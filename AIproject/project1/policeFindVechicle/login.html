@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Police Portal Login - VehicleGuard AI</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: { 800: '#0f1c3f', 900: '#0a1229', 950: '#060a17' }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dark bg-[#070d18] text-slate-100 min-h-screen flex flex-col antialiased transition-colors duration-200">
+
+    <!-- Top Demo Disclaimer Banner -->
+    <div class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-slate-950 font-bold text-xs py-1.5 px-4 text-center tracking-wide shadow-md flex items-center justify-center space-x-2">
+        <span>⚠️</span>
+        <span data-i18n="demo_banner">DEMO PROTOTYPE — NOT CONNECTED TO LIVE GOVERNMENT DATABASES (FOR DEMO & EVALUATION ONLY)</span>
+        <span>⚠️</span>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-40 bg-slate-900/90 dark:bg-[#0d1527]/95 backdrop-blur-md border-b border-slate-800 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="index.html" class="flex items-center space-x-3 group">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 via-indigo-600 to-slate-900 p-0.5 shadow-lg shadow-blue-500/20 group-hover:scale-105 transition transform">
+                        <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center border border-blue-400/30">
+                            <span class="text-2xl">🛡️</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <span class="font-extrabold text-xl tracking-tight text-white group-hover:text-blue-400 transition" data-i18n="brand_name">VehicleGuard AI</span>
+                            <span class="text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded bg-blue-900/60 text-blue-300 border border-blue-500/40">PROTOTYPE</span>
+                        </div>
+                        <p class="text-xs text-slate-400 hidden sm:block tracking-wide" data-i18n="brand_subtitle">AI-Powered Stolen Vehicle Detection & Verification</p>
+                    </div>
+                </a>
+
+                <nav class="hidden lg:flex items-center space-x-1">
+                    <a href="index.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_home">Home</a>
+                    <a href="scan.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_scan">Vehicle Scan</a>
+                    <a href="report.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_report">Report Vehicle</a>
+                    <a href="status.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_status">Check Status</a>
+                    <a href="dashboard.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_dashboard">Police Dashboard</a>
+                    <a href="help.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_help">Help & FAQ</a>
+                </nav>
+
+                <div class="hidden sm:flex items-center space-x-3">
+                    <div class="flex items-center bg-slate-800/80 dark:bg-slate-900 border border-slate-700/80 rounded-lg p-1 text-xs">
+                        <button class="btn-switch-lang lang-btn-en px-2.5 py-1 rounded font-semibold text-blue-400 transition" data-lang="en">EN</button>
+                        <span class="text-slate-600">|</span>
+                        <button class="btn-switch-lang lang-btn-ta px-2.5 py-1 rounded font-semibold text-slate-400 hover:text-white transition" data-lang="ta">தமிழ்</button>
+                    </div>
+
+                    <button class="theme-toggle-btn p-2 rounded-lg bg-slate-800/80 dark:bg-slate-900 border border-slate-700/80 text-slate-300 hover:text-white transition">
+                        <span class="theme-icon text-sm">🌙</span>
+                    </button>
+                </div>
+
+                <div class="flex lg:hidden items-center space-x-2">
+                    <button class="theme-toggle-btn p-2 rounded-lg bg-slate-800 border border-slate-700 text-slate-300">
+                        <span class="theme-icon text-sm">🌙</span>
+                    </button>
+                    <button id="mobile-menu-btn" class="p-2.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white border border-slate-700">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-800 bg-slate-900/95 px-4 pt-3 pb-6 space-y-2">
+            <a href="index.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300" data-i18n="nav_home">Home</a>
+            <a href="scan.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300" data-i18n="nav_scan">Vehicle Scan</a>
+            <a href="report.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300" data-i18n="nav_report">Report Vehicle</a>
+            <a href="status.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300" data-i18n="nav_status">Check Status</a>
+            <a href="dashboard.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300" data-i18n="nav_dashboard">Police Dashboard</a>
+            <a href="help.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300" data-i18n="nav_help">Help & FAQ</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-6">
+            
+            <!-- Login Card -->
+            <div class="bg-slate-900/95 border-2 border-slate-700/80 rounded-2xl p-8 shadow-2xl space-y-6 relative overflow-hidden">
+                
+                <div class="text-center space-y-2">
+                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 via-indigo-600 to-slate-900 p-0.5 shadow-xl shadow-blue-500/20 mx-auto flex items-center justify-center">
+                        <div class="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center text-3xl">
+                            👮
+                        </div>
+                    </div>
+                    <h2 class="text-2xl font-black text-white" data-i18n="login_title">Tamil Nadu Police IT Portal</h2>
+                    <p class="text-xs text-slate-400" data-i18n="login_subtitle">Authorized Law Enforcement Checkpoint Access</p>
+                </div>
+
+                <!-- Prototype Warning Banner -->
+                <div class="p-3 bg-amber-950/50 border border-amber-500/50 rounded-xl text-center">
+                    <span class="text-[11px] font-bold text-amber-300 uppercase tracking-wider block mb-0.5" data-i18n="login_badge_notice">RESTRICTED ACCESS — DEMO SIMULATION</span>
+                    <p class="text-[10px] text-amber-200">Demonstration credentials provided below for system assessment.</p>
+                </div>
+
+                <!-- Form -->
+                <form id="police-login-form" class="space-y-4">
+                    <div>
+                        <label for="login-officer-id" class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1" data-i18n="form_officer_id">
+                            Officer Identification Code (PIN/ID)
+                        </label>
+                        <input type="text" id="login-officer-id" required placeholder="e.g. DEMO001" value="DEMO001" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm font-mono text-white focus:outline-none focus:border-blue-500">
+                    </div>
+
+                    <div>
+                        <label for="login-password" class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1" data-i18n="form_password">
+                            Secure Access Password
+                        </label>
+                        <input type="password" id="login-password" required placeholder="••••••••" value="Demo@123" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500">
+                    </div>
+
+                    <!-- Auto Fill Button -->
+                    <button type="button" id="btn-autofill-demo" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-blue-300 rounded-lg text-xs font-mono font-semibold border border-slate-700 transition" data-i18n="btn_autofill_demo">
+                        ⚡ Auto-Fill Demo Credentials (DEMO001 / Demo@123)
+                    </button>
+
+                    <!-- Submit Login Button -->
+                    <button type="submit" class="w-full py-3.5 px-6 rounded-xl font-bold text-sm bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:to-indigo-500 text-white shadow-xl shadow-blue-600/30 transition transform hover:scale-[1.02]" data-i18n="btn_login">
+                        Access Command Portal →
+                    </button>
+                </form>
+
+                <div class="pt-4 border-t border-slate-800 text-center text-xs text-slate-500">
+                    <p data-i18n="login_demo_creds">Demo Credentials: Officer ID: DEMO001 | Password: Demo@123</p>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800 text-slate-400 text-xs py-6">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-1">
+            <p class="font-bold text-slate-300" data-i18n="demo_footer_disclaimer">DEMO PROTOTYPE — NOT CONNECTED TO LIVE GOVERNMENT SYSTEMS</p>
+            <p class="text-[10px]">Secure checkpoint authentication prototype for VehicleGuard AI.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/translations.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

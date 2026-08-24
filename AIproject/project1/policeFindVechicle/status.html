@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Complaint Status - VehicleGuard AI</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        navy: { 800: '#0f1c3f', 900: '#0a1229', 950: '#060a17' }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="dark bg-[#070d18] text-slate-100 min-h-screen flex flex-col antialiased transition-colors duration-200">
+
+    <!-- Top Demo Disclaimer Banner -->
+    <div class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-slate-950 font-bold text-xs py-1.5 px-4 text-center tracking-wide shadow-md flex items-center justify-center space-x-2">
+        <span>⚠️</span>
+        <span data-i18n="demo_banner">DEMO PROTOTYPE — NOT CONNECTED TO LIVE GOVERNMENT DATABASES (FOR DEMO & EVALUATION ONLY)</span>
+        <span>⚠️</span>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-40 bg-slate-900/90 dark:bg-[#0d1527]/95 backdrop-blur-md border-b border-slate-800 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="index.html" class="flex items-center space-x-3 group">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 via-indigo-600 to-slate-900 p-0.5 shadow-lg shadow-blue-500/20 group-hover:scale-105 transition transform">
+                        <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center border border-blue-400/30">
+                            <span class="text-2xl">🛡️</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <span class="font-extrabold text-xl tracking-tight text-white group-hover:text-blue-400 transition" data-i18n="brand_name">VehicleGuard AI</span>
+                            <span class="text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded bg-blue-900/60 text-blue-300 border border-blue-500/40">PROTOTYPE</span>
+                        </div>
+                        <p class="text-xs text-slate-400 hidden sm:block tracking-wide" data-i18n="brand_subtitle">AI-Powered Stolen Vehicle Detection & Verification</p>
+                    </div>
+                </a>
+
+                <nav class="hidden lg:flex items-center space-x-1">
+                    <a href="index.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_home">Home</a>
+                    <a href="scan.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_scan">Vehicle Scan</a>
+                    <a href="report.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_report">Report Vehicle</a>
+                    <a href="status.html" class="px-3.5 py-2 rounded-lg text-sm font-semibold text-blue-400 bg-slate-800/80 transition" data-i18n="nav_status">Check Status</a>
+                    <a href="dashboard.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_dashboard">Police Dashboard</a>
+                    <a href="help.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_help">Help & FAQ</a>
+                </nav>
+
+                <div class="hidden sm:flex items-center space-x-3">
+                    <div class="flex items-center bg-slate-800/80 dark:bg-slate-900 border border-slate-700/80 rounded-lg p-1 text-xs">
+                        <button class="btn-switch-lang lang-btn-en px-2.5 py-1 rounded font-semibold text-blue-400 transition" data-lang="en">EN</button>
+                        <span class="text-slate-600">|</span>
+                        <button class="btn-switch-lang lang-btn-ta px-2.5 py-1 rounded font-semibold text-slate-400 hover:text-white transition" data-lang="ta">தமிழ்</button>
+                    </div>
+
+                    <button class="theme-toggle-btn p-2 rounded-lg bg-slate-800/80 dark:bg-slate-900 border border-slate-700/80 text-slate-300 hover:text-white transition">
+                        <span class="theme-icon text-sm">🌙</span>
+                    </button>
+
+                    <div id="nav-auth-container">
+                        <a id="nav-login-link" href="login.html" class="px-3.5 py-2 rounded-lg text-xs font-semibold text-slate-300 hover:text-white border border-slate-700 hover:border-slate-500 bg-slate-800/60 transition" data-i18n="nav_login">
+                            👮 Police Login
+                        </a>
+                        <div id="nav-user-badge" class="hidden items-center space-x-2 px-3 py-1.5 rounded-lg bg-blue-950/70 border border-blue-500/50 text-blue-300 text-xs">
+                            <span>👮</span>
+                            <span id="nav-officer-name" class="font-mono font-semibold">DEMO001</span>
+                            <a href="#" id="btn-nav-logout" class="text-rose-400 hover:underline ml-2" data-i18n="nav_logout">Logout</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex lg:hidden items-center space-x-2">
+                    <button class="theme-toggle-btn p-2 rounded-lg bg-slate-800 border border-slate-700 text-slate-300">
+                        <span class="theme-icon text-sm">🌙</span>
+                    </button>
+                    <button id="mobile-menu-btn" class="p-2.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white border border-slate-700">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-800 bg-slate-900/95 px-4 pt-3 pb-6 space-y-2">
+            <a href="index.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300" data-i18n="nav_home">Home</a>
+            <a href="scan.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300" data-i18n="nav_scan">Vehicle Scan</a>
+            <a href="report.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300" data-i18n="nav_report">Report Vehicle</a>
+            <a href="status.html" class="block px-3 py-2 rounded-lg text-base font-semibold text-blue-400 bg-slate-800" data-i18n="nav_status">Check Status</a>
+            <a href="dashboard.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300" data-i18n="nav_dashboard">Police Dashboard</a>
+            <a href="help.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300" data-i18n="nav_help">Help & FAQ</a>
+            <a href="login.html" class="block px-3 py-2 rounded-lg text-base font-semibold text-amber-400 bg-slate-800/80" data-i18n="nav_login">👮 Police Login</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow py-8 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto w-full">
+        <!-- Title Banner -->
+        <div class="mb-8 text-center">
+            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-950/80 border border-blue-500/40 text-blue-300 text-xs font-bold mb-2">
+                <span>🔍</span>
+                <span>PUBLIC REFERENCE TRACKING</span>
+            </div>
+            <h1 class="text-2xl sm:text-3xl font-black text-white" data-i18n="status_title">Check Stolen Vehicle Complaint Status</h1>
+            <p class="text-slate-400 text-sm mt-1 max-w-xl mx-auto" data-i18n="status_subtitle">
+                Enter your reference number or vehicle registration number to track complaint processing.
+            </p>
+        </div>
+
+        <!-- Search Box Card -->
+        <div class="bg-slate-900/95 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6">
+            <div>
+                <label for="status-search-input" class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2" data-i18n="status_input_label">
+                    Reference Number / Vehicle Number
+                </label>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <input type="text" id="status-search-input" placeholder="e.g. SVR-2026-482731 or TN09AB1234" class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-4 py-3.5 text-base font-mono uppercase text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20">
+                    <button id="btn-track-status" class="py-3.5 px-8 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-sm transition shadow-lg shadow-blue-600/30 whitespace-nowrap" data-i18n="btn_check_status">
+                        Check Status
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick Test Sample References -->
+            <div class="pt-2">
+                <span class="text-xs text-slate-400 block mb-2 font-medium">Quick Demo Samples (Click to Search):</span>
+                <div class="flex flex-wrap gap-2 text-xs">
+                    <button onclick="document.getElementById('status-search-input').value='SVR-2026-482731'; document.getElementById('btn-track-status').click();" class="px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-blue-300 hover:bg-slate-700 font-mono">
+                        SVR-2026-482731 (Registered)
+                    </button>
+                    <button onclick="document.getElementById('status-search-input').value='SVR-2026-192844'; document.getElementById('btn-track-status').click();" class="px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-amber-300 hover:bg-slate-700 font-mono">
+                        SVR-2026-192844 (Under Review)
+                    </button>
+                    <button onclick="document.getElementById('status-search-input').value='SVR-2026-773120'; document.getElementById('btn-track-status').click();" class="px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 font-mono">
+                        SVR-2026-773120 (Pending)
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Section -->
+        <div id="status-result-container" class="hidden mt-8 space-y-6">
+
+            <!-- Empty / No Record State -->
+            <div id="status-empty-state" class="hidden p-8 rounded-2xl bg-slate-900 border border-slate-800 text-center space-y-3">
+                <div class="w-14 h-14 rounded-full bg-slate-800 flex items-center justify-center mx-auto text-2xl text-slate-400">❓</div>
+                <h3 class="text-base font-bold text-white">No Record Found</h3>
+                <p class="text-xs text-slate-400 max-w-sm mx-auto" data-i18n="status_no_record">No matching record found. Please verify your reference number or register a new complaint.</p>
+                <a href="report.html" class="inline-block mt-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold rounded-lg">
+                    Submit New Complaint Request →
+                </a>
+            </div>
+
+            <!-- Record Details & Timeline Card -->
+            <div id="status-details" class="hidden bg-slate-900/95 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl print-area">
+                
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-slate-800 pb-5 gap-3 mb-6">
+                    <div>
+                        <span class="text-xs text-slate-400 font-mono uppercase block">COMPLAINT REFERENCE</span>
+                        <h2 id="res-ref-no" class="text-xl sm:text-2xl font-mono font-black text-blue-400">SVR-2026-482731</h2>
+                    </div>
+                    <div>
+                        <span id="res-status-badge" class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border bg-emerald-900/60 text-emerald-300 border-emerald-500/50">
+                            Registered — Demo Status
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Timeline Progress Steps -->
+                <div class="py-6 px-2 sm:px-6 bg-slate-950/60 rounded-xl border border-slate-800/80 mb-6">
+                    <div class="relative flex items-center justify-between">
+                        <!-- Progress line -->
+                        <div class="absolute left-0 top-4 -translate-y-1/2 w-full h-1 bg-slate-800 z-0"></div>
+
+                        <!-- Step 1 -->
+                        <div class="relative z-10 flex flex-col items-center">
+                            <div id="step-1-dot" class="w-8 h-8 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-xs shadow-lg">✓</div>
+                            <span id="step-1-label" class="font-semibold text-white text-xs mt-2 text-center">Submitted</span>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="relative z-10 flex flex-col items-center">
+                            <div id="step-2-dot" class="w-8 h-8 rounded-full bg-slate-700 text-slate-400 font-bold flex items-center justify-center text-xs">2</div>
+                            <span id="step-2-label" class="text-slate-400 text-xs mt-2 text-center">Verification</span>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div class="relative z-10 flex flex-col items-center">
+                            <div id="step-3-dot" class="w-8 h-8 rounded-full bg-slate-700 text-slate-400 font-bold flex items-center justify-center text-xs">3</div>
+                            <span id="step-3-label" class="text-slate-400 text-xs mt-2 text-center">Under Review</span>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div class="relative z-10 flex flex-col items-center">
+                            <div id="step-4-dot" class="w-8 h-8 rounded-full bg-slate-700 text-slate-400 font-bold flex items-center justify-center text-xs">4</div>
+                            <span id="step-4-label" class="text-slate-400 text-xs mt-2 text-center">FIR / Watchlist</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Record Details Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs mb-6">
+                    <div class="p-3 bg-slate-800/50 rounded-lg">
+                        <span class="text-slate-400 block mb-0.5">Vehicle Registration</span>
+                        <span id="res-veh-no" class="font-mono font-bold text-white text-sm">TN09AB1234</span>
+                    </div>
+                    <div class="p-3 bg-slate-800/50 rounded-lg">
+                        <span class="text-slate-400 block mb-0.5">Complainant Name</span>
+                        <span id="res-owner" class="font-semibold text-white">K. R. Vignesh</span>
+                    </div>
+                    <div class="p-3 bg-slate-800/50 rounded-lg">
+                        <span class="text-slate-400 block mb-0.5">Vehicle Specification</span>
+                        <span id="res-model" class="font-semibold text-white">Royal Enfield Classic 350 (Black)</span>
+                    </div>
+                    <div class="p-3 bg-slate-800/50 rounded-lg">
+                        <span class="text-slate-400 block mb-0.5">Jurisdiction Police Station</span>
+                        <span id="res-station" class="font-semibold text-white">T. Nagar Station, Chennai</span>
+                    </div>
+                    <div class="p-3 bg-slate-800/50 rounded-lg sm:col-span-2">
+                        <span class="text-slate-400 block mb-0.5">Officer Case Remarks</span>
+                        <span id="res-remarks" class="font-medium text-slate-200">FIR registered. Broadcasted across all checkpoint ANPR scanners.</span>
+                    </div>
+                </div>
+
+                <!-- Notice -->
+                <div class="p-3.5 bg-slate-950 border border-slate-800 rounded-lg text-[11px] text-slate-400 mb-6">
+                    ⚡ <strong>Citizen Advisory:</strong> For formal FIR certified copies or insurance claims endorsement, please present your original RC book and ID at your assigned jurisdiction police station.
+                </div>
+
+                <!-- Actions -->
+                <div class="flex justify-end space-x-3 no-print">
+                    <button class="px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 rounded-lg text-xs font-semibold" onclick="window.print()">
+                        🖨️ Print Status Record
+                    </button>
+                    <a href="scan.html" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-semibold">
+                        Open Scanner →
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800 text-slate-400 text-xs py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+            <p class="font-bold text-slate-300" data-i18n="demo_footer_disclaimer">DEMO PROTOTYPE — NOT CONNECTED TO LIVE GOVERNMENT SYSTEMS</p>
+            <p class="text-[11px]">VehicleGuard AI citizen complaint verification and tracking portal.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/translations.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/complaints.js"></script>
+</body>
+</html>
