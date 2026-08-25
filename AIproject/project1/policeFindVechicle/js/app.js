@@ -503,10 +503,36 @@ function initHeaderAndNav() {
 
     // Auth status badge in nav
     updateNavAuthBadge();
+
+    // Universal Logout Button Binding
+    document.querySelectorAll('#btn-nav-logout, .btn-logout, #btn-mobile-logout').forEach(btn => {
+        btn.addEventListener('click', handleLogout);
+    });
 }
 
 /**
- * Check and render auth state in navbar
+ * Universal Logout Handler
+ */
+function handleLogout(e) {
+    if (e) e.preventDefault();
+    localStorage.removeItem('vg_auth');
+    updateNavAuthBadge();
+    showToast(getCurrentLanguage() === 'ta' ? 'வெற்றிகரமாக வெளியேறியது.' : 'Logged out successfully.', 'info', 2000);
+    
+    // If currently on dashboard, redirect to login page or home
+    if (window.location.pathname.includes('dashboard.html')) {
+        setTimeout(() => {
+            window.location.href = 'login.html';
+        }, 600);
+    } else {
+        setTimeout(() => {
+            window.location.reload();
+        }, 500);
+    }
+}
+
+/**
+ * Check and render auth state in navbar (Desktop & Mobile)
  */
 function getLoggedInOfficer() {
     try {
@@ -519,19 +545,43 @@ function getLoggedInOfficer() {
 
 function updateNavAuthBadge() {
     const officer = getLoggedInOfficer();
+    
+    // Desktop Nav Elements
     const navLoginLink = document.getElementById('nav-login-link');
     const navUserBadge = document.getElementById('nav-user-badge');
     const navOfficerName = document.getElementById('nav-officer-name');
+
+    // Mobile Menu Elements
+    const mobileLoginLink = document.getElementById('mobile-login-link');
+    const mobileUserBadge = document.getElementById('mobile-user-badge');
+    const mobileOfficerName = document.getElementById('mobile-officer-name');
 
     if (officer) {
         if (navLoginLink) navLoginLink.classList.add('hidden');
         if (navUserBadge) {
             navUserBadge.classList.remove('hidden');
+            navUserBadge.classList.add('flex');
             if (navOfficerName) navOfficerName.textContent = `${officer.id} (${officer.rank || 'Officer'})`;
+        }
+
+        if (mobileLoginLink) mobileLoginLink.classList.add('hidden');
+        if (mobileUserBadge) {
+            mobileUserBadge.classList.remove('hidden');
+            mobileUserBadge.classList.add('flex');
+            if (mobileOfficerName) mobileOfficerName.textContent = `${officer.name || officer.id} (${officer.id})`;
         }
     } else {
         if (navLoginLink) navLoginLink.classList.remove('hidden');
-        if (navUserBadge) navUserBadge.classList.add('hidden');
+        if (navUserBadge) {
+            navUserBadge.classList.add('hidden');
+            navUserBadge.classList.remove('flex');
+        }
+
+        if (mobileLoginLink) mobileLoginLink.classList.remove('hidden');
+        if (mobileUserBadge) {
+            mobileUserBadge.classList.add('hidden');
+            mobileUserBadge.classList.remove('flex');
+        }
     }
 }
 

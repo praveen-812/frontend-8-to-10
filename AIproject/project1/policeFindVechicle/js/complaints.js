@@ -231,11 +231,21 @@ function initStatusChecker() {
             input.value = refParam;
             performStatusSearch(refParam);
         }
+
+        // Listen for storage events (e.g. if officer approves in another tab)
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'vg_complaints' || e.key === 'vg_stolen_db') {
+                const currentVal = input.value.trim();
+                if (currentVal) {
+                    performStatusSearch(currentVal);
+                }
+            }
+        });
     }
 }
 
 /**
- * Perform Status Lookup
+ * Perform Comprehensive Real-Time Status Lookup
  */
 function performStatusSearch(query) {
     if (!query || query.trim() === '') {
@@ -252,13 +262,15 @@ function performStatusSearch(query) {
     const complaints = getComplaints();
     const stolenDb = getStolenDatabase();
 
-    // Search complaints first
+    // 1. Search in complaints by reference, normalized vehicle number, or FIR number
     let match = complaints.find(c => 
         c.referenceNumber.toUpperCase() === cleanQuery || 
-        normalizeVehicleNumber(c.vehicleNumber) === normalizedVeh
+        normalizeVehicleNumber(c.vehicleNumber) === normalizedVeh ||
+        (c.firNumber && c.firNumber.toUpperCase() === cleanQuery) ||
+        (c.mobile && c.mobile.replace(/[^0-9]/g, '') === cleanQuery.replace(/[^0-9]/g, ''))
     );
 
-    // Fallback search in stolen db
+    // 2. Fallback search in active stolen vehicle database
     if (!match) {
         const dbMatch = stolenDb.find(s => 
             s.complaintNumber.toUpperCase() === cleanQuery || 
@@ -268,20 +280,22 @@ function performStatusSearch(query) {
             match = {
                 referenceNumber: dbMatch.complaintNumber,
                 vehicleNumber: dbMatch.vehicleNumber,
-                ownerName: dbMatch.ownerName || "Protected Complainant",
-                mobile: "Verified Contact",
-                vehicleType: dbMatch.vehicleType,
-                make: dbMatch.make,
-                model: dbMatch.model,
-                color: dbMatch.color,
+                firNumber: dbMatch.complaintNumber,
+                ownerName: dbMatch.ownerName || "Confidential Complainant",
+                mobile: "Verified Police Record",
+                vehicleType: dbMatch.vehicleType || "Vehicle",
+                make: dbMatch.make || "Standard",
+                model: dbMatch.model || "Model",
+                color: dbMatch.color || "Standard",
                 incidentDate: dbMatch.complaintDate,
                 district: dbMatch.district || "Chennai",
                 policeStation: dbMatch.policeStation,
                 location: dbMatch.theftLocation || "Roadway",
-                status: "FIR Registered — Demo Status",
+                status: "FIR Registered — Active Watchlist",
                 statusCode: "REGISTERED",
                 submissionDate: dbMatch.complaintDate,
-                remarks: "Active FIR Registered. Alert broadcasted across all ANPR checkpoints."
+                approvedBy: "Duty Officer / Central IT Cell",
+                remarks: "Active FIR Registered. Target flagged across all zonal police checkpoints."
             };
         }
     }
@@ -291,7 +305,7 @@ function performStatusSearch(query) {
     if (!match) {
         if (emptyState) emptyState.classList.remove('hidden');
         if (detailsContainer) detailsContainer.classList.add('hidden');
-        showToast("No record found matching the search query.", "warning");
+        showToast(`No record found for "${query}". Check your reference or registration number.`, "warning");
         return;
     }
 
@@ -299,33 +313,65 @@ function performStatusSearch(query) {
     if (detailsContainer) {
         detailsContainer.classList.remove('hidden');
         renderStatusDetails(match);
+        showToast(`Loaded status for ${match.vehicleNumber} (${match.status})`, "info", 2500);
     }
 }
 
 /**
- * Render Status Details and Timeline
+ * Render Status Details, FIR Highlights and Dynamic Timeline
  */
 function renderStatusDetails(record) {
-    // Fill text elements
-    document.getElementById('res-ref-no').textContent = record.referenceNumber;
-    document.getElementById('res-veh-no').textContent = record.vehicleNumber;
-    document.getElementById('res-owner').textContent = record.ownerName;
-    document.getElementById('res-model').textContent = `${record.make} ${record.model || ''} (${record.color || 'Standard'})`;
-    document.getElementById('res-station').textContent = `${record.policeStation}, ${record.district}`;
-    document.getElementById('res-date').textContent = record.incidentDate || record.submissionDate;
-    document.getElementById('res-remarks').textContent = record.remarks || "Under routine processing.";
+    // Fill basic text elements
+    const refNoEl = document.getElementById('res-ref-no');
+    const vehNoEl = document.getElementById('res-veh-no');
+    const ownerEl = document.getElementById('res-owner');
+    const modelEl = document.getElementById('res-model');
+    const stationEl = document.getElementById('res-station');
+    const dateEl = document.getElementById('res-date');
+    const remarksEl = document.getElementById('res-remarks');
+
+    if (refNoEl) refNoEl.textContent = record.referenceNumber;
+    if (vehNoEl) vehNoEl.textContent = record.vehicleNumber;
+    if (ownerEl) ownerEl.textContent = record.ownerName;
+    if (modelEl) modelEl.textContent = `${record.make} ${record.model || ''} (${record.color || 'Standard'})`;
+    if (stationEl) stationEl.textContent = `${record.policeStation}, ${record.district}`;
+    if (dateEl) dateEl.textContent = record.incidentDate || record.submissionDate;
+    if (remarksEl) remarksEl.textContent = record.remarks || "Under routine processing.";
 
     // Render Status Badge
     const statusBadge = document.getElementById('res-status-badge');
     let badgeClass = "bg-amber-900/60 text-amber-300 border-amber-500/50";
+    let statusIcon = "🟡";
+
     if (record.statusCode === 'REGISTERED') {
         badgeClass = "bg-rose-900/60 text-rose-300 border-rose-500/50 strobe-alert";
+        statusIcon = "🔴";
     } else if (record.statusCode === 'UNDER_REVIEW') {
         badgeClass = "bg-blue-900/60 text-blue-300 border-blue-500/50";
+        statusIcon = "🔵";
+    } else if (record.statusCode === 'REJECTED') {
+        badgeClass = "bg-slate-800 text-slate-400 border-slate-600";
+        statusIcon = "⚪";
     }
+
     if (statusBadge) {
-        statusBadge.className = `inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border ${badgeClass}`;
-        statusBadge.textContent = record.status;
+        statusBadge.className = `inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-bold border ${badgeClass}`;
+        statusBadge.innerHTML = `<span>${statusIcon}</span><span>${record.status}</span>`;
+    }
+
+    // Approved FIR Banner
+    const firBanner = document.getElementById('res-fir-banner');
+    const firNoEl = document.getElementById('res-fir-no');
+    const approvalOfficerEl = document.getElementById('res-approval-officer');
+
+    if (firBanner) {
+        if (record.statusCode === 'REGISTERED' && (record.firNumber || record.referenceNumber.startsWith('FIR-'))) {
+            firBanner.classList.remove('hidden');
+            if (firNoEl) firNoEl.textContent = record.firNumber || record.referenceNumber;
+            if (approvalOfficerEl) approvalOfficerEl.textContent = record.approvedBy ? `Approved by ${record.approvedBy}` : "Verified by Police Station Duty Officer";
+        } else {
+            firBanner.classList.add('hidden');
+        }
     }
 
     // Render Timeline Steps
@@ -333,30 +379,93 @@ function renderStatusDetails(record) {
 }
 
 /**
- * Update visual progress step indicators
+ * Update visual progress step indicators & Progress Bar
  */
 function updateTimelineUI(statusCode) {
-    const steps = [
-        { id: 'step-1', completed: true },
-        { id: 'step-2', completed: statusCode === 'UNDER_REVIEW' || statusCode === 'REGISTERED' },
-        { id: 'step-3', completed: statusCode === 'UNDER_REVIEW' || statusCode === 'REGISTERED' },
-        { id: 'step-4', completed: statusCode === 'REGISTERED' }
-    ];
+    const isRegistered = statusCode === 'REGISTERED';
+    const isUnderReview = statusCode === 'UNDER_REVIEW';
+    const isPending = statusCode === 'PENDING';
+    const isRejected = statusCode === 'REJECTED';
 
-    steps.forEach((step, idx) => {
-        const dot = document.getElementById(`${step.id}-dot`);
-        const label = document.getElementById(`${step.id}-label`);
-        if (dot) {
-            if (step.completed) {
-                dot.className = "w-8 h-8 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-xs shadow-lg shadow-emerald-600/30";
-                dot.innerHTML = "✓";
-            } else {
-                dot.className = "w-8 h-8 rounded-full bg-slate-700 text-slate-400 font-bold flex items-center justify-center text-xs border border-slate-600";
-                dot.innerHTML = `${idx + 1}`;
+    const progressFill = document.getElementById('timeline-progress-fill');
+    if (progressFill) {
+        if (isRegistered) {
+            progressFill.style.width = '100%';
+            progressFill.className = 'absolute left-0 top-4 -translate-y-1/2 h-1.5 bg-emerald-500 transition-all duration-700 z-0';
+        } else if (isUnderReview) {
+            progressFill.style.width = '66%';
+            progressFill.className = 'absolute left-0 top-4 -translate-y-1/2 h-1.5 bg-blue-500 transition-all duration-700 z-0';
+        } else if (isRejected) {
+            progressFill.style.width = '33%';
+            progressFill.className = 'absolute left-0 top-4 -translate-y-1/2 h-1.5 bg-rose-500 transition-all duration-700 z-0';
+        } else {
+            progressFill.style.width = '25%';
+            progressFill.className = 'absolute left-0 top-4 -translate-y-1/2 h-1.5 bg-amber-500 transition-all duration-700 z-0';
+        }
+    }
+
+    // Step 1: Submitted
+    const dot1 = document.getElementById('step-1-dot');
+    const lbl1 = document.getElementById('step-1-label');
+    if (dot1) {
+        dot1.className = "w-8 h-8 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-xs shadow-lg shadow-emerald-600/30";
+        dot1.innerHTML = "✓";
+    }
+    if (lbl1) lbl1.className = "font-semibold text-white text-xs mt-2 text-center";
+
+    // Step 2: Verification
+    const dot2 = document.getElementById('step-2-dot');
+    const lbl2 = document.getElementById('step-2-label');
+    if (dot2) {
+        if (isRegistered || isUnderReview) {
+            dot2.className = "w-8 h-8 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-xs shadow-lg shadow-emerald-600/30";
+            dot2.innerHTML = "✓";
+            if (lbl2) lbl2.className = "font-semibold text-white text-xs mt-2 text-center";
+        } else if (isRejected) {
+            dot2.className = "w-8 h-8 rounded-full bg-rose-600 text-white font-bold flex items-center justify-center text-xs shadow-lg shadow-rose-600/30";
+            dot2.innerHTML = "✗";
+            if (lbl2) {
+                lbl2.className = "font-semibold text-rose-400 text-xs mt-2 text-center";
+                lbl2.textContent = "Rejected";
             }
+        } else {
+            dot2.className = "w-8 h-8 rounded-full bg-amber-600 text-white font-bold flex items-center justify-center text-xs ring-4 ring-amber-500/20";
+            dot2.innerHTML = "2";
+            if (lbl2) lbl2.className = "font-semibold text-amber-300 text-xs mt-2 text-center";
         }
-        if (label) {
-            label.className = step.completed ? "font-semibold text-white text-xs mt-2 text-center" : "text-slate-400 text-xs mt-2 text-center";
+    }
+
+    // Step 3: Under Review
+    const dot3 = document.getElementById('step-3-dot');
+    const lbl3 = document.getElementById('step-3-label');
+    if (dot3) {
+        if (isRegistered) {
+            dot3.className = "w-8 h-8 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-xs shadow-lg shadow-emerald-600/30";
+            dot3.innerHTML = "✓";
+            if (lbl3) lbl3.className = "font-semibold text-white text-xs mt-2 text-center";
+        } else if (isUnderReview) {
+            dot3.className = "w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-xs ring-4 ring-blue-500/30 shadow-lg shadow-blue-600/30";
+            dot3.innerHTML = "3";
+            if (lbl3) lbl3.className = "font-bold text-blue-300 text-xs mt-2 text-center";
+        } else {
+            dot3.className = "w-8 h-8 rounded-full bg-slate-700 text-slate-400 font-bold flex items-center justify-center text-xs border border-slate-600";
+            dot3.innerHTML = "3";
+            if (lbl3) lbl3.className = "text-slate-400 text-xs mt-2 text-center";
         }
-    });
+    }
+
+    // Step 4: FIR Registered & Watchlist
+    const dot4 = document.getElementById('step-4-dot');
+    const lbl4 = document.getElementById('step-4-label');
+    if (dot4) {
+        if (isRegistered) {
+            dot4.className = "w-8 h-8 rounded-full bg-rose-600 text-white font-bold flex items-center justify-center text-xs shadow-lg shadow-rose-600/40 ring-4 ring-rose-500/30 animate-pulse";
+            dot4.innerHTML = "🚨";
+            if (lbl4) lbl4.className = "font-bold text-rose-300 text-xs mt-2 text-center";
+        } else {
+            dot4.className = "w-8 h-8 rounded-full bg-slate-700 text-slate-400 font-bold flex items-center justify-center text-xs border border-slate-600";
+            dot4.innerHTML = "4";
+            if (lbl4) lbl4.className = "text-slate-400 text-xs mt-2 text-center";
+        }
+    }
 }

@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <!-- Radial Gradients for Emblem Outer Ring -->
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE066"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#997A15"/>
+    </linearGradient>
+    <linearGradient id="maroonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#881337"/>
+      <stop offset="100%" stop-color="#4C0519"/>
+    </linearGradient>
+    <linearGradient id="gopuramGold" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFF3A8"/>
+      <stop offset="40%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#B45309"/>
+    </linearGradient>
+    <filter id="dropShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Outer Ring Shadow & Base -->
+  <circle cx="250" cy="250" r="236" fill="url(#goldGradient)" filter="url(#dropShadow)"/>
+  <circle cx="250" cy="250" r="226" fill="#1e3a8a"/>
+  
+  <!-- Outer Decorative Ring with Dots/Teeth -->
+  <circle cx="250" cy="250" r="218" fill="none" stroke="url(#goldGradient)" stroke-width="4" stroke-dasharray="6,6"/>
+  <circle cx="250" cy="250" r="208" fill="none" stroke="url(#goldGradient)" stroke-width="3"/>
+
+  <!-- Inner Navy / Blue Medallion -->
+  <circle cx="250" cy="250" r="202" fill="#0b1e47"/>
+
+  <!-- Tamil Nadu Banner Ring Text Area -->
+  <!-- Top Arc for Tamil Nadu Government Text in Tamil -->
+  <path id="topTextArc" d="M 75 250 A 175 175 0 0 1 425 250" fill="none"/>
+  <path id="bottomTextArc" d="M 425 250 A 175 175 0 0 1 75 250" fill="none"/>
+
+  <text font-family="'Noto Sans Tamil', 'Inter', sans-serif" font-weight="900" font-size="28" fill="#FEE08B" letter-spacing="4">
+    <textPath href="#topTextArc" startOffset="50%" text-anchor="middle">தமிழ்நாடு அரசு</textPath>
+  </text>
+
+  <text font-family="'Noto Sans Tamil', 'Inter', sans-serif" font-weight="700" font-size="20" fill="#FEE08B" letter-spacing="3">
+    <textPath href="#bottomTextArc" startOffset="50%" text-anchor="middle">வாய்மையே வெல்லும்</textPath>
+  </text>
+
+  <!-- Inner Circle Border for Gopuram Base -->
+  <circle cx="250" cy="250" r="145" fill="#07132e" stroke="url(#goldGradient)" stroke-width="3"/>
+
+  <!-- Sun Rays Behind Gopuram -->
+  <g stroke="#F59E0B" stroke-width="2" opacity="0.6">
+    <line x1="250" y1="110" x2="250" y2="135"/>
+    <line x1="200" y1="125" x2="215" y2="145"/>
+    <line x1="300" y1="125" x2="285" y2="145"/>
+    <line x1="165" y1="160" x2="185" y2="175"/>
+    <line x1="335" y1="160" x2="315" y2="175"/>
+    <line x1="140" y1="210" x2="165" y2="218"/>
+    <line x1="360" y1="210" x2="335" y2="218"/>
+  </g>
+
+  <!-- Srivilliputhur Andal Temple Gopuram Tower Silhouette & Details -->
+  <!-- Base Foundation Platform -->
+  <rect x="180" y="320" width="140" height="22" rx="4" fill="url(#gopuramGold)" stroke="#78350F" stroke-width="2"/>
+  <rect x="190" y="306" width="120" height="16" rx="3" fill="url(#gopuramGold)" stroke="#78350F" stroke-width="1.5"/>
+
+  <!-- Gopuram Tier 1 (Bottom Entrance Gate / Nilayam) -->
+  <path d="M 195 306 L 200 274 L 300 274 L 305 306 Z" fill="url(#gopuramGold)" stroke="#78350F" stroke-width="1.5"/>
+  <!-- Central Temple Arch Doorway -->
+  <path d="M 236 306 L 236 282 Q 250 272 264 282 L 264 306 Z" fill="#07132e" stroke="#FDE68A" stroke-width="1.5"/>
+
+  <!-- Gopuram Tier 2 -->
+  <path d="M 202 274 L 208 244 L 292 244 L 298 274 Z" fill="url(#gopuramGold)" stroke="#78350F" stroke-width="1.5"/>
+  <!-- Niches in Tier 2 -->
+  <rect x="220" y="252" width="10" height="14" rx="2" fill="#07132e"/>
+  <rect x="245" y="250" width="10" height="16" rx="2" fill="#07132e"/>
+  <rect x="270" y="252" width="10" height="14" rx="2" fill="#07132e"/>
+
+  <!-- Gopuram Tier 3 -->
+  <path d="M 210 244 L 216 218 L 284 218 L 290 244 Z" fill="url(#gopuramGold)" stroke="#78350F" stroke-width="1.5"/>
+  <!-- Niches in Tier 3 -->
+  <rect x="226" y="226" width="8" height="12" rx="1.5" fill="#07132e"/>
+  <rect x="246" y="224" width="8" height="14" rx="1.5" fill="#07132e"/>
+  <rect x="266" y="226" width="8" height="12" rx="1.5" fill="#07132e"/>
+
+  <!-- Gopuram Tier 4 -->
+  <path d="M 218 218 L 224 194 L 276 194 L 282 218 Z" fill="url(#gopuramGold)" stroke="#78350F" stroke-width="1.5"/>
+  <rect x="233" y="200" width="7" height="10" rx="1" fill="#07132e"/>
+  <rect x="246.5" y="198" width="7" height="12" rx="1" fill="#07132e"/>
+  <rect x="260" y="200" width="7" height="10" rx="1" fill="#07132e"/>
+
+  <!-- Gopuram Tier 5 -->
+  <path d="M 225 194 L 230 174 L 270 174 L 275 194 Z" fill="url(#gopuramGold)" stroke="#78350F" stroke-width="1.5"/>
+
+  <!-- Gopuram Crown (Shikharam / Kalasams) -->
+  <path d="M 224 174 Q 250 162 276 174 L 272 170 Q 250 156 228 170 Z" fill="url(#gopuramGold)" stroke="#78350F" stroke-width="1.5"/>
+  
+  <!-- 7 Golden Kalasam Finials on top -->
+  <circle cx="232" cy="158" r="3" fill="#FFE066" stroke="#B45309" stroke-width="1"/>
+  <line x1="232" y1="161" x2="232" y2="167" stroke="#FFE066" stroke-width="2"/>
+
+  <circle cx="238" cy="156" r="3" fill="#FFE066" stroke="#B45309" stroke-width="1"/>
+  <line x1="238" y1="159" x2="238" y2="166" stroke="#FFE066" stroke-width="2"/>
+
+  <circle cx="244" cy="154" r="3.5" fill="#FFE066" stroke="#B45309" stroke-width="1"/>
+  <line x1="244" y1="157.5" x2="244" y2="165" stroke="#FFE066" stroke-width="2"/>
+
+  <!-- Center Big Kalasam with Indian Flag Colors -->
+  <circle cx="250" cy="152" r="4.5" fill="#FFE066" stroke="#B45309" stroke-width="1"/>
+  <line x1="250" y1="156.5" x2="250" y2="164" stroke="#FFE066" stroke-width="2.5"/>
+
+  <circle cx="256" cy="154" r="3.5" fill="#FFE066" stroke="#B45309" stroke-width="1"/>
+  <line x1="256" y1="157.5" x2="256" y2="165" stroke="#FFE066" stroke-width="2"/>
+
+  <circle cx="262" cy="156" r="3" fill="#FFE066" stroke="#B45309" stroke-width="1"/>
+  <line x1="262" y1="159" x2="262" y2="166" stroke="#FFE066" stroke-width="2"/>
+
+  <circle cx="268" cy="158" r="3" fill="#FFE066" stroke="#B45309" stroke-width="1"/>
+  <line x1="268" y1="161" x2="268" y2="167" stroke="#FFE066" stroke-width="2"/>
+
+  <!-- Indian National Flag Crest (Ashoka Lion Capital Silhouette at Top Apex) -->
+  <g transform="translate(250, 118) scale(0.6)">
+    <!-- Ashoka Lion Crest Miniature Plaque -->
+    <path d="M -22 -15 L 22 -15 L 18 15 L -18 15 Z" fill="#F59E0B" stroke="#78350F" stroke-width="1.5"/>
+    <!-- Ashoka Chakra Wheel -->
+    <circle cx="0" cy="0" r="8" fill="#1e3a8a" stroke="#FDE68A" stroke-width="1.5"/>
+    <circle cx="0" cy="0" r="2.5" fill="#FDE68A"/>
+    <!-- Lions silhouette -->
+    <path d="M -14 -15 Q -18 -32 -6 -35 Q 0 -38 6 -35 Q 18 -32 14 -15 Z" fill="#FFE066" stroke="#B45309" stroke-width="1.5"/>
+  </g>
+
+  <!-- Flanking Indian Tricolor Flags on sides -->
+  <!-- Left Flag -->
+  <path d="M 172 260 Q 155 250 142 265 Q 155 275 172 268 Z" fill="#FF9933"/>
+  <path d="M 172 268 Q 155 258 142 273 Q 155 283 172 276 Z" fill="#FFFFFF"/>
+  <path d="M 172 276 Q 155 266 142 281 Q 155 291 172 284 Z" fill="#138808"/>
+  <line x1="172" y1="250" x2="172" y2="305" stroke="url(#goldGradient)" stroke-width="3"/>
+
+  <!-- Right Flag -->
+  <path d="M 328 260 Q 345 250 358 265 Q 345 275 328 268 Z" fill="#FF9933"/>
+  <path d="M 328 268 Q 345 258 358 273 Q 345 283 328 276 Z" fill="#FFFFFF"/>
+  <path d="M 328 276 Q 345 266 358 281 Q 345 291 328 284 Z" fill="#138808"/>
+  <line x1="328" y1="250" x2="328" y2="305" stroke="url(#goldGradient)" stroke-width="3"/>
+
+  <!-- Side Decorative Laurels -->
+  <g fill="#D4AF37" opacity="0.9">
+    <circle cx="108" cy="250" r="4"/>
+    <circle cx="392" cy="250" r="4"/>
+    <polygon points="108,242 112,250 108,258 104,250"/>
+    <polygon points="392,242 396,250 392,258 388,250"/>
+  </g>
+</svg>

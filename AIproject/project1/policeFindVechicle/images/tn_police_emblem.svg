@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <!-- Rich Metallic & Police Color Gradients -->
+    <linearGradient id="policeGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE885"/>
+      <stop offset="45%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#8C6D0D"/>
+    </linearGradient>
+    <linearGradient id="shieldNavy" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a8a"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="policeRed" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#DC2626"/>
+      <stop offset="100%" stop-color="#991B1B"/>
+    </linearGradient>
+    <linearGradient id="silverBlade" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="50%" stop-color="#CBD5E1"/>
+      <stop offset="100%" stop-color="#64748B"/>
+    </linearGradient>
+    <filter id="badgeShadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Background Base Badge -->
+  <!-- 8-Pointed Police Star Rays Background -->
+  <g fill="url(#policeGold)" opacity="0.9" filter="url(#badgeShadow)">
+    <polygon points="250,20 270,95 345,45 320,120 405,100 355,165 435,185 365,230 435,275 355,295 405,360 320,340 345,415 270,365 250,440 230,365 155,415 180,340 95,360 145,295 65,275 135,230 65,185 145,165 95,100 180,120 155,45 230,95"/>
+  </g>
+
+  <!-- Crossed Ceremonial Swords behind Central Shield -->
+  <!-- Sword 1 (Top Left to Bottom Right) -->
+  <g>
+    <line x1="120" y1="120" x2="380" y2="380" stroke="url(#silverBlade)" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="115" cy="115" r="7" fill="url(#policeGold)"/>
+    <line x1="105" y1="135" x2="135" y2="105" stroke="url(#policeGold)" stroke-width="6" stroke-linecap="round"/>
+    <polygon points="380,380 395,395 375,390" fill="url(#silverBlade)"/>
+  </g>
+  <!-- Sword 2 (Top Right to Bottom Left) -->
+  <g>
+    <line x1="380" y1="120" x2="120" y2="380" stroke="url(#silverBlade)" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="385" cy="115" r="7" fill="url(#policeGold)"/>
+    <line x1="395" y1="135" x2="365" y2="105" stroke="url(#policeGold)" stroke-width="6" stroke-linecap="round"/>
+    <polygon points="120,380 105,395 125,390" fill="url(#silverBlade)"/>
+  </g>
+
+  <!-- Laurel Wreath Around Shield -->
+  <g stroke="url(#policeGold)" fill="none" stroke-width="4" stroke-linecap="round">
+    <!-- Left Wreath Branch -->
+    <path d="M 160 330 C 120 280, 120 190, 165 140"/>
+    <!-- Left Leaves -->
+    <path d="M 130 290 Q 115 285 125 270" stroke-width="3"/>
+    <path d="M 125 250 Q 110 245 120 230" stroke-width="3"/>
+    <path d="M 128 210 Q 113 205 125 190" stroke-width="3"/>
+    <path d="M 142 170 Q 130 160 145 150" stroke-width="3"/>
+
+    <!-- Right Wreath Branch -->
+    <path d="M 340 330 C 380 280, 380 190, 335 140"/>
+    <!-- Right Leaves -->
+    <path d="M 370 290 Q 385 285 375 270" stroke-width="3"/>
+    <path d="M 375 250 Q 390 245 380 230" stroke-width="3"/>
+    <path d="M 372 210 Q 387 205 375 190" stroke-width="3"/>
+    <path d="M 358 170 Q 370 160 355 150" stroke-width="3"/>
+  </g>
+
+  <!-- Main Police Shield Outer Frame -->
+  <path d="M 160 120 L 340 120 Q 350 240 250 350 Q 150 240 160 120 Z" fill="url(#shieldNavy)" stroke="url(#policeGold)" stroke-width="8" filter="url(#badgeShadow)"/>
+  
+  <!-- Inner Shield Border -->
+  <path d="M 172 132 L 328 132 Q 336 235 250 332 Q 164 235 172 132 Z" fill="#0b1329" stroke="url(#policeGold)" stroke-width="2"/>
+
+  <!-- Red & Blue Diagonal Police Sash in Shield Center -->
+  <g opacity="0.25">
+    <polygon points="172,132 230,132 328,290 310,315" fill="#EF4444"/>
+    <polygon points="230,132 290,132 328,210 328,290" fill="#3B82F6"/>
+  </g>
+
+  <!-- Ashoka Lion Capital (Indian National Police Crest on top of Shield) -->
+  <g transform="translate(250, 195) scale(0.95)">
+    <!-- Pedestal Base / Abacus -->
+    <path d="M -50 30 L 50 30 L 40 45 L -40 45 Z" fill="url(#policeGold)" stroke="#78350F" stroke-width="1.5"/>
+    <rect x="-42" y="32" width="84" height="4" fill="#FFE885"/>
+
+    <!-- Ashoka Dharma Chakra on Abacus -->
+    <circle cx="0" cy="38" r="6" fill="#1e3a8a" stroke="url(#policeGold)" stroke-width="1"/>
+    <circle cx="0" cy="38" r="2" fill="#FFE885"/>
+    <!-- Galloping Horse & Bull Relief Accents -->
+    <circle cx="-25" cy="38" r="3" fill="#F59E0B"/>
+    <circle cx="25" cy="38" r="3" fill="#F59E0B"/>
+
+    <!-- Central Lion Figure -->
+    <!-- Head & Mane -->
+    <path d="M -18 30 C -22 10, -25 -20, 0 -35 C 25 -20, 22 10, 18 30 Z" fill="url(#policeGold)" stroke="#78350F" stroke-width="2"/>
+    <!-- Lion Face Features -->
+    <!-- Snout & Mouth -->
+    <path d="M -10 -5 Q 0 5 10 -5 Q 0 -15 -10 -5 Z" fill="#FFE885" stroke="#78350F" stroke-width="1.5"/>
+    <!-- Eyes -->
+    <circle cx="-6" cy="-12" r="2.5" fill="#451A03"/>
+    <circle cx="6" cy="-12" r="2.5" fill="#451A03"/>
+    <!-- Crown / Ears -->
+    <path d="M -16 -24 L -10 -18 L -6 -24 L 0 -20 L 6 -24 L 10 -18 L 16 -24" stroke="url(#policeGold)" stroke-width="2" fill="none"/>
+
+    <!-- Flanking Left Lion (Profile) -->
+    <path d="M -18 25 C -35 15, -40 -10, -25 -25 C -18 -15, -16 5, -16 25 Z" fill="url(#policeGold)" stroke="#78350F" stroke-width="1.5"/>
+    <circle cx="-28" cy="-12" r="2" fill="#451A03"/>
+
+    <!-- Flanking Right Lion (Profile) -->
+    <path d="M 18 25 C 35 15, 40 -10, 25 -25 C 18 -15, 16 5, 16 25 Z" fill="url(#policeGold)" stroke="#78350F" stroke-width="1.5"/>
+    <circle cx="28" cy="-12" r="2" fill="#451A03"/>
+  </g>
+
+  <!-- Police Star Badge at Base of Shield -->
+  <g transform="translate(250, 290) scale(0.7)">
+    <polygon points="0,-18 5,-5 18,-5 8,4 12,18 0,9 -12,18 -8,4 -18,-5 -5,-5" fill="#FFE885" stroke="#78350F" stroke-width="1.5"/>
+  </g>
+
+  <!-- Bottom Curved Ribbon Banner with Tamil Inscription -->
+  <!-- Banner Body -->
+  <g filter="url(#badgeShadow)">
+    <path d="M 90 395 Q 250 435 410 395 L 430 425 Q 250 470 70 425 Z" fill="url(#policeRed)" stroke="url(#policeGold)" stroke-width="3"/>
+    <!-- Ribbon Tails -->
+    <polygon points="70,425 90,395 50,380" fill="#7F1D1D" stroke="url(#policeGold)" stroke-width="2"/>
+    <polygon points="430,425 410,395 450,380" fill="#7F1D1D" stroke="url(#policeGold)" stroke-width="2"/>
+  </g>
+
+  <!-- Banner Text Path -->
+  <path id="policeBannerArc" d="M 95 428 Q 250 464 405 428" fill="none"/>
+  
+  <text font-family="'Noto Sans Tamil', 'Inter', sans-serif" font-weight="900" font-size="22" fill="#FFE885" letter-spacing="3">
+    <textPath href="#policeBannerArc" startOffset="50%" text-anchor="middle">தமிழ்நாடு காவல் • TN POLICE</textPath>
+  </text>
+</svg>

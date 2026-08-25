@@ -1,7 +1,10 @@
 /**
  * VehicleGuard AI - Police Command & Intelligence Dashboard
- * Handles dynamic KPI computation, live plate search, database filterable tables, and CSV exports.
+ * Handles dynamic KPI computation, live plate search, filterable tables, 
+ * CSV exports, Stolen Database management, and Citizen Submission Approval / FIR Promotion workflow.
  */
+
+let activeComplaintFilter = 'ALL';
 
 document.addEventListener('DOMContentLoaded', () => {
     initDashboard();
@@ -12,10 +15,11 @@ function initDashboard() {
     renderRecentAlertsFeed();
     renderScansTable('ALL');
     renderStolenDbTable();
-    renderComplaintsTable();
+    renderComplaintsTable('ALL');
     renderDistrictAnalytics();
     initDashboardSearch();
     initFilterTabs();
+    initComplaintFilterTabs();
     initAddStolenModal();
 
     // Export and Clear buttons
@@ -49,7 +53,7 @@ function renderKPIs() {
     if (elTotal) elTotal.textContent = (1240 + totalScans).toLocaleString();
     if (elStolen) elStolen.textContent = (15 + stolenHits).toLocaleString();
     if (elClean) elClean.textContent = (1199 + cleanScans).toLocaleString();
-    if (elPending) elPending.textContent = (24 + pendingVerifications).toLocaleString();
+    if (elPending) elPending.textContent = pendingVerifications.toLocaleString();
     if (elFIRs) elFIRs.textContent = activeFIRs.toLocaleString();
 }
 
@@ -76,7 +80,7 @@ function renderRecentAlertsFeed() {
                 </div>
             </div>
             <div class="text-right">
-                <span class="text-xs font-mono text-slate-400 block">${item.timestamp.split(' ')[1] || item.timestamp}</span>
+                <span class="text-xs font-mono text-slate-400 block">${(item.timestamp || '').split(' ')[1] || item.timestamp}</span>
                 <span class="text-[10px] uppercase font-bold text-rose-400 bg-rose-900/60 px-2 py-0.5 rounded">ALERT</span>
             </div>
         </div>
@@ -121,7 +125,7 @@ function handleDashSearch(query) {
 }
 
 /**
- * Filter Tabs in Dashboard
+ * Filter Tabs in Dashboard Scans Table
  */
 function initFilterTabs() {
     document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -135,6 +139,25 @@ function initFilterTabs() {
 
             const filter = e.currentTarget.dataset.filter || 'ALL';
             renderScansTable(filter);
+        });
+    });
+}
+
+/**
+ * Complaint Filter Tabs
+ */
+function initComplaintFilterTabs() {
+    document.querySelectorAll('.complaint-tab-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            document.querySelectorAll('.complaint-tab-btn').forEach(b => {
+                b.classList.remove('bg-blue-600', 'text-white');
+                b.classList.add('bg-slate-800', 'text-slate-400');
+            });
+            e.currentTarget.classList.remove('bg-slate-800', 'text-slate-400');
+            e.currentTarget.classList.add('bg-blue-600', 'text-white');
+
+            activeComplaintFilter = e.currentTarget.dataset.cfilter || 'ALL';
+            renderComplaintsTable(activeComplaintFilter);
         });
     });
 }
@@ -188,16 +211,21 @@ function renderStolenDbTable() {
     if (!tbody) return;
 
     const db = getStolenDatabase();
-    tbody.innerHTML = db.map(item => `
+    if (db.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="py-8 text-center text-slate-500 text-sm">No active stolen records in database.</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = db.map((item, index) => `
         <tr class="border-b border-slate-700/40 hover:bg-slate-800/40 transition">
             <td class="py-3 px-4 font-mono font-bold text-rose-400">${item.vehicleNumber}</td>
-            <td class="py-3 px-4 text-xs text-slate-200">${item.make} ${item.model}</td>
+            <td class="py-3 px-4 text-xs text-slate-200">${item.make} ${item.model || ''}</td>
             <td class="py-3 px-4 text-xs text-slate-400">${item.vehicleType}</td>
             <td class="py-3 px-4 font-mono text-xs text-slate-300">${item.complaintNumber}</td>
             <td class="py-3 px-4 text-xs text-slate-300">${item.policeStation} (${item.district || 'Chennai'})</td>
             <td class="py-3 px-4 text-xs text-slate-400">${item.complaintDate}</td>
             <td class="py-3 px-4 text-right">
-                <button class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded text-xs text-slate-200" onclick='openDossierModal(${JSON.stringify(item)})'>
+                <button class="px-2.5 py-1 bg-blue-900/40 hover:bg-blue-800/60 border border-blue-600/50 text-blue-300 rounded text-xs transition" onclick='openDossierModalByIndex(${index})'>
                     Dossier
                 </button>
             </td>
@@ -205,30 +233,430 @@ function renderStolenDbTable() {
     `).join('');
 }
 
+window.openDossierModalByIndex = function(index) {
+    const db = getStolenDatabase();
+    if (db[index]) {
+        openDossierModal(db[index]);
+    }
+};
+
 /**
- * Render Complaints Table
+ * Open Crime Dossier Modal for Stolen Record
  */
-function renderComplaintsTable() {
+function openDossierModal(record) {
+    const existing = document.getElementById('fir-dossier-modal');
+    if (existing) existing.remove();
+
+    const modal = document.createElement('div');
+    modal.id = 'fir-dossier-modal';
+    modal.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm overflow-y-auto';
+    modal.innerHTML = `
+        <div class="bg-slate-900 border-2 border-rose-500/60 rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl text-slate-100 print-area space-y-6">
+            <div class="flex justify-between items-start border-b border-slate-700 pb-4">
+                <div class="flex items-center space-x-3">
+                    <img src="images/tn_police_emblem.svg" alt="TN Police" class="w-12 h-12 object-contain">
+                    <div>
+                        <span class="text-[10px] font-mono uppercase tracking-widest text-rose-400 font-bold block">CCTNS CRIME DOSSIER • TN POLICE</span>
+                        <h3 class="text-xl sm:text-2xl font-black text-white font-mono">${record.complaintNumber}</h3>
+                    </div>
+                </div>
+                <button class="text-slate-400 hover:text-white text-2xl font-bold p-1 no-print" onclick="document.getElementById('fir-dossier-modal').remove()">&times;</button>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 bg-slate-950/60 p-4 rounded-xl border border-slate-800 text-xs">
+                <div>
+                    <span class="text-slate-400 block mb-0.5">Vehicle Number</span>
+                    <span class="font-mono font-bold text-rose-400 text-sm">${record.vehicleNumber}</span>
+                </div>
+                <div>
+                    <span class="text-slate-400 block mb-0.5">Make & Model</span>
+                    <span class="font-semibold text-white">${record.make} ${record.model || ''}</span>
+                </div>
+                <div>
+                    <span class="text-slate-400 block mb-0.5">Category / Type</span>
+                    <span class="font-semibold text-white">${record.vehicleType}</span>
+                </div>
+                <div>
+                    <span class="text-slate-400 block mb-0.5">Primary Color</span>
+                    <span class="font-semibold text-white">${record.color || 'Standard'}</span>
+                </div>
+                <div>
+                    <span class="text-slate-400 block mb-0.5">Jurisdiction District</span>
+                    <span class="font-semibold text-white">${record.district}</span>
+                </div>
+                <div>
+                    <span class="text-slate-400 block mb-0.5">Reporting Police Station</span>
+                    <span class="font-semibold text-white">${record.policeStation}</span>
+                </div>
+                <div>
+                    <span class="text-slate-400 block mb-0.5">Theft Date</span>
+                    <span class="font-semibold text-white">${record.complaintDate}</span>
+                </div>
+                <div>
+                    <span class="text-slate-400 block mb-0.5">Complainant / Owner</span>
+                    <span class="font-semibold text-white">${record.ownerName || 'Verified Complainant'}</span>
+                </div>
+                <div>
+                    <span class="text-slate-400 block mb-0.5">Engine / Chassis Hash</span>
+                    <span class="font-mono text-slate-300">${record.engineHash || 'TN-HASH-VERIFIED'}</span>
+                </div>
+            </div>
+
+            <div class="bg-rose-950/30 border border-rose-600/40 rounded-xl p-4 text-xs space-y-1">
+                <span class="font-bold text-rose-300 uppercase tracking-wider block mb-1">Incident Report Notes & Investigation Brief</span>
+                <p class="text-slate-300 leading-relaxed">${record.notes || 'Vehicle reported stolen. High-priority intercept order active at all regional checkpoints.'}</p>
+            </div>
+
+            <div class="flex justify-between items-center pt-2 no-print border-t border-slate-800">
+                <button type="button" class="py-2.5 px-4 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-xs font-semibold text-slate-200 transition flex items-center space-x-1.5" onclick="window.print()">
+                    <span>🖨️ Print Crime Dossier</span>
+                </button>
+                <button type="button" class="py-2.5 px-6 bg-slate-700 hover:bg-slate-600 rounded-lg text-xs font-bold text-white transition" onclick="document.getElementById('fir-dossier-modal').remove()">
+                    Close
+                </button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+}
+
+/**
+ * Render Citizen Complaints & User Submissions Table with Scrutiny & Approval Action
+ */
+function renderComplaintsTable(filter = 'ALL') {
     const tbody = document.getElementById('dash-complaints-tbody');
     if (!tbody) return;
 
+    let complaints = getComplaints();
+    if (filter === 'PENDING') {
+        complaints = complaints.filter(c => c.statusCode === 'PENDING');
+    } else if (filter === 'UNDER_REVIEW') {
+        complaints = complaints.filter(c => c.statusCode === 'UNDER_REVIEW');
+    } else if (filter === 'REGISTERED') {
+        complaints = complaints.filter(c => c.statusCode === 'REGISTERED');
+    } else if (filter === 'REJECTED') {
+        complaints = complaints.filter(c => c.statusCode === 'REJECTED');
+    }
+
+    if (complaints.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" class="py-8 text-center text-slate-500 text-sm">No complaints found matching filter "${filter}".</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = complaints.map((item, index) => {
+        let badgeClass = "bg-amber-900/60 text-amber-300 border-amber-500/50";
+        let statusDot = "🟡";
+        if (item.statusCode === 'REGISTERED') {
+            badgeClass = "bg-rose-900/60 text-rose-300 border-rose-500/50";
+            statusDot = "🔴";
+        } else if (item.statusCode === 'UNDER_REVIEW') {
+            badgeClass = "bg-blue-900/60 text-blue-300 border-blue-500/50";
+            statusDot = "🔵";
+        } else if (item.statusCode === 'REJECTED') {
+            badgeClass = "bg-slate-800 text-slate-400 border-slate-600";
+            statusDot = "⚪";
+        }
+
+        return `
+            <tr class="border-b border-slate-700/40 hover:bg-slate-800/40 transition">
+                <td class="py-3 px-4 font-mono font-bold text-blue-400">${item.referenceNumber}</td>
+                <td class="py-3 px-4 font-mono font-semibold text-slate-100">${item.vehicleNumber}</td>
+                <td class="py-3 px-4 text-xs">
+                    <span class="font-medium text-slate-200 block">${item.ownerName}</span>
+                    <span class="text-[10px] text-slate-400 font-mono">${item.mobile || ''}</span>
+                </td>
+                <td class="py-3 px-4 text-xs text-slate-300">${item.district}</td>
+                <td class="py-3 px-4 text-xs text-slate-400">${(item.submissionDate || item.incidentDate || '').split(' ')[0]}</td>
+                <td class="py-3 px-4">
+                    <span class="inline-flex items-center space-x-1 px-2.5 py-1 rounded-md text-[11px] font-bold border ${badgeClass}">
+                        <span>${statusDot}</span>
+                        <span>${item.status}</span>
+                    </span>
+                </td>
+                <td class="py-3 px-4 text-right">
+                    <button class="px-3 py-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-lg text-xs font-bold transition shadow-md shadow-blue-600/20 flex items-center space-x-1 ml-auto" onclick='openComplaintApprovalModal("${item.referenceNumber}")'>
+                        <span>🔍</span>
+                        <span>Scrutiny & Approval</span>
+                    </button>
+                </td>
+            </tr>
+        `;
+    }).join('');
+}
+
+/**
+ * Interactive Citizen Complaint Scrutiny & Approval Dossier Modal
+ * Allows logged-in police personnel to review user details, approve FIR, mark under review, or reject.
+ */
+window.openComplaintApprovalModal = function(referenceNumber) {
     const complaints = getComplaints();
-    tbody.innerHTML = complaints.map(item => `
-        <tr class="border-b border-slate-700/40 hover:bg-slate-800/40 transition">
-            <td class="py-3 px-4 font-mono font-bold text-blue-400">${item.referenceNumber}</td>
-            <td class="py-3 px-4 font-mono font-semibold text-slate-200">${item.vehicleNumber}</td>
-            <td class="py-3 px-4 text-xs text-slate-300">${item.ownerName}</td>
-            <td class="py-3 px-4 text-xs text-slate-300">${item.district}</td>
-            <td class="py-3 px-4 text-xs text-slate-400">${item.submissionDate || item.incidentDate}</td>
-            <td class="py-3 px-4">
-                <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold ${
-                    item.statusCode === 'REGISTERED' ? 'bg-rose-900/60 text-rose-300 border border-rose-500/50' : 'bg-amber-900/60 text-amber-300 border border-amber-500/50'
-                }">
-                    ${item.status}
-                </span>
-            </td>
-        </tr>
-    `).join('');
+    const record = complaints.find(c => c.referenceNumber === referenceNumber);
+    if (!record) {
+        showToast("Complaint record not found.", "error");
+        return;
+    }
+
+    const officer = getLoggedInOfficer() || {
+        id: "DEMO001",
+        name: "Sub-Inspector K. Arumugam",
+        rank: "Sub-Inspector of Police",
+        station: "T. Nagar Police Station (E-1)",
+        district: "Chennai City Police"
+    };
+
+    const existing = document.getElementById('complaint-approval-modal');
+    if (existing) existing.remove();
+
+    const isAlreadyApproved = record.statusCode === 'REGISTERED';
+    const isRejected = record.statusCode === 'REJECTED';
+
+    const modal = document.createElement('div');
+    modal.id = 'complaint-approval-modal';
+    modal.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm overflow-y-auto';
+    modal.innerHTML = `
+        <div class="bg-slate-900 border-2 border-blue-500/60 rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl text-slate-100 space-y-6">
+            
+            <!-- Modal Header -->
+            <div class="flex justify-between items-start border-b border-slate-700 pb-4">
+                <div class="flex items-center space-x-3">
+                    <img src="images/tn_state_emblem.svg" alt="Tamil Nadu State Symbol" class="w-12 h-12 object-contain">
+                    <div>
+                        <span class="text-[10px] font-mono uppercase tracking-widest text-blue-400 font-bold block">CITIZEN THEFT SUBMISSION SCRUTINY</span>
+                        <h3 class="text-xl font-bold text-white flex items-center space-x-2">
+                            <span>Reference:</span>
+                            <span class="font-mono text-blue-300">${record.referenceNumber}</span>
+                        </h3>
+                    </div>
+                </div>
+                <button class="text-slate-400 hover:text-white text-2xl font-bold p-1" onclick="document.getElementById('complaint-approval-modal').remove()">&times;</button>
+            </div>
+
+            <!-- Officer In-Charge Banner -->
+            <div class="bg-blue-950/40 border border-blue-600/40 rounded-xl p-3.5 flex items-center justify-between text-xs">
+                <div class="flex items-center space-x-2.5">
+                    <span class="text-xl">👮</span>
+                    <div>
+                        <span class="text-slate-400 block text-[10px] uppercase">Duty Scrutiny Officer</span>
+                        <span class="font-bold text-blue-200">${officer.name} (${officer.rank})</span>
+                    </div>
+                </div>
+                <div class="text-right font-mono text-[11px] text-slate-400">
+                    Station: ${officer.station}
+                </div>
+            </div>
+
+            <!-- Citizen & Vehicle Details Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 bg-slate-950/70 p-4 rounded-xl border border-slate-800 text-xs">
+                <div>
+                    <span class="text-slate-400 block text-[11px]">Vehicle Registration</span>
+                    <span class="font-mono font-extrabold text-blue-300 text-sm">${record.vehicleNumber}</span>
+                </div>
+                <div>
+                    <span class="text-slate-400 block text-[11px]">Vehicle Category</span>
+                    <span class="font-semibold text-white">${record.vehicleType}</span>
+                </div>
+                <div>
+                    <span class="text-slate-400 block text-[11px]">Make & Model</span>
+                    <span class="font-semibold text-white">${record.make} ${record.model || ''}</span>
+                </div>
+                <div>
+                    <span class="text-slate-400 block text-[11px]">Color</span>
+                    <span class="font-semibold text-white">${record.color || 'Standard'}</span>
+                </div>
+                <div>
+                    <span class="text-slate-400 block text-[11px]">Complainant Full Name</span>
+                    <span class="font-semibold text-white">${record.ownerName}</span>
+                </div>
+                <div>
+                    <span class="text-slate-400 block text-[11px]">Complainant Mobile</span>
+                    <span class="font-mono text-white">${record.mobile}</span>
+                </div>
+                <div>
+                    <span class="text-slate-400 block text-[11px]">Incident Date & Time</span>
+                    <span class="font-medium text-white">${record.incidentDate} (${record.incidentTime || 'N/A'})</span>
+                </div>
+                <div>
+                    <span class="text-slate-400 block text-[11px]">Incident District</span>
+                    <span class="font-medium text-white">${record.district}</span>
+                </div>
+                <div>
+                    <span class="text-slate-400 block text-[11px]">Jurisdiction Police Station</span>
+                    <span class="font-medium text-white">${record.policeStation}</span>
+                </div>
+                <div class="col-span-2 sm:col-span-3 pt-2 border-t border-slate-800">
+                    <span class="text-slate-400 block text-[11px]">Theft Location / Landmark:</span>
+                    <span class="text-slate-200">${record.location || 'Roadside area'}</span>
+                </div>
+                <div class="col-span-2 sm:col-span-3">
+                    <span class="text-slate-400 block text-[11px]">Citizen Description & Identification Marks:</span>
+                    <span class="text-slate-300 italic">${record.description || 'No special marks recorded.'}</span>
+                </div>
+            </div>
+
+            <!-- Current Status Box -->
+            <div class="p-3 rounded-xl border flex items-center justify-between text-xs ${
+                isAlreadyApproved ? 'bg-rose-950/40 border-rose-600/50 text-rose-200' :
+                isRejected ? 'bg-slate-800/80 border-slate-600 text-slate-300' :
+                record.statusCode === 'UNDER_REVIEW' ? 'bg-blue-950/40 border-blue-600/50 text-blue-200' :
+                'bg-amber-950/40 border-amber-600/50 text-amber-200'
+            }">
+                <div>
+                    <span class="text-[10px] uppercase font-bold block opacity-80">Current Scrutiny Verdict</span>
+                    <span class="font-extrabold text-sm">${record.status}</span>
+                </div>
+                <span class="text-xs font-mono text-slate-400">Submission: ${record.submissionDate}</span>
+            </div>
+
+            <!-- Officer Review Remarks Form -->
+            <div class="space-y-2">
+                <label for="officer-scrutiny-remarks" class="block text-xs font-bold text-slate-300 uppercase tracking-wider">
+                    Officer Scrutiny Assessment & Action Remarks:
+                </label>
+                <textarea id="officer-scrutiny-remarks" rows="2" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-blue-500" placeholder="Enter scrutiny findings, RC verification remarks, or FIR assignment details...">${record.remarks || ''}</textarea>
+            </div>
+
+            <!-- Action Buttons Grid -->
+            <div class="flex flex-col sm:flex-row gap-2.5 pt-2 border-t border-slate-800">
+                <!-- Approve & Register FIR Button -->
+                <button type="button" id="btn-modal-approve-fir" class="flex-1 py-3 px-4 bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white font-bold rounded-xl text-xs shadow-lg shadow-rose-600/30 transition flex items-center justify-center space-x-1.5">
+                    <span>✅</span>
+                    <span>Approve & Issue Formal FIR</span>
+                </button>
+
+                <!-- Mark Under Review Button -->
+                <button type="button" id="btn-modal-under-review" class="py-3 px-4 bg-blue-800 hover:bg-blue-700 text-blue-100 font-semibold rounded-xl text-xs border border-blue-600/50 transition">
+                    <span>🔍 Mark Under Review</span>
+                </button>
+
+                <!-- Reject Complaint Button -->
+                <button type="button" id="btn-modal-reject" class="py-3 px-3.5 bg-slate-800 hover:bg-rose-950/80 hover:text-rose-300 border border-slate-700 text-slate-300 font-semibold rounded-xl text-xs transition">
+                    <span>❌ Reject</span>
+                </button>
+
+                <!-- Close Button -->
+                <button type="button" class="py-3 px-4 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold rounded-xl text-xs border border-slate-700 transition" onclick="document.getElementById('complaint-approval-modal').remove()">
+                    Close
+                </button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+
+    // Event Handlers for Modal Buttons
+    const btnApprove = document.getElementById('btn-modal-approve-fir');
+    const btnReview = document.getElementById('btn-modal-under-review');
+    const btnReject = document.getElementById('btn-modal-reject');
+    const remarksInput = document.getElementById('officer-scrutiny-remarks');
+
+    if (btnApprove) {
+        btnApprove.addEventListener('click', () => {
+            const remarks = remarksInput.value.trim() || "Documents and identity verified by duty officer. FIR generated and added to CCTNS ANPR tracking watchlist.";
+            handleApproveComplaint(record.referenceNumber, remarks, officer);
+        });
+    }
+
+    if (btnReview) {
+        btnReview.addEventListener('click', () => {
+            const remarks = remarksInput.value.trim() || "RC copy verification under inquiry with local jurisdictional station.";
+            handleUpdateComplaintStatus(record.referenceNumber, "Under Police Review", "UNDER_REVIEW", remarks);
+        });
+    }
+
+    if (btnReject) {
+        btnReject.addEventListener('click', () => {
+            const remarks = remarksInput.value.trim() || "Submission rejected due to invalid vehicle registration or lack of physical documentation.";
+            handleUpdateComplaintStatus(record.referenceNumber, "Rejected — Incomplete Details", "REJECTED", remarks);
+        });
+    }
+};
+
+/**
+ * Approve Complaint & Promote to Active Stolen Watchlist (vg_stolen_db)
+ */
+function handleApproveComplaint(refNumber, remarks, officer) {
+    const complaints = getComplaints();
+    const index = complaints.findIndex(c => c.referenceNumber === refNumber);
+    if (index === -1) return;
+
+    const comp = complaints[index];
+
+    // Generate district code based FIR Number: e.g. FIR-2026-CHN-00812
+    const distCode = (comp.district || 'CHN').substring(0, 3).toUpperCase();
+    const randomFirDigits = Math.floor(10000 + Math.random() * 90000);
+    const firNumber = `FIR-2026-${distCode}-${randomFirDigits}`;
+
+    // Update complaint record
+    comp.status = "FIR Registered — Approved";
+    comp.statusCode = "REGISTERED";
+    comp.firNumber = firNumber;
+    comp.approvedBy = `${officer.name} (${officer.id})`;
+    comp.approvalDate = new Date().toISOString().replace('T', ' ').substring(0, 19);
+    comp.remarks = remarks;
+
+    // Save complaints
+    localStorage.setItem('vg_complaints', JSON.stringify(complaints));
+
+    // Promote to Active Stolen Watchlist (vg_stolen_db)
+    const stolenDb = getStolenDatabase();
+    const normalizedVeh = normalizeVehicleNumber(comp.vehicleNumber);
+    
+    // Check if not already in stolen db
+    const existingStolen = stolenDb.find(s => normalizeVehicleNumber(s.vehicleNumber) === normalizedVeh);
+    if (!existingStolen) {
+        stolenDb.unshift({
+            vehicleNumber: normalizedVeh,
+            vehicleType: comp.vehicleType,
+            make: comp.make,
+            model: comp.model || "Standard",
+            color: comp.color || "Standard",
+            complaintNumber: firNumber,
+            policeStation: comp.policeStation || `${comp.district} Police Station`,
+            district: comp.district,
+            complaintDate: comp.incidentDate || new Date().toISOString().split('T')[0],
+            theftLocation: comp.location || "Public area",
+            ownerName: comp.ownerName,
+            engineHash: `TN${distCode}${Math.floor(100000 + Math.random() * 900000)}X`,
+            status: "STOLEN",
+            severity: "HIGH_PRIORITY",
+            notes: `FIR approved from citizen submission (${refNumber}). Verified by ${officer.name} (${officer.id}). ${remarks}`
+        });
+        localStorage.setItem('vg_stolen_db', JSON.stringify(stolenDb));
+    }
+
+    // Close modal
+    const modal = document.getElementById('complaint-approval-modal');
+    if (modal) modal.remove();
+
+    // Re-render UI
+    renderKPIs();
+    renderComplaintsTable(activeComplaintFilter);
+    renderStolenDbTable();
+
+    playAlertSound('stolen');
+    showToast(`✅ Complaint Approved! FIR Registered: ${firNumber} & Added to Watchlist`, "success", 5000);
+}
+
+/**
+ * Update Complaint Status (Under Review / Rejected)
+ */
+function handleUpdateComplaintStatus(refNumber, newStatusText, newStatusCode, remarks) {
+    const complaints = getComplaints();
+    const index = complaints.findIndex(c => c.referenceNumber === refNumber);
+    if (index === -1) return;
+
+    complaints[index].status = newStatusText;
+    complaints[index].statusCode = newStatusCode;
+    complaints[index].remarks = remarks;
+
+    localStorage.setItem('vg_complaints', JSON.stringify(complaints));
+
+    const modal = document.getElementById('complaint-approval-modal');
+    if (modal) modal.remove();
+
+    renderKPIs();
+    renderComplaintsTable(activeComplaintFilter);
+
+    showToast(`Status updated: ${newStatusText}`, "info", 3500);
 }
 
 /**

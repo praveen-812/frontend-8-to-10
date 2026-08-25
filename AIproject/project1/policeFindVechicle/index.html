@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VehicleGuard AI - AI-Powered Stolen Vehicle Detection & Verification</title>
+    <title>Tamil Nadu Police - VehicleGuard AI Verification System</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -39,31 +39,31 @@
         <span>⚠️</span>
     </div>
 
-    <!-- Main Navigation Header -->
-    <header class="sticky top-0 z-40 bg-slate-900/90 dark:bg-[#0d1527]/95 backdrop-blur-md border-b border-slate-800 transition-colors">
+    <!-- Main Navigation Header (Clean & Professional with ONLY ONE Logo: Four Lions Emblem) -->
+    <header class="sticky top-0 z-40 bg-slate-900/95 dark:bg-[#070e1e]/95 backdrop-blur-md border-b border-amber-500/20 transition-colors shadow-xl shadow-black/40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
-                <!-- Brand Logo & Title -->
+                
+                <!-- ONLY ONE LOGO: Bright, Clear, and Highly Visible Four Lions / Ashoka Emblem -->
                 <div class="flex items-center space-x-3">
-                    <a href="index.html" class="flex items-center space-x-3 group">
-                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 via-indigo-600 to-slate-900 p-0.5 shadow-lg shadow-blue-500/20 group-hover:scale-105 transition transform">
-                            <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center border border-blue-400/30">
-                                <span class="text-2xl">🛡️</span>
-                            </div>
+                    <a href="index.html" class="flex items-center space-x-3.5 group">
+                        <div class="relative flex items-center justify-center p-1 rounded-xl bg-gradient-to-br from-amber-400/30 via-slate-900 to-slate-950 border-2 border-amber-400/80 shadow-lg shadow-amber-500/30 group-hover:scale-105 transition transform overflow-hidden w-12 h-12 sm:w-14 sm:h-14">
+                            <!-- Bright, Clear Ashoka Four Lions Logo from images/lion.jfif -->
+                            <img src="images/lion.jfif" alt="State Emblem of India - Four Lions" class="w-full h-full object-cover rounded-lg filter brightness-110 contrast-110 drop-shadow-[0_0_10px_rgba(245,158,11,0.6)]">
                         </div>
                         <div>
                             <div class="flex items-center space-x-2">
-                                <span class="font-extrabold text-xl tracking-tight text-white group-hover:text-blue-400 transition" data-i18n="brand_name">VehicleGuard AI</span>
-                                <span class="text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded bg-blue-900/60 text-blue-300 border border-blue-500/40">PROTOTYPE</span>
+                                <span class="font-black text-lg sm:text-xl tracking-tight text-white group-hover:text-amber-400 transition uppercase">Tamil Nadu Police</span>
+                                <span class="text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">OFFICIAL</span>
                             </div>
-                            <p class="text-xs text-slate-400 hidden sm:block tracking-wide" data-i18n="brand_subtitle">AI-Powered Stolen Vehicle Detection & Verification</p>
+                            <p class="text-[11px] text-slate-300 hidden sm:block tracking-wide font-medium">VehicleGuard AI • Law Enforcement Verification System</p>
                         </div>
                     </a>
                 </div>
 
                 <!-- Desktop Navigation Links -->
                 <nav class="hidden lg:flex items-center space-x-1">
-                    <a href="index.html" class="px-3.5 py-2 rounded-lg text-sm font-semibold text-blue-400 bg-slate-800/80 transition" data-i18n="nav_home">Home</a>
+                    <a href="index.html" class="px-3.5 py-2 rounded-lg text-sm font-semibold text-amber-400 bg-slate-800/90 transition" data-i18n="nav_home">Home</a>
                     <a href="scan.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_scan">Vehicle Scan</a>
                     <a href="report.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_report">Report Vehicle</a>
                     <a href="status.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_status">Check Status</a>
@@ -71,7 +71,7 @@
                     <a href="help.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_help">Help & FAQ</a>
                 </nav>
 
-                <!-- Action Controls: Language, Theme & CTA -->
+                <!-- Action Controls: Language, Theme & Login -->
                 <div class="hidden sm:flex items-center space-x-3">
                     <!-- Language Switcher -->
                     <div class="flex items-center bg-slate-800/80 dark:bg-slate-900 border border-slate-700/80 rounded-lg p-1 text-xs">
@@ -93,13 +93,13 @@
                         <div id="nav-user-badge" class="hidden items-center space-x-2 px-3 py-1.5 rounded-lg bg-blue-950/70 border border-blue-500/50 text-blue-300 text-xs">
                             <span>👮</span>
                             <span id="nav-officer-name" class="font-mono font-semibold">DEMO001</span>
-                            <a href="#" id="btn-nav-logout" class="text-rose-400 hover:underline ml-2" data-i18n="nav_logout">Logout</a>
+                            <button id="btn-nav-logout" type="button" class="btn-logout text-rose-400 hover:text-rose-300 hover:underline ml-2 text-xs font-bold" data-i18n="nav_logout">Logout</button>
                         </div>
                     </div>
 
-                    <!-- Prominent Scan CTA Button -->
-                    <a href="scan.html" class="inline-flex items-center px-4 py-2 rounded-xl text-xs font-extrabold tracking-wider uppercase bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:to-indigo-500 text-white shadow-lg shadow-blue-600/30 hover:scale-105 transition transform" data-i18n="btn_scan_nav">
-                        ⚡ SCAN VEHICLE
+                    <!-- Jump to Scanner CTA -->
+                    <a href="#main-scanner-section" class="inline-flex items-center px-4 py-2 rounded-xl text-xs font-extrabold tracking-wider uppercase bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-slate-950 shadow-lg shadow-amber-500/30 hover:scale-105 transition transform">
+                        ⚡ QUICK SCAN
                     </a>
                 </div>
 
@@ -119,13 +119,25 @@
 
         <!-- Mobile Navigation Menu -->
         <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-800 bg-slate-900/95 px-4 pt-3 pb-6 space-y-2">
-            <a href="index.html" class="block px-3 py-2 rounded-lg text-base font-semibold text-blue-400 bg-slate-800" data-i18n="nav_home">Home</a>
+            <a href="index.html" class="block px-3 py-2 rounded-lg text-base font-semibold text-amber-400 bg-slate-800" data-i18n="nav_home">Home</a>
             <a href="scan.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:bg-slate-800" data-i18n="nav_scan">Vehicle Scan</a>
             <a href="report.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:bg-slate-800" data-i18n="nav_report">Report Vehicle</a>
             <a href="status.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:bg-slate-800" data-i18n="nav_status">Check Status</a>
             <a href="dashboard.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:bg-slate-800" data-i18n="nav_dashboard">Police Dashboard</a>
             <a href="help.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:bg-slate-800" data-i18n="nav_help">Help & FAQ</a>
-            <a href="login.html" class="block px-3 py-2 rounded-lg text-base font-semibold text-amber-400 bg-slate-800/80" data-i18n="nav_login">👮 Police Login</a>
+            
+            <div id="mobile-auth-section" class="pt-2 border-t border-slate-800">
+                <a id="mobile-login-link" href="login.html" class="block px-3 py-2 rounded-lg text-base font-semibold text-amber-400 bg-slate-800/80" data-i18n="nav_login">👮 Police Login</a>
+                <div id="mobile-user-badge" class="hidden flex-col space-y-2 p-3 bg-blue-950/70 border border-blue-500/50 rounded-xl">
+                    <div class="flex items-center space-x-2 text-blue-300 text-xs">
+                        <span>👮</span>
+                        <span id="mobile-officer-name" class="font-mono font-bold">DEMO001</span>
+                    </div>
+                    <button id="btn-mobile-logout" type="button" class="btn-logout w-full py-2 bg-rose-900/60 hover:bg-rose-800 text-rose-200 rounded-lg text-xs font-bold transition" data-i18n="nav_logout">
+                        Logout from Portal
+                    </button>
+                </div>
+            </div>
 
             <div class="pt-4 border-t border-slate-800 flex items-center justify-between">
                 <span class="text-xs text-slate-400">Language / மொழி:</span>
@@ -139,343 +151,587 @@
 
     <!-- Main Content Area -->
     <main class="flex-grow">
-        <!-- Hero Section -->
-        <section class="relative overflow-hidden pt-12 pb-20 md:py-24 border-b border-slate-800/80 police-grid-bg">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                    
-                    <!-- Hero Left Copy -->
-                    <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
-                        <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-blue-950/80 border border-blue-500/40 text-blue-300 text-xs font-bold tracking-wide">
-                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-                            <span data-i18n="hero_tagline">Scan. Verify. Alert. Protect.</span>
-                        </div>
+        
+        <!-- =========================================================================
+             1. TOP SHOWCASE HEADER:
+                - Tamil Nadu / Srivilliputhur Gopuram Image (Prominently at Top)
+                - "Truth and Triumph" (வாய்மையே வெல்லும்) in Bold Professional Typography
+                - Clean Live Status / Telemetry Information Section
+             ========================================================================= -->
+        <section class="relative overflow-hidden pt-8 pb-10 md:pt-10 md:pb-12 bg-gradient-to-b from-[#081226] via-[#0a152e] to-[#070d18] border-b border-amber-500/20 text-center">
+            <!-- Subtle Radial Ambient Glow -->
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(245,158,11,0.12),transparent_70%)] pointer-events-none"></div>
 
-                        <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight">
-                            <span data-i18n="hero_title">AI-Powered Stolen Vehicle Detection</span>
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-4">
+                
+                <!-- Tamil Nadu / Srivilliputhur Gopuram Crest (Prominent, Elegant, Visually Attractive) -->
+                <div class="flex flex-col items-center justify-center">
+                    <div class="relative p-1 rounded-2xl bg-gradient-to-b from-amber-400/40 via-blue-900/30 to-slate-950 border-2 border-amber-400/70 shadow-2xl shadow-amber-500/30 hover:scale-105 transition transform duration-300 w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 overflow-hidden flex items-center justify-center">
+                        <!-- Srivilliputhur Gopuram Emblem from images/tamilnadu.jfif -->
+                        <img src="images/tamilnadu.jfif" alt="Government of Tamil Nadu - Srivilliputhur Gopuram Emblem" class="w-full h-full object-cover rounded-xl filter brightness-110 contrast-105 drop-shadow-[0_0_12px_rgba(245,158,11,0.5)]">
+                    </div>
+                    <div class="mt-2.5">
+                        <span class="text-xs sm:text-sm font-bold uppercase tracking-[0.25em] text-amber-300 block">
+                            தமிழ்நாடு அரசு • GOVERNMENT OF TAMIL NADU
+                        </span>
+                        <span class="text-[11px] font-mono text-slate-400 uppercase tracking-widest block">
+                            Tamil Nadu Police Department • Stolen Vehicle Verification Portal
+                        </span>
+                    </div>
+                </div>
+
+                <!-- "Truth and Triumph" Professional Typography Style -->
+                <div class="pt-1 pb-1 space-y-1.5">
+                    <div class="inline-flex items-center space-x-3 px-5 sm:px-8 py-2 rounded-2xl bg-amber-950/50 border-2 border-amber-400/80 shadow-2xl shadow-amber-500/20">
+                        <span class="text-lg sm:text-xl">🏛️</span>
+                        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-300 to-yellow-400 uppercase">
+                            “ Truth and Triumph ”
                         </h1>
+                        <span class="text-lg sm:text-xl">🏛️</span>
+                    </div>
 
-                        <p class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed" data-i18n="hero_desc">
-                            Help police officers quickly identify vehicles that have been reported stolen by scanning their registration number during routine vehicle checking.
+                    <div class="text-center">
+                        <p class="text-lg sm:text-xl md:text-2xl font-black text-amber-300/95 tracking-wide font-tamil">
+                            வாய்மையே வெல்லும்
                         </p>
+                        <p class="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto mt-1 leading-relaxed">
+                            Official AI-Powered License Plate Verification & Instant Stolen Vehicle Detection System
+                        </p>
+                    </div>
+                </div>
 
-                        <!-- Call to Actions -->
-                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
-                            <a href="scan.html" class="w-full sm:w-auto px-8 py-4 rounded-xl font-extrabold text-base bg-blue-600 hover:bg-blue-500 text-white shadow-xl shadow-blue-600/30 hover:scale-105 transition transform flex items-center justify-center space-x-3">
-                                <span>⚡</span>
-                                <span data-i18n="hero_btn_scan">Launch Vehicle Scanner</span>
-                            </a>
-                            <a href="report.html" class="w-full sm:w-auto px-7 py-4 rounded-xl font-bold text-base bg-slate-800/90 hover:bg-slate-700 border border-slate-700 text-slate-200 hover:text-white transition flex items-center justify-center space-x-2">
-                                <span>📝</span>
-                                <span data-i18n="hero_btn_report">Report a Stolen Vehicle</span>
-                            </a>
+                <!-- Clean Status / Information Section -->
+                <div class="pt-2 max-w-3xl mx-auto">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 text-left">
+                        <div class="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center space-x-2.5">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+                            <div>
+                                <div class="text-[10px] text-slate-400 uppercase font-mono">ANPR ENGINE</div>
+                                <div class="text-xs font-bold text-emerald-400 font-mono">ONLINE • v4.2</div>
+                            </div>
                         </div>
-
-                        <!-- Micro Stats Banner -->
-                        <div class="pt-6 grid grid-cols-3 gap-4 max-w-lg mx-auto lg:mx-0 border-t border-slate-800/80">
+                        <div class="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center space-x-2.5">
+                            <span class="text-base">📍</span>
                             <div>
-                                <div class="font-mono text-2xl font-black text-blue-400">< 1.2s</div>
-                                <div class="text-xs text-slate-400">ANPR Query Speed</div>
+                                <div class="text-[10px] text-slate-400 uppercase font-mono">JURISDICTION</div>
+                                <div class="text-xs font-bold text-white font-mono">38 TN DISTRICTS</div>
                             </div>
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center space-x-2.5">
+                            <span class="text-base">⚡</span>
                             <div>
-                                <div class="font-mono text-2xl font-black text-emerald-400">99.4%</div>
-                                <div class="text-xs text-slate-400">Plate Normalization</div>
+                                <div class="text-[10px] text-slate-400 uppercase font-mono">QUERY SPEED</div>
+                                <div class="text-xs font-bold text-amber-400 font-mono">&lt; 1.2s INSTANT</div>
                             </div>
+                        </div>
+                        <div class="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center space-x-2.5">
+                            <span class="text-base">🛡️</span>
                             <div>
-                                <div class="font-mono text-2xl font-black text-amber-400">38+</div>
-                                <div class="text-xs text-slate-400">TN Districts Sync</div>
+                                <div class="text-[10px] text-slate-400 uppercase font-mono">THEFT WATCHLIST</div>
+                                <div class="text-xs font-bold text-blue-400 font-mono">ACTIVE REPOSITORY</div>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <!-- Hero Right Interactive Simulator Card -->
-                    <div class="lg:col-span-5">
-                        <div class="bg-slate-900/95 dark:bg-[#0d162a] border-2 border-slate-700/80 rounded-2xl p-6 shadow-2xl relative overflow-hidden">
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             2. VEHICLE SCANNING FEATURE — FRONT AND CENTER PRIMARY FOCUS OF PAGE
+                - Immediate attention grabber
+                - Full camera scan / upload area
+                - Direct plate query console with 1-click test presets
+                - Instant dynamic result cards (🔴 Stolen / 🟢 Clean / 🟡 Verify)
+             ========================================================================= -->
+        <section id="main-scanner-section" class="py-8 sm:py-12 bg-[#060b16] border-b border-slate-800 police-grid-bg relative">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <!-- Section Header Callout -->
+                <div class="text-center max-w-3xl mx-auto mb-8">
+                    <div class="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-blue-950/90 border border-blue-500/40 text-blue-300 text-xs font-mono font-bold mb-3 shadow-lg">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span>PRIMARY ACTION • OPTICAL NUMBER PLATE VERIFICATION</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight">
+                        Instant Vehicle Scan & Stolen Status Check
+                    </h2>
+                    <p class="text-slate-300 text-xs sm:text-sm mt-1.5 max-w-xl mx-auto">
+                        Point camera at the number plate, upload a photo, or enter registration number to verify immediately against stolen records.
+                    </p>
+                </div>
+
+                <!-- Main Scanner Core Layout -->
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    
+                    <!-- Left Column: Optical Camera Viewport & Capture HUD -->
+                    <div class="lg:col-span-7 space-y-5">
+                        <div class="bg-slate-900/95 border-2 border-amber-500/30 rounded-2xl p-5 sm:p-6 shadow-2xl relative backdrop-blur-sm">
+                            
+                            <!-- Scanner Top Header -->
                             <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-3 h-3 rounded-full bg-rose-500"></div>
-                                    <div class="w-3 h-3 rounded-full bg-amber-500"></div>
-                                    <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
-                                    <span class="text-xs font-mono text-slate-400 ml-2">ANPR-HUD-PREVIEW</span>
+                                <div class="flex items-center space-x-2.5">
+                                    <span class="text-xl">📷</span>
+                                    <div>
+                                        <h3 class="font-bold text-sm sm:text-base text-white">ANPR Optical Camera Feed</h3>
+                                        <p class="text-[10px] text-slate-400">Live Camera or Image Ingestion Scanner</p>
+                                    </div>
                                 </div>
-                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-900/60 text-blue-300 border border-blue-500/40">LIVE SIMULATOR</span>
+                                <span id="ocr-confidence-badge" class="hidden px-2.5 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-500/40">
+                                    OCR Confidence: 98.6%
+                                </span>
                             </div>
 
-                            <!-- Mock Scanning Frame -->
-                            <div class="scanner-viewport h-48 rounded-xl relative flex items-center justify-center border border-slate-700 bg-slate-950 mb-4">
-                                <div class="scanner-laser"></div>
+                            <!-- Camera Viewport Box with HUD Elements -->
+                            <div class="scanner-viewport h-64 sm:h-72 md:h-80 w-full rounded-xl relative flex items-center justify-center border-2 border-slate-700 bg-black overflow-hidden shadow-inner">
+                                <!-- HUD Corner Target Reticles -->
                                 <div class="hud-corner hud-corner-tl"></div>
                                 <div class="hud-corner hud-corner-tr"></div>
                                 <div class="hud-corner hud-corner-bl"></div>
                                 <div class="hud-corner hud-corner-br"></div>
-                                
-                                <!-- Mock Plate graphic -->
-                                <div class="ind-number-plate scale-110">
-                                    <div class="ind-side">
-                                        <div class="w-2.5 h-2.5 rounded-full bg-amber-400 mb-0.5"></div>
-                                        <span>IND</span>
+
+                                <!-- Animated Laser Scanner Line -->
+                                <div id="scanner-laser-line" class="scanner-laser hidden"></div>
+
+                                <!-- Live HTML5 Video Element -->
+                                <video id="camera-video" class="w-full h-full object-cover hidden" playsinline autoplay muted></video>
+
+                                <!-- Camera Inactive Placeholder -->
+                                <div id="camera-placeholder" class="text-center p-6 space-y-2.5">
+                                    <div class="w-14 h-14 rounded-full bg-slate-800/80 border border-slate-700 flex items-center justify-center mx-auto text-2xl text-slate-400 shadow-md">
+                                        📹
                                     </div>
-                                    <span>TN 09 AB 1234</span>
+                                    <p class="text-sm font-bold text-slate-200">Live Optical Scanner Inactive</p>
+                                    <p class="text-xs text-slate-400 max-w-xs mx-auto">Click "Start Camera" to initialize live ANPR detection or upload a photo below.</p>
                                 </div>
                             </div>
 
-                            <!-- Live Quick Interactive Lookup Widget -->
-                            <div class="space-y-3">
-                                <div class="flex space-x-2">
-                                    <input type="text" id="hero-quick-plate" placeholder="Enter Registration (e.g. TN09AB1234)" class="w-full bg-slate-950 border border-slate-700 rounded-lg px-3.5 py-2.5 text-sm font-mono uppercase text-white focus:outline-none focus:border-blue-500">
-                                    <button id="btn-hero-check" class="px-4 py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-bold text-xs uppercase tracking-wider transition whitespace-nowrap">
-                                        Check
-                                    </button>
-                                </div>
+                            <!-- Simple, Intuitive Camera Controls -->
+                            <div class="flex flex-wrap items-center gap-3 mt-4">
+                                <button id="btn-start-camera" class="flex-1 min-w-[130px] py-2.5 px-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold text-xs sm:text-sm shadow-lg shadow-blue-600/30 flex items-center justify-center space-x-2 transition">
+                                    <span>▶</span>
+                                    <span data-i18n="btn_start_camera">Start Camera</span>
+                                </button>
+                                <button id="btn-stop-camera" class="hidden flex-1 min-w-[130px] py-2.5 px-4 bg-rose-600 hover:bg-rose-500 text-white rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center space-x-2 transition">
+                                    <span>⏹</span>
+                                    <span data-i18n="btn_stop_camera">Stop Camera</span>
+                                </button>
+                                <button id="btn-capture-image" class="hidden flex-1 min-w-[130px] py-2.5 px-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center space-x-2 transition shadow-lg shadow-emerald-600/20">
+                                    <span>📸</span>
+                                    <span data-i18n="btn_capture">Capture Plate</span>
+                                </button>
+                            </div>
 
-                                <!-- Quick Test Buttons -->
-                                <div class="flex flex-wrap gap-2 text-[11px]">
-                                    <button onclick="document.getElementById('hero-quick-plate').value='TN09AB1234'; document.getElementById('btn-hero-check').click();" class="px-2.5 py-1 rounded bg-rose-950/70 border border-rose-600/50 text-rose-300 hover:bg-rose-900 transition">
-                                        🔴 Test Stolen: TN09AB1234
-                                    </button>
-                                    <button onclick="document.getElementById('hero-quick-plate').value='TN07BK9988'; document.getElementById('btn-hero-check').click();" class="px-2.5 py-1 rounded bg-emerald-950/70 border border-emerald-600/50 text-emerald-300 hover:bg-emerald-900 transition">
-                                        🟢 Test Clean: TN07BK9988
-                                    </button>
+                            <!-- Drag & Drop Upload Zone -->
+                            <div class="mt-4 pt-4 border-t border-slate-800">
+                                <div id="upload-dropzone" class="border-2 border-dashed border-slate-700 hover:border-amber-500/60 rounded-xl p-4 text-center cursor-pointer transition bg-slate-950/50 relative group">
+                                    <input type="file" id="plate-image-upload" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full">
+                                    <div class="space-y-1">
+                                        <span class="text-xl block group-hover:scale-110 transition">📁</span>
+                                        <p class="text-xs font-semibold text-slate-300" data-i18n="drop_image_hint">Drag & drop plate image here, or click to browse</p>
+                                        <p class="text-[10px] text-slate-500">Supports JPEG, PNG, WEBP from mobile camera or gallery</p>
+                                    </div>
                                 </div>
+                            </div>
 
-                                <!-- Output Box in Hero -->
-                                <div id="hero-quick-output" class="hidden p-3 rounded-lg border text-xs">
-                                    <!-- Populated dynamically via JS -->
+                        </div>
+
+                        <!-- Captured / Ingestion Preview Box -->
+                        <div id="preview-container" class="hidden bg-slate-900/95 border border-slate-700/80 rounded-2xl p-4 relative">
+                            <div class="flex items-center justify-between mb-2.5">
+                                <h4 class="text-xs font-mono font-bold text-slate-400 uppercase">ANPR Ingestion Preview</h4>
+                                <span class="text-[10px] px-2 py-0.5 rounded bg-blue-900/60 text-blue-300 font-mono">PLATE EXTRACTED</span>
+                            </div>
+                            <div class="relative rounded-lg overflow-hidden border border-slate-700 bg-black max-h-40 flex items-center justify-center">
+                                <img id="captured-preview-img" src="" alt="Captured Plate Preview" class="max-h-40 w-auto object-contain">
+                                <div id="ocr-bounding-box" class="absolute border-2 border-emerald-400 bg-emerald-400/10 rounded pointer-events-none" style="top: 25%; left: 20%; width: 60%; height: 50%;">
+                                    <span class="absolute -top-4 left-0 bg-emerald-600 text-[8px] font-mono text-white px-1 py-0.2 rounded">OCR: TARGET_PLATE</span>
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- 1-Click Quick Demo Test Presets -->
+                        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5">
+                            <div class="flex items-center justify-between mb-2.5">
+                                <h4 class="text-xs font-bold text-amber-300 uppercase tracking-wider flex items-center space-x-1.5">
+                                    <span>⚡</span>
+                                    <span data-i18n="sample_plates_title">Quick Demo Test Presets (Click to Test):</span>
+                                </h4>
+                                <span class="text-[10px] text-slate-500 font-mono">DEMO SHORTCUTS</span>
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                <button class="btn-sample-plate text-left p-2.5 rounded-xl bg-rose-950/40 border border-rose-600/40 hover:bg-rose-900/60 transition group" data-sample="stolen1">
+                                    <div class="flex items-center justify-between">
+                                        <span class="font-mono text-xs font-black text-rose-300">TN09AB1234</span>
+                                        <span class="text-[10px] px-1.5 py-0.2 rounded bg-rose-900 text-rose-200 font-bold uppercase">🔴 STOLEN BIKE</span>
+                                    </div>
+                                    <p class="text-[10px] text-slate-400 mt-0.5">Royal Enfield Classic — Chennai</p>
+                                </button>
+
+                                <button class="btn-sample-plate text-left p-2.5 rounded-xl bg-rose-950/40 border border-rose-600/40 hover:bg-rose-900/60 transition group" data-sample="stolen2">
+                                    <div class="flex items-center justify-between">
+                                        <span class="font-mono text-xs font-black text-rose-300">TN01CD5678</span>
+                                        <span class="text-[10px] px-1.5 py-0.2 rounded bg-rose-900 text-rose-200 font-bold uppercase">🔴 STOLEN SCOOTER</span>
+                                    </div>
+                                    <p class="text-[10px] text-slate-400 mt-0.5">Honda Activa 6G — Mylapore</p>
+                                </button>
+
+                                <button class="btn-sample-plate text-left p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-600/40 hover:bg-emerald-900/60 transition group" data-sample="clean1">
+                                    <div class="flex items-center justify-between">
+                                        <span class="font-mono text-xs font-black text-emerald-300">TN07BK9988</span>
+                                        <span class="text-[10px] px-1.5 py-0.2 rounded bg-emerald-900 text-emerald-200 font-bold uppercase">🟢 CLEAN</span>
+                                    </div>
+                                    <p class="text-[10px] text-slate-400 mt-0.5">Hero Splendor — Zero Active FIRs</p>
+                                </button>
+
+                                <button class="btn-sample-plate text-left p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-600/40 hover:bg-emerald-900/60 transition group" data-sample="clean2">
+                                    <div class="flex items-center justify-between">
+                                        <span class="font-mono text-xs font-black text-emerald-300">TN22EF4321</span>
+                                        <span class="text-[10px] px-1.5 py-0.2 rounded bg-emerald-900 text-emerald-200 font-bold uppercase">🟢 CLEAN</span>
+                                    </div>
+                                    <p class="text-[10px] text-slate-400 mt-0.5">Honda City — Zero Active FIRs</p>
+                                </button>
                             </div>
                         </div>
                     </div>
 
-                </div>
-            </div>
-        </section>
+                    <!-- Right Column: Direct Number Plate Query & Instant Dynamic Results -->
+                    <div class="lg:col-span-5 space-y-5">
+                        
+                        <!-- Manual OCR / Number Plate Verification Card -->
+                        <div class="bg-slate-900/95 border-2 border-slate-700/80 rounded-2xl p-5 sm:p-6 shadow-2xl backdrop-blur-sm">
+                            <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+                                <label for="detected-plate-input" class="font-bold text-sm text-slate-200" data-i18n="detected_plate_label">
+                                    Vehicle Registration Number
+                                </label>
+                                <span class="text-[10px] text-amber-400 font-mono font-bold">ANPR READY</span>
+                            </div>
 
-        <!-- Visual Police Workflow Section -->
-        <section class="py-16 bg-slate-900/50 dark:bg-[#090f1d] border-b border-slate-800">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center max-w-3xl mx-auto mb-12">
-                    <h2 class="text-xs font-mono uppercase tracking-widest text-blue-400 font-bold mb-2">OPERATIONAL ARCHITECTURE</h2>
-                    <h3 class="text-2xl sm:text-3xl font-extrabold text-white" data-i18n="workflow_title">Intelligent Field Verification Workflow</h3>
-                    <p class="text-slate-400 text-sm mt-2">How police officers on duty scan and verify suspected vehicles within seconds.</p>
-                </div>
+                            <div class="space-y-4">
+                                <!-- Indian License Plate High-Contrast Input -->
+                                <div class="relative">
+                                    <input type="text" id="detected-plate-input" placeholder="e.g. TN 09 AB 1234" class="w-full bg-slate-950 border-2 border-amber-500/70 rounded-xl px-4 py-3.5 text-xl sm:text-2xl font-mono font-black uppercase text-white tracking-widest text-center focus:outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-500/20 transition">
+                                    <div class="absolute left-3.5 top-4 flex items-center space-x-1 pointer-events-none">
+                                        <span class="text-xs font-bold text-amber-400 font-mono">IND</span>
+                                    </div>
+                                </div>
 
-                <!-- 5-Step Workflow Cards -->
-                <div class="grid grid-cols-1 md:grid-cols-5 gap-4 relative">
-                    <!-- Step 1 -->
-                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 relative hover:border-blue-500/50 transition">
-                        <div class="w-10 h-10 rounded-lg bg-blue-900/50 text-blue-400 flex items-center justify-center font-bold text-lg mb-3">
-                            🚗
-                        </div>
-                        <h4 class="font-bold text-white text-sm mb-1" data-i18n="step_1_title">1. Vehicle Checkpoint</h4>
-                        <p class="text-xs text-slate-400 leading-relaxed" data-i18n="step_1_desc">Officer targets incoming vehicle at routine junction or patrol checkpost.</p>
-                    </div>
+                                <p class="text-[11px] text-slate-400 leading-snug" data-i18n="scanner_helper">
+                                    Supports all standard Indian formats (e.g. TN09AB1234, TN01CD5678, TN22EF4321, BH series). Auto uppercase & spacing normalization applied.
+                                </p>
 
-                    <!-- Step 2 -->
-                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 relative hover:border-blue-500/50 transition">
-                        <div class="w-10 h-10 rounded-lg bg-indigo-900/50 text-indigo-400 flex items-center justify-center font-bold text-lg mb-3">
-                            📷
-                        </div>
-                        <h4 class="font-bold text-white text-sm mb-1" data-i18n="step_2_title">2. Camera / ANPR Scan</h4>
-                        <p class="text-xs text-slate-400 leading-relaxed" data-i18n="step_2_desc">Capture plate image via mobile camera, bodycam, or static feed.</p>
-                    </div>
-
-                    <!-- Step 3 -->
-                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 relative hover:border-blue-500/50 transition">
-                        <div class="w-10 h-10 rounded-lg bg-cyan-900/50 text-cyan-400 flex items-center justify-center font-bold text-lg mb-3">
-                            🧠
-                        </div>
-                        <h4 class="font-bold text-white text-sm mb-1" data-i18n="step_3_title">3. OCR Number Extraction</h4>
-                        <p class="text-xs text-slate-400 leading-relaxed" data-i18n="step_3_desc">Optical character recognition parses plate format and normalizes text.</p>
-                    </div>
-
-                    <!-- Step 4 -->
-                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 relative hover:border-blue-500/50 transition">
-                        <div class="w-10 h-10 rounded-lg bg-purple-900/50 text-purple-400 flex items-center justify-center font-bold text-lg mb-3">
-                            🗄️
-                        </div>
-                        <h4 class="font-bold text-white text-sm mb-1" data-i18n="step_4_title">4. Database Check</h4>
-                        <p class="text-xs text-slate-400 leading-relaxed" data-i18n="step_4_desc">Instant search against stolen vehicle FIRs and missing registries.</p>
-                    </div>
-
-                    <!-- Step 5 -->
-                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 relative hover:border-rose-500/50 transition">
-                        <div class="w-10 h-10 rounded-lg bg-rose-900/50 text-rose-400 flex items-center justify-center font-bold text-lg mb-3">
-                            🚨
-                        </div>
-                        <h4 class="font-bold text-white text-sm mb-1" data-i18n="step_5_title">5. Immediate Verdict</h4>
-                        <p class="text-xs text-slate-400 leading-relaxed" data-i18n="step_5_desc">Instant RED (Stolen) or GREEN (Clear) response with SOP directives.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Feature Capabilities Grid -->
-        <section class="py-16 bg-[#070d18] border-b border-slate-800">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center max-w-2xl mx-auto mb-12">
-                    <h2 class="text-xs font-mono uppercase tracking-widest text-blue-400 font-bold mb-2">SYSTEM CAPABILITIES</h2>
-                    <h3 class="text-2xl sm:text-3xl font-extrabold text-white">Engineered for Fast Public Safety Response</h3>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Feature 1 -->
-                    <div class="p-6 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition">
-                        <div class="w-12 h-12 rounded-xl bg-blue-600/20 text-blue-400 flex items-center justify-center text-2xl mb-4">⚡</div>
-                        <h4 class="text-lg font-bold text-white mb-2" data-i18n="feat_1_title">Fast Detection</h4>
-                        <p class="text-sm text-slate-400 leading-relaxed" data-i18n="feat_1_desc">Sub-second database querying against high-priority vehicle theft records.</p>
-                    </div>
-
-                    <!-- Feature 2 -->
-                    <div class="p-6 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition">
-                        <div class="w-12 h-12 rounded-xl bg-indigo-600/20 text-indigo-400 flex items-center justify-center text-2xl mb-4">📸</div>
-                        <h4 class="text-lg font-bold text-white mb-2" data-i18n="feat_2_title">AI-Assisted Recognition</h4>
-                        <p class="text-sm text-slate-400 leading-relaxed" data-i18n="feat_2_desc">Number plate image processing and OCR/ANPR-ready workflow.</p>
-                    </div>
-
-                    <!-- Feature 3 -->
-                    <div class="p-6 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition">
-                        <div class="w-12 h-12 rounded-xl bg-emerald-600/20 text-emerald-400 flex items-center justify-center text-2xl mb-4">🌐</div>
-                        <h4 class="text-lg font-bold text-white mb-2" data-i18n="feat_3_title">Cross-District Checking</h4>
-                        <p class="text-sm text-slate-400 leading-relaxed" data-i18n="feat_3_desc">A vehicle reported in one district can be checked when encountered elsewhere.</p>
-                    </div>
-
-                    <!-- Feature 4 -->
-                    <div class="p-6 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition">
-                        <div class="w-12 h-12 rounded-xl bg-purple-600/20 text-purple-400 flex items-center justify-center text-2xl mb-4">🔐</div>
-                        <h4 class="text-lg font-bold text-white mb-2" data-i18n="feat_4_title">Secure Access</h4>
-                        <p class="text-sm text-slate-400 leading-relaxed" data-i18n="feat_4_desc">Role-based police dashboard concept with audit logging and authentication.</p>
-                    </div>
-
-                    <!-- Feature 5 -->
-                    <div class="p-6 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition">
-                        <div class="w-12 h-12 rounded-xl bg-rose-600/20 text-rose-400 flex items-center justify-center text-2xl mb-4">🚨</div>
-                        <h4 class="text-lg font-bold text-white mb-2" data-i18n="feat_5_title">Instant Alerts</h4>
-                        <p class="text-sm text-slate-400 leading-relaxed" data-i18n="feat_5_desc">Immediate result when a demo stolen-vehicle match is found.</p>
-                    </div>
-
-                    <!-- Feature 6 -->
-                    <div class="p-6 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition">
-                        <div class="w-12 h-12 rounded-xl bg-amber-600/20 text-amber-400 flex items-center justify-center text-2xl mb-4">📋</div>
-                        <h4 class="text-lg font-bold text-white mb-2" data-i18n="feat_6_title">Complaint Tracking</h4>
-                        <p class="text-sm text-slate-400 leading-relaxed" data-i18n="feat_6_desc">Users can track submitted complaint references and FIR progress online.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Security & Architecture Section -->
-        <section class="py-16 bg-slate-900/40 border-b border-slate-800">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="bg-gradient-to-br from-slate-900 to-[#0c1424] border border-slate-700/80 rounded-2xl p-8 lg:p-12">
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                        <div class="lg:col-span-8 space-y-4">
-                            <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-blue-900/60 text-blue-300 border border-blue-500/40 uppercase">SECURITY & PRIVACY FRAMEWORK</span>
-                            <h3 class="text-2xl sm:text-3xl font-extrabold text-white">Designed with High-Standard Law Enforcement Security Controls</h3>
-                            <p class="text-sm text-slate-300 leading-relaxed">
-                                The VehicleGuard AI prototype incorporates conceptual zero-trust verification, role-based officer access control (RBAC), end-to-end lookup encryption, minimal personal-data exposure, and tamper-evident audit logging for all license plate queries.
-                            </p>
-                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-2 text-xs text-slate-300 font-medium">
-                                <div class="flex items-center space-x-2"><span>🛡️</span><span>Role-Based Access</span></div>
-                                <div class="flex items-center space-x-2"><span>📜</span><span>Audit Trail Logging</span></div>
-                                <div class="flex items-center space-x-2"><span>🔒</span><span>Minimal PII Exposure</span></div>
-                                <div class="flex items-center space-x-2"><span>⏱️</span><span>Session Auto-Expiry</span></div>
-                                <div class="flex items-center space-x-2"><span>📡</span><span>Authorized API Bridge</span></div>
-                                <div class="flex items-center space-x-2"><span>🛡️</span><span>Privacy First</span></div>
+                                <!-- Primary Call to Action Button: CHECK VEHICLE STATUS -->
+                                <button id="btn-check-vehicle" class="w-full py-4 px-6 rounded-xl font-black text-base tracking-wider uppercase bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:to-indigo-500 text-white shadow-xl shadow-blue-600/30 hover:scale-[1.02] active:scale-95 transition transform flex items-center justify-center space-x-3">
+                                    <span class="text-xl">🔍</span>
+                                    <span data-i18n="btn_confirm_check">CHECK VEHICLE STATUS</span>
+                                </button>
                             </div>
                         </div>
-                        <div class="lg:col-span-4 text-center lg:text-right">
-                            <a href="scan.html" class="inline-flex items-center px-6 py-3.5 rounded-xl font-bold text-sm bg-blue-600 hover:bg-blue-500 text-white shadow-xl shadow-blue-600/30 transition">
-                                Test Scanner Now →
+
+                        <!-- Dynamic In-Place Results Display Container -->
+                        <div id="scan-results-container" class="hidden space-y-4">
+
+                            <!-- Loading Spinner Card -->
+                            <div id="scan-loading-card" class="hidden p-8 rounded-2xl bg-slate-900 border border-slate-700 text-center space-y-3">
+                                <div class="w-10 h-10 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+                                <h4 class="font-bold text-white text-sm">Searching Stolen Vehicle Database...</h4>
+                                <p class="text-xs text-slate-400">Querying Tamil Nadu Police FIR repository hash & active alerts.</p>
+                            </div>
+
+                            <!-- 🔴 STOLEN VEHICLE ALERT CARD -->
+                            <div id="card-result-stolen" class="hidden bg-slate-900 border-2 border-rose-600 rounded-2xl p-5 sm:p-6 shadow-2xl strobe-alert relative overflow-hidden">
+                                <div class="flex items-start justify-between border-b border-rose-900/60 pb-3 mb-3">
+                                    <div class="space-y-1">
+                                        <span class="px-2.5 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-rose-600 text-white">IMMEDIATE POLICE ACTION REQUIRED</span>
+                                        <h3 class="text-lg sm:text-xl font-black text-rose-400" data-i18n="result_stolen_title">🔴 YES — STOLEN VEHICLE REPORT FOUND</h3>
+                                        <p class="text-xs text-rose-300" data-i18n="result_stolen_subtitle">ACTIVE THEFT COMPLAINT ON FILE</p>
+                                    </div>
+                                    <span class="text-3xl animate-bounce">🚨</span>
+                                </div>
+
+                                <!-- Stolen Vehicle Dossier Table -->
+                                <div class="bg-rose-950/30 border border-rose-900/50 rounded-xl p-3.5 space-y-1.5 text-xs mb-4">
+                                    <div class="flex justify-between py-1 border-b border-rose-900/30">
+                                        <span class="text-slate-400 font-medium" data-i18n="lbl_reg_no">Registration No:</span>
+                                        <span id="stolen-veh-num" class="font-mono font-black text-sm text-rose-200">TN09AB1234</span>
+                                    </div>
+                                    <div class="flex justify-between py-1 border-b border-rose-900/30">
+                                        <span class="text-slate-400 font-medium" data-i18n="lbl_make_model">Make & Model:</span>
+                                        <span id="stolen-make-model" class="font-semibold text-white">Royal Enfield Classic 350</span>
+                                    </div>
+                                    <div class="flex justify-between py-1 border-b border-rose-900/30">
+                                        <span class="text-slate-400 font-medium" data-i18n="lbl_veh_type">Vehicle Type:</span>
+                                        <span id="stolen-veh-type" class="text-slate-200">Motorcycle</span>
+                                    </div>
+                                    <div class="flex justify-between py-1 border-b border-rose-900/30">
+                                        <span class="text-slate-400 font-medium" data-i18n="lbl_color">Color:</span>
+                                        <span id="stolen-color" class="text-slate-200">Stealth Black</span>
+                                    </div>
+                                    <div class="flex justify-between py-1 border-b border-rose-900/30">
+                                        <span class="text-slate-400 font-medium" data-i18n="lbl_fir_complaint">FIR / Complaint Ref:</span>
+                                        <span id="stolen-fir-num" class="font-mono font-bold text-rose-300">FIR-2026-CHN-00412</span>
+                                    </div>
+                                    <div class="flex justify-between py-1 border-b border-rose-900/30">
+                                        <span class="text-slate-400 font-medium" data-i18n="lbl_police_station">Police Station:</span>
+                                        <span id="stolen-station" class="text-slate-200">T. Nagar Police Station (E-1)</span>
+                                    </div>
+                                    <div class="flex justify-between py-1 border-b border-rose-900/30">
+                                        <span class="text-slate-400 font-medium" data-i18n="lbl_theft_date">Complaint Date:</span>
+                                        <span id="stolen-date" class="text-slate-200">2026-08-18</span>
+                                    </div>
+                                    <div class="flex justify-between py-1">
+                                        <span class="text-slate-400 font-medium" data-i18n="lbl_district">District / City:</span>
+                                        <span id="stolen-district" class="text-slate-200">Chennai</span>
+                                    </div>
+                                </div>
+
+                                <!-- Action Buttons -->
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                    <button id="btn-view-dossier" class="py-2 px-3 bg-rose-700 hover:bg-rose-600 text-white rounded-lg text-xs font-bold transition flex items-center justify-center space-x-1.5" data-i18n="btn_view_fir">
+                                        <span>📄</span>
+                                        <span>View FIR Dossier</span>
+                                    </button>
+                                    <button id="btn-notify-supervisor" class="py-2 px-3 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold transition flex items-center justify-center space-x-1.5" data-i18n="btn_notify_sup">
+                                        <span>📡</span>
+                                        <span>Notify Control Room</span>
+                                    </button>
+                                    <button id="btn-print-verification" class="py-2 px-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 rounded-lg text-xs font-semibold transition flex items-center justify-center space-x-1.5" data-i18n="btn_print_report">
+                                        <span>🖨️</span>
+                                        <span>Print Verification</span>
+                                    </button>
+                                    <button onclick="document.getElementById('detected-plate-input').value=''; document.getElementById('detected-plate-input').focus();" class="py-2 px-3 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 rounded-lg text-xs font-semibold transition" data-i18n="btn_new_scan">
+                                        ⚡ New Scan
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 🟢 NO MATCH CLEAN RESULT CARD -->
+                            <div id="card-result-clean" class="hidden bg-slate-900 border-2 border-emerald-500 rounded-2xl p-5 sm:p-6 shadow-2xl glow-green">
+                                <div class="flex items-start justify-between border-b border-emerald-900/60 pb-3 mb-3">
+                                    <div class="space-y-1">
+                                        <span class="px-2.5 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-emerald-600 text-white">CHECKPOINT CLEARANCE</span>
+                                        <h3 class="text-lg sm:text-xl font-black text-emerald-400" data-i18n="result_clean_title">🟢 NO — NO STOLEN REPORT FOUND</h3>
+                                        <p class="text-xs text-emerald-300" data-i18n="result_clean_subtitle">ZERO ACTIVE THEFT RECORDS IN REPOSITORY</p>
+                                    </div>
+                                    <span class="text-2xl text-emerald-400 font-bold">✓</span>
+                                </div>
+
+                                <div class="bg-emerald-950/30 border border-emerald-800/50 rounded-xl p-3 mb-3 space-y-1.5 text-xs">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-slate-400 font-medium">Scanned Registration:</span>
+                                        <span id="clean-veh-num" class="font-mono font-bold text-sm text-emerald-300">TN07BK9988</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-slate-400 font-medium">Verification Timestamp:</span>
+                                        <span id="clean-timestamp" class="text-slate-300 font-mono">2026-08-25 17:40</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-slate-400 font-medium">Watchlist Status:</span>
+                                        <span class="text-emerald-400 font-semibold">Clean (No Active Complaints)</span>
+                                    </div>
+                                </div>
+
+                                <p class="text-[11px] text-slate-400 mb-3 leading-relaxed">
+                                    ⚠️ Standard SOP Reminder: This verification indicates no theft report is filed. Perform standard physical documentation checks as mandated.
+                                </p>
+
+                                <button onclick="document.getElementById('detected-plate-input').value=''; document.getElementById('detected-plate-input').focus();" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs sm:text-sm transition" data-i18n="btn_new_scan">
+                                    Scan Another Vehicle
+                                </button>
+                            </div>
+
+                            <!-- 🟡 VERIFICATION REQUIRED / UNREADABLE CARD -->
+                            <div id="card-result-verify" class="hidden bg-slate-900 border-2 border-amber-500 rounded-2xl p-5 sm:p-6 shadow-2xl">
+                                <div class="flex items-start justify-between border-b border-amber-900/60 pb-3 mb-3">
+                                    <div class="space-y-1">
+                                        <span class="px-2.5 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-amber-600 text-white">RE-CHECK NEEDED</span>
+                                        <h3 class="text-lg sm:text-xl font-black text-amber-400" data-i18n="result_verify_title">🟡 VERIFICATION REQUIRED</h3>
+                                        <p class="text-xs text-amber-300" data-i18n="result_verify_subtitle">UNREADABLE OR INCOMPLETE NUMBER PLATE</p>
+                                    </div>
+                                    <span class="text-2xl text-amber-400">⚠️</span>
+                                </div>
+
+                                <p class="text-xs text-slate-300 mb-4 verify-desc leading-relaxed" data-i18n="result_verify_desc">
+                                    Unable to read the number plate clearly. Please capture another image or enter the registration number manually.
+                                </p>
+
+                                <div class="grid grid-cols-2 gap-2">
+                                    <button onclick="startCamera()" class="py-2 px-3 bg-amber-600 hover:bg-amber-500 text-white font-bold rounded-lg text-xs transition" data-i18n="btn_try_again">
+                                        🔄 Try Again
+                                    </button>
+                                    <button onclick="document.getElementById('detected-plate-input').focus();" class="py-2 px-3 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold rounded-lg text-xs border border-slate-700 transition" data-i18n="btn_enter_manual">
+                                        ⌨️ Enter Manually
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Recent Terminal Scans Audit Trail Section -->
+                <div class="mt-10 bg-slate-900/90 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-3 border-b border-slate-800 gap-2 mb-4">
+                        <div>
+                            <h3 class="text-base font-bold text-white flex items-center space-x-2">
+                                <span>📜</span>
+                                <span data-i18n="tab_recent_scans">Recent Terminal Field Scans</span>
+                            </h3>
+                            <p class="text-[11px] text-slate-400">Local audit log of license plates verified at this terminal</p>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button onclick="renderRecentScansTable()" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs border border-slate-700 transition">
+                                🔄 Refresh Log
+                            </button>
+                            <a href="dashboard.html" class="px-3 py-1 bg-blue-600/20 text-blue-400 hover:bg-blue-600/30 rounded-lg text-xs border border-blue-500/30 transition">
+                                Police Dashboard →
                             </a>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
-    </main>
 
-    <!-- Professional Footer -->
-    <footer class="bg-slate-950 border-t border-slate-800 text-slate-400 text-xs py-10">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-                <div class="flex items-center space-x-3">
-                    <span class="text-2xl">🛡️</span>
-                    <div>
-                        <span class="font-extrabold text-base text-white" data-i18n="brand_name">VehicleGuard AI</span>
-                        <p class="text-slate-500" data-i18n="brand_subtitle">AI-Powered Stolen Vehicle Detection & Verification</p>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-xs">
+                            <thead>
+                                <tr class="text-slate-400 border-b border-slate-800 uppercase tracking-wider font-mono text-[10px]">
+                                    <th class="py-2.5 px-3">Vehicle Number</th>
+                                    <th class="py-2.5 px-3">Timestamp</th>
+                                    <th class="py-2.5 px-3">Verdict</th>
+                                    <th class="py-2.5 px-3 hidden md:table-cell">Checkpoint Location</th>
+                                    <th class="py-2.5 px-3">Details</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recent-scans-tbody">
+                                <!-- Populated dynamically by js/scanner.js -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
-                <div class="flex flex-wrap items-center gap-6">
-                    <a href="help.html#privacy" class="hover:text-slate-200 transition">Privacy Policy</a>
-                    <a href="help.html#security" class="hover:text-slate-200 transition">Security Architecture</a>
-                    <a href="help.html" class="hover:text-slate-200 transition">Help & SOP</a>
-                    <a href="help.html#terms" class="hover:text-slate-200 transition">Terms of Use</a>
-                    <a href="help.html#contact" class="hover:text-slate-200 transition">Control Room Contact</a>
+            </div>
+        </section>
+
+        <!-- =========================================================================
+             3. SECONDARY SUPPORTING SECTION:
+                - Law Enforcement Field SOP Workflow (4 Simple Steps)
+                - System Capabilities & Security Integrity
+             ========================================================================= -->
+        <section class="py-12 bg-slate-900/60 dark:bg-[#081020] border-b border-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-2xl mx-auto mb-10">
+                    <span class="text-[11px] font-mono uppercase tracking-widest text-amber-400 font-bold block mb-1">STANDARD OPERATING PROCEDURE</span>
+                    <h3 class="text-xl sm:text-2xl font-black text-white" data-i18n="workflow_title">Checkpoint Verification Workflow</h3>
+                    <p class="text-slate-400 text-xs mt-1">Field protocol for police officers during routine checkpoint inspections.</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Step 1 -->
+                    <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 hover:border-amber-500/40 transition">
+                        <div class="w-9 h-9 rounded-lg bg-blue-900/50 text-blue-400 flex items-center justify-center font-bold text-base mb-2.5">
+                            🚗
+                        </div>
+                        <h4 class="font-bold text-white text-xs mb-1" data-i18n="step_1_title">1. Vehicle Checkpoint</h4>
+                        <p class="text-[11px] text-slate-400 leading-relaxed" data-i18n="step_1_desc">Target incoming vehicle at routine junction or patrol checkpost.</p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 hover:border-amber-500/40 transition">
+                        <div class="w-9 h-9 rounded-lg bg-indigo-900/50 text-indigo-400 flex items-center justify-center font-bold text-base mb-2.5">
+                            📷
+                        </div>
+                        <h4 class="font-bold text-white text-xs mb-1" data-i18n="step_2_title">2. Camera ANPR Scan</h4>
+                        <p class="text-[11px] text-slate-400 leading-relaxed" data-i18n="step_2_desc">Capture plate image via terminal camera or enter number directly.</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 hover:border-amber-500/40 transition">
+                        <div class="w-9 h-9 rounded-lg bg-cyan-900/50 text-cyan-400 flex items-center justify-center font-bold text-base mb-2.5">
+                            🧠
+                        </div>
+                        <h4 class="font-bold text-white text-xs mb-1" data-i18n="step_4_title">3. Stolen DB Hash Query</h4>
+                        <p class="text-[11px] text-slate-400 leading-relaxed" data-i18n="step_4_desc">Instant search against stolen vehicle FIRs and missing registries.</p>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 hover:border-amber-500/40 transition">
+                        <div class="w-9 h-9 rounded-lg bg-rose-900/50 text-rose-400 flex items-center justify-center font-bold text-base mb-2.5">
+                            🚨
+                        </div>
+                        <h4 class="font-bold text-white text-xs mb-1" data-i18n="step_5_title">4. Immediate Verdict</h4>
+                        <p class="text-[11px] text-slate-400 leading-relaxed" data-i18n="step_5_desc">Instant RED (Stolen Alert) or GREEN (Clear) response with SOP directives.</p>
+                    </div>
+                </div>
+
+                <!-- Quick Access Service Cards -->
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <a href="report.html" class="p-5 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 hover:border-amber-500/50 transition group flex items-start space-x-3.5">
+                        <div class="text-2xl p-2 rounded-xl bg-amber-500/10 text-amber-400 group-hover:scale-110 transition">📝</div>
+                        <div>
+                            <h4 class="text-sm font-bold text-white group-hover:text-amber-400 transition" data-i18n="hero_btn_report">Report Stolen Vehicle</h4>
+                            <p class="text-[11px] text-slate-400 mt-0.5">Citizens can submit stolen vehicle reports for police verification.</p>
+                        </div>
+                    </a>
+
+                    <a href="status.html" class="p-5 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 hover:border-blue-500/50 transition group flex items-start space-x-3.5">
+                        <div class="text-2xl p-2 rounded-xl bg-blue-500/10 text-blue-400 group-hover:scale-110 transition">🔍</div>
+                        <div>
+                            <h4 class="text-sm font-bold text-white group-hover:text-blue-400 transition">Track Complaint Status</h4>
+                            <p class="text-[11px] text-slate-400 mt-0.5">Check real-time status of your submitted stolen vehicle reference.</p>
+                        </div>
+                    </a>
+
+                    <a href="dashboard.html" class="p-5 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 hover:border-emerald-500/50 transition group flex items-start space-x-3.5">
+                        <div class="text-2xl p-2 rounded-xl bg-emerald-500/10 text-emerald-400 group-hover:scale-110 transition">📊</div>
+                        <div>
+                            <h4 class="text-sm font-bold text-white group-hover:text-emerald-400 transition" data-i18n="nav_dashboard">Police Intelligence Dashboard</h4>
+                            <p class="text-[11px] text-slate-400 mt-0.5">District analytics, FIR repository management, and scan logs.</p>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Professional Police IT System Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800 text-slate-400 text-xs py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center space-x-3">
+                    <img src="images/lion.jfif" alt="Emblem" class="w-8 h-8 rounded-lg object-cover border border-amber-500/50">
+                    <div>
+                        <span class="font-extrabold text-sm text-white" data-i18n="brand_name">VehicleGuard AI</span>
+                        <p class="text-[11px] text-slate-400" data-i18n="brand_subtitle">Tamil Nadu Police Stolen Vehicle Verification Portal</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-5 text-[11px]">
+                    <a href="help.html#privacy" class="hover:text-slate-200 transition">Privacy Framework</a>
+                    <a href="help.html#security" class="hover:text-slate-200 transition">Security Protocol</a>
+                    <a href="help.html" class="hover:text-slate-200 transition">Officer SOP & FAQ</a>
+                    <a href="login.html" class="hover:text-slate-200 transition">Officer Login</a>
                 </div>
             </div>
 
-            <!-- Prominent Demo Warning in Footer -->
-            <div class="p-3.5 bg-slate-900/80 border border-slate-800 rounded-lg text-center text-slate-400">
+            <!-- Demo Warning in Footer -->
+            <div class="p-3 bg-slate-900/80 border border-slate-800 rounded-lg text-center text-slate-400 text-[11px]">
                 <p class="font-bold text-slate-300 mb-0.5" data-i18n="demo_footer_disclaimer">DEMO PROTOTYPE — NOT CONNECTED TO LIVE GOVERNMENT SYSTEMS</p>
-                <p class="text-[11px] text-slate-400">This frontend prototype is created for technical demonstration and college portfolio evaluation purposes only. No official government seals or live citizen data are used.</p>
+                <p class="text-[10px] text-slate-500">This frontend prototype is created for technical demonstration and portfolio evaluation purposes only.</p>
             </div>
 
-            <div class="flex flex-col sm:flex-row items-center justify-between text-slate-400 text-[11px] pt-4 border-t border-slate-800/80">
-                <div>&copy; 2026 VehicleGuard AI Public Safety Prototype. All Rights Reserved.</div>
-                <div class="mt-2 sm:mt-0 font-mono text-slate-400">Tactical Build: v2.4-TN-ANPR</div>
+            <div class="flex flex-col sm:flex-row items-center justify-between text-slate-500 text-[10px] pt-3 border-t border-slate-800/80">
+                <div>&copy; 2026 Tamil Nadu Police • VehicleGuard AI Prototype. All Rights Reserved.</div>
+                <div class="font-mono">Tactical Build: v2.5-TN-ANPR</div>
             </div>
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- Core Scripts -->
     <script src="js/translations.js"></script>
     <script src="js/app.js"></script>
-    <script>
-        // Hero quick check logic
-        document.addEventListener('DOMContentLoaded', () => {
-            const btn = document.getElementById('btn-hero-check');
-            const input = document.getElementById('hero-quick-plate');
-            const output = document.getElementById('hero-quick-output');
-
-            if (btn && input && output) {
-                btn.addEventListener('click', () => {
-                    const raw = input.value.trim();
-                    if (!raw) {
-                        showToast("Please enter a vehicle registration number.", "warning");
-                        return;
-                    }
-                    const normalized = normalizeVehicleNumber(raw);
-                    const db = getStolenDatabase();
-                    const match = db.find(s => normalizeVehicleNumber(s.vehicleNumber) === normalized);
-
-                    output.classList.remove('hidden');
-                    if (match) {
-                        playAlertSound('stolen');
-                        output.className = "p-4 rounded-xl border border-rose-500/60 bg-rose-950/60 text-rose-200 strobe-alert";
-                        output.innerHTML = `
-                            <div class="flex items-center justify-between mb-1">
-                                <span class="font-extrabold text-sm text-rose-300">🔴 STOLEN REPORT FOUND</span>
-                                <span class="font-mono text-xs text-rose-300">${match.vehicleNumber}</span>
-                            </div>
-                            <p class="text-xs text-rose-200">${match.make} ${match.model} — FIR: ${match.complaintNumber} (${match.policeStation})</p>
-                            <a href="scan.html" class="mt-2 inline-block text-xs font-bold text-white underline">Open Full Scanner Verification →</a>
-                        `;
-                    } else {
-                        playAlertSound('clean');
-                        output.className = "p-4 rounded-xl border border-emerald-500/60 bg-emerald-950/60 text-emerald-200";
-                        output.innerHTML = `
-                            <div class="flex items-center justify-between mb-1">
-                                <span class="font-extrabold text-sm text-emerald-300">🟢 NO STOLEN REPORT FOUND</span>
-                                <span class="font-mono text-xs text-emerald-300">${normalized}</span>
-                            </div>
-                            <p class="text-xs text-emerald-300">No active theft record exists in demo database.</p>
-                            <a href="scan.html" class="mt-2 inline-block text-xs font-bold text-white underline">Open Full Scanner →</a>
-                        `;
-                    }
-                });
-            }
-        });
-    </script>
+    <script src="js/scanner.js"></script>
 </body>
 </html>

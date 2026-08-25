@@ -33,20 +33,22 @@
     <header class="sticky top-0 z-40 bg-slate-900/90 dark:bg-[#0d1527]/95 backdrop-blur-md border-b border-slate-800 transition-colors">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
-                <a href="index.html" class="flex items-center space-x-3 group">
-                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 via-indigo-600 to-slate-900 p-0.5 shadow-lg shadow-blue-500/20 group-hover:scale-105 transition transform">
-                        <div class="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center border border-blue-400/30">
-                            <span class="text-2xl">🛡️</span>
+                <!-- Single Ashoka Four Lions Emblem Logo & Title -->
+                <div class="flex items-center space-x-3">
+                    <a href="index.html" class="flex items-center space-x-3.5 group">
+                        <div class="relative flex items-center justify-center p-1 rounded-xl bg-gradient-to-br from-amber-400/30 via-slate-900 to-slate-950 border-2 border-amber-400/80 shadow-lg shadow-amber-500/30 group-hover:scale-105 transition transform overflow-hidden w-12 h-12 sm:w-14 sm:h-14">
+                            <!-- Bright, Clear Ashoka Four Lions Logo from images/lion.jfif -->
+                            <img src="images/lion.jfif" alt="State Emblem of India - Four Lions" class="w-full h-full object-cover rounded-lg filter brightness-110 contrast-110 drop-shadow-[0_0_10px_rgba(245,158,11,0.6)]">
                         </div>
-                    </div>
-                    <div>
-                        <div class="flex items-center space-x-2">
-                            <span class="font-extrabold text-xl tracking-tight text-white group-hover:text-blue-400 transition" data-i18n="brand_name">VehicleGuard AI</span>
-                            <span class="text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded bg-blue-900/60 text-blue-300 border border-blue-500/40">PROTOTYPE</span>
+                        <div>
+                            <div class="flex items-center space-x-2">
+                                <span class="font-black text-lg sm:text-xl tracking-tight text-white group-hover:text-amber-400 transition uppercase">Tamil Nadu Police</span>
+                                <span class="text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">OFFICIAL</span>
+                            </div>
+                            <p class="text-[11px] text-slate-300 hidden sm:block tracking-wide font-medium">VehicleGuard AI • Law Enforcement Verification System</p>
                         </div>
-                        <p class="text-xs text-slate-400 hidden sm:block tracking-wide" data-i18n="brand_subtitle">AI-Powered Stolen Vehicle Detection & Verification</p>
-                    </div>
-                </a>
+                    </a>
+                </div>
 
                 <nav class="hidden lg:flex items-center space-x-1">
                     <a href="index.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_home">Home</a>
@@ -97,14 +99,15 @@
             <!-- Login Card -->
             <div class="bg-slate-900/95 border-2 border-slate-700/80 rounded-2xl p-8 shadow-2xl space-y-6 relative overflow-hidden">
                 
-                <div class="text-center space-y-2">
-                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-600 via-indigo-600 to-slate-900 p-0.5 shadow-xl shadow-blue-500/20 mx-auto flex items-center justify-center">
-                        <div class="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center text-3xl">
-                            👮
-                        </div>
+                <div class="text-center space-y-3">
+                    <div class="flex items-center justify-center space-x-3 bg-slate-950/80 p-3 rounded-2xl border border-slate-700/80 shadow-xl max-w-fit mx-auto">
+                        <img src="images/tn_state_emblem.svg" alt="Government of Tamil Nadu" class="w-14 h-14 object-contain">
+                        <img src="images/tn_police_emblem.svg" alt="Tamil Nadu Police" class="w-14 h-14 object-contain">
                     </div>
-                    <h2 class="text-2xl font-black text-white" data-i18n="login_title">Tamil Nadu Police IT Portal</h2>
-                    <p class="text-xs text-slate-400" data-i18n="login_subtitle">Authorized Law Enforcement Checkpoint Access</p>
+                    <div>
+                        <h2 class="text-2xl font-black text-white" data-i18n="login_title">Tamil Nadu Police IT Portal</h2>
+                        <p class="text-xs text-slate-400 mt-0.5" data-i18n="login_subtitle">Authorized Law Enforcement Checkpoint Access</p>
+                    </div>
                 </div>
 
                 <!-- Prototype Warning Banner -->
