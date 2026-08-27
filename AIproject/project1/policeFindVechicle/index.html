@@ -39,31 +39,30 @@
         <span>⚠️</span>
     </div>
 
-    <!-- Main Navigation Header (Clean & Professional with ONLY ONE Logo: Four Lions Emblem) -->
-    <header class="sticky top-0 z-40 bg-slate-900/95 dark:bg-[#070e1e]/95 backdrop-blur-md border-b border-amber-500/20 transition-colors shadow-xl shadow-black/40">
+    <!-- Main Navigation Header (Clean & Professional Police Portal) -->
+    <header class="sticky top-0 z-40 bg-slate-900/95 dark:bg-[#070e1e]/95 backdrop-blur-md border-b border-slate-800 transition-colors shadow-xl shadow-black/40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
                 
-                <!-- ONLY ONE LOGO: Bright, Clear, and Highly Visible Four Lions / Ashoka Emblem -->
+                <!-- Creative & Professional Police Siren Logo & Title -->
                 <div class="flex items-center space-x-3">
-                    <a href="index.html" class="flex items-center space-x-3.5 group">
-                        <div class="relative flex items-center justify-center p-1 rounded-xl bg-gradient-to-br from-amber-400/30 via-slate-900 to-slate-950 border-2 border-amber-400/80 shadow-lg shadow-amber-500/30 group-hover:scale-105 transition transform overflow-hidden w-12 h-12 sm:w-14 sm:h-14">
-                            <!-- Bright, Clear Ashoka Four Lions Logo from images/lion.jfif -->
-                            <img src="images/lion.jfif" alt="State Emblem of India - Four Lions" class="w-full h-full object-cover rounded-lg filter brightness-110 contrast-110 drop-shadow-[0_0_10px_rgba(245,158,11,0.6)]">
+                    <a href="index.html" class="flex items-center space-x-3 group">
+                        <div class="relative flex items-center justify-center p-1 rounded-xl bg-slate-950 border border-slate-700/80 shadow-md group-hover:scale-105 transition transform w-11 h-11 sm:w-12 sm:h-12 overflow-hidden">
+                            <img src="images/police_siren_logo.svg" alt="Police Siren Beacon" class="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]">
                         </div>
                         <div>
                             <div class="flex items-center space-x-2">
-                                <span class="font-black text-lg sm:text-xl tracking-tight text-white group-hover:text-amber-400 transition uppercase">Tamil Nadu Police</span>
-                                <span class="text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">OFFICIAL</span>
+                                <span class="font-black text-lg sm:text-xl tracking-tight text-white group-hover:text-blue-400 transition uppercase">VehicleGuard AI</span>
+                                <span class="text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/40">POLICE IT</span>
                             </div>
-                            <p class="text-[11px] text-slate-300 hidden sm:block tracking-wide font-medium">VehicleGuard AI • Law Enforcement Verification System</p>
+                            <p class="text-[11px] text-slate-300 hidden sm:block tracking-wide font-medium">Stolen Vehicle Detection & ANPR Verification System</p>
                         </div>
                     </a>
                 </div>
 
                 <!-- Desktop Navigation Links -->
                 <nav class="hidden lg:flex items-center space-x-1">
-                    <a href="index.html" class="px-3.5 py-2 rounded-lg text-sm font-semibold text-amber-400 bg-slate-800/90 transition" data-i18n="nav_home">Home</a>
+                    <a href="index.html" class="px-3.5 py-2 rounded-lg text-sm font-semibold text-blue-400 bg-slate-800/90 transition" data-i18n="nav_home">Home</a>
                     <a href="scan.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_scan">Vehicle Scan</a>
                     <a href="report.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_report">Report Vehicle</a>
                     <a href="status.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_status">Check Status</a>
@@ -85,20 +84,24 @@
                         <span class="theme-icon text-sm">🌙</span>
                     </button>
 
-                    <!-- Police Login or Badge -->
-                    <div id="nav-auth-container">
-                        <a id="nav-login-link" href="login.html" class="px-3.5 py-2 rounded-lg text-xs font-semibold text-slate-300 hover:text-white border border-slate-700 hover:border-slate-500 bg-slate-800/60 transition" data-i18n="nav_login">
-                            👮 Police Login
+                    <!-- Police Login or Badge (Unified Single-Line Flex Pill) -->
+                    <div id="nav-auth-container" class="flex-shrink-0 flex items-center">
+                        <a id="nav-login-link" href="login.html" class="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-slate-200 hover:text-white border border-slate-700/80 hover:border-blue-500/60 bg-slate-800/80 hover:bg-slate-700/90 shadow-sm transition whitespace-nowrap flex-shrink-0">
+                            <span class="text-sm">👮</span>
+                            <span data-i18n="nav_login">Police Login</span>
                         </a>
-                        <div id="nav-user-badge" class="hidden items-center space-x-2 px-3 py-1.5 rounded-lg bg-blue-950/70 border border-blue-500/50 text-blue-300 text-xs">
-                            <span>👮</span>
-                            <span id="nav-officer-name" class="font-mono font-semibold">DEMO001</span>
-                            <button id="btn-nav-logout" type="button" class="btn-logout text-rose-400 hover:text-rose-300 hover:underline ml-2 text-xs font-bold" data-i18n="nav_logout">Logout</button>
+                        <div id="nav-user-badge" class="hidden items-center space-x-2 px-3 py-1.5 rounded-xl bg-slate-800/90 border border-blue-500/40 text-xs shadow-md shrink-0 whitespace-nowrap">
+                            <div class="flex items-center space-x-1.5">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                <span class="text-blue-300 font-mono font-bold" id="nav-officer-id">DEMO001</span>
+                                <span class="text-slate-300 font-medium text-[11px] hidden xl:inline" id="nav-officer-rank">• SI Arumugam</span>
+                            </div>
+                            <button id="btn-nav-logout" type="button" class="btn-logout px-2.5 py-1 rounded-lg bg-rose-600/90 hover:bg-rose-500 text-white text-[11px] font-bold transition shadow-sm" data-i18n="nav_logout">Logout</button>
                         </div>
                     </div>
 
                     <!-- Jump to Scanner CTA -->
-                    <a href="#main-scanner-section" class="inline-flex items-center px-4 py-2 rounded-xl text-xs font-extrabold tracking-wider uppercase bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-slate-950 shadow-lg shadow-amber-500/30 hover:scale-105 transition transform">
+                    <a href="#main-scanner-section" class="inline-flex items-center px-4 py-2 rounded-xl text-xs font-extrabold tracking-wider uppercase bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white shadow-lg shadow-blue-600/30 hover:scale-105 transition transform whitespace-nowrap flex-shrink-0">
                         ⚡ QUICK SCAN
                     </a>
                 </div>
@@ -119,7 +122,7 @@
 
         <!-- Mobile Navigation Menu -->
         <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-800 bg-slate-900/95 px-4 pt-3 pb-6 space-y-2">
-            <a href="index.html" class="block px-3 py-2 rounded-lg text-base font-semibold text-amber-400 bg-slate-800" data-i18n="nav_home">Home</a>
+            <a href="index.html" class="block px-3 py-2 rounded-lg text-base font-semibold text-blue-400 bg-slate-800" data-i18n="nav_home">Home</a>
             <a href="scan.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:bg-slate-800" data-i18n="nav_scan">Vehicle Scan</a>
             <a href="report.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:bg-slate-800" data-i18n="nav_report">Report Vehicle</a>
             <a href="status.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:bg-slate-800" data-i18n="nav_status">Check Status</a>
@@ -127,13 +130,19 @@
             <a href="help.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:bg-slate-800" data-i18n="nav_help">Help & FAQ</a>
             
             <div id="mobile-auth-section" class="pt-2 border-t border-slate-800">
-                <a id="mobile-login-link" href="login.html" class="block px-3 py-2 rounded-lg text-base font-semibold text-amber-400 bg-slate-800/80" data-i18n="nav_login">👮 Police Login</a>
-                <div id="mobile-user-badge" class="hidden flex-col space-y-2 p-3 bg-blue-950/70 border border-blue-500/50 rounded-xl">
-                    <div class="flex items-center space-x-2 text-blue-300 text-xs">
-                        <span>👮</span>
-                        <span id="mobile-officer-name" class="font-mono font-bold">DEMO001</span>
+                <a id="mobile-login-link" href="login.html" class="inline-flex items-center space-x-2 w-full px-3.5 py-2.5 rounded-xl text-sm font-bold text-blue-400 bg-slate-800/90 hover:bg-slate-700 border border-slate-700/70 transition whitespace-nowrap">
+                    <span class="text-base">👮</span>
+                    <span data-i18n="nav_login">Police Login</span>
+                </a>
+                <div id="mobile-user-badge" class="hidden flex-col space-y-2 p-3 bg-slate-800/90 border border-blue-500/40 rounded-xl whitespace-nowrap">
+                    <div class="flex items-center justify-between text-xs">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                            <span id="mobile-officer-name" class="font-bold text-white">DEMO001</span>
+                        </div>
+                        <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-blue-900/60 text-blue-300 border border-blue-500/40">ON DUTY</span>
                     </div>
-                    <button id="btn-mobile-logout" type="button" class="btn-logout w-full py-2 bg-rose-900/60 hover:bg-rose-800 text-rose-200 rounded-lg text-xs font-bold transition" data-i18n="nav_logout">
+                    <button id="btn-mobile-logout" type="button" class="btn-logout w-full py-2 bg-rose-600 hover:bg-rose-500 text-white rounded-lg text-xs font-bold transition shadow-md" data-i18n="nav_logout">
                         Logout from Portal
                     </button>
                 </div>
@@ -151,91 +160,6 @@
 
     <!-- Main Content Area -->
     <main class="flex-grow">
-        
-        <!-- =========================================================================
-             1. TOP SHOWCASE HEADER:
-                - Tamil Nadu / Srivilliputhur Gopuram Image (Prominently at Top)
-                - "Truth and Triumph" (வாய்மையே வெல்லும்) in Bold Professional Typography
-                - Clean Live Status / Telemetry Information Section
-             ========================================================================= -->
-        <section class="relative overflow-hidden pt-8 pb-10 md:pt-10 md:pb-12 bg-gradient-to-b from-[#081226] via-[#0a152e] to-[#070d18] border-b border-amber-500/20 text-center">
-            <!-- Subtle Radial Ambient Glow -->
-            <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(245,158,11,0.12),transparent_70%)] pointer-events-none"></div>
-
-            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-4">
-                
-                <!-- Tamil Nadu / Srivilliputhur Gopuram Crest (Prominent, Elegant, Visually Attractive) -->
-                <div class="flex flex-col items-center justify-center">
-                    <div class="relative p-1 rounded-2xl bg-gradient-to-b from-amber-400/40 via-blue-900/30 to-slate-950 border-2 border-amber-400/70 shadow-2xl shadow-amber-500/30 hover:scale-105 transition transform duration-300 w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 overflow-hidden flex items-center justify-center">
-                        <!-- Srivilliputhur Gopuram Emblem from images/tamilnadu.jfif -->
-                        <img src="images/tamilnadu.jfif" alt="Government of Tamil Nadu - Srivilliputhur Gopuram Emblem" class="w-full h-full object-cover rounded-xl filter brightness-110 contrast-105 drop-shadow-[0_0_12px_rgba(245,158,11,0.5)]">
-                    </div>
-                    <div class="mt-2.5">
-                        <span class="text-xs sm:text-sm font-bold uppercase tracking-[0.25em] text-amber-300 block">
-                            தமிழ்நாடு அரசு • GOVERNMENT OF TAMIL NADU
-                        </span>
-                        <span class="text-[11px] font-mono text-slate-400 uppercase tracking-widest block">
-                            Tamil Nadu Police Department • Stolen Vehicle Verification Portal
-                        </span>
-                    </div>
-                </div>
-
-                <!-- "Truth and Triumph" Professional Typography Style -->
-                <div class="pt-1 pb-1 space-y-1.5">
-                    <div class="inline-flex items-center space-x-3 px-5 sm:px-8 py-2 rounded-2xl bg-amber-950/50 border-2 border-amber-400/80 shadow-2xl shadow-amber-500/20">
-                        <span class="text-lg sm:text-xl">🏛️</span>
-                        <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-100 via-amber-300 to-yellow-400 uppercase">
-                            “ Truth and Triumph ”
-                        </h1>
-                        <span class="text-lg sm:text-xl">🏛️</span>
-                    </div>
-
-                    <div class="text-center">
-                        <p class="text-lg sm:text-xl md:text-2xl font-black text-amber-300/95 tracking-wide font-tamil">
-                            வாய்மையே வெல்லும்
-                        </p>
-                        <p class="text-xs sm:text-sm text-slate-300 max-w-xl mx-auto mt-1 leading-relaxed">
-                            Official AI-Powered License Plate Verification & Instant Stolen Vehicle Detection System
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Clean Status / Information Section -->
-                <div class="pt-2 max-w-3xl mx-auto">
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 text-left">
-                        <div class="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center space-x-2.5">
-                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
-                            <div>
-                                <div class="text-[10px] text-slate-400 uppercase font-mono">ANPR ENGINE</div>
-                                <div class="text-xs font-bold text-emerald-400 font-mono">ONLINE • v4.2</div>
-                            </div>
-                        </div>
-                        <div class="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center space-x-2.5">
-                            <span class="text-base">📍</span>
-                            <div>
-                                <div class="text-[10px] text-slate-400 uppercase font-mono">JURISDICTION</div>
-                                <div class="text-xs font-bold text-white font-mono">38 TN DISTRICTS</div>
-                            </div>
-                        </div>
-                        <div class="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center space-x-2.5">
-                            <span class="text-base">⚡</span>
-                            <div>
-                                <div class="text-[10px] text-slate-400 uppercase font-mono">QUERY SPEED</div>
-                                <div class="text-xs font-bold text-amber-400 font-mono">&lt; 1.2s INSTANT</div>
-                            </div>
-                        </div>
-                        <div class="p-2.5 rounded-xl bg-slate-900/90 border border-slate-800 flex items-center space-x-2.5">
-                            <span class="text-base">🛡️</span>
-                            <div>
-                                <div class="text-[10px] text-slate-400 uppercase font-mono">THEFT WATCHLIST</div>
-                                <div class="text-xs font-bold text-blue-400 font-mono">ACTIVE REPOSITORY</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
 
         <!-- =========================================================================
              2. VEHICLE SCANNING FEATURE — FRONT AND CENTER PRIMARY FOCUS OF PAGE
@@ -701,10 +625,12 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5">
             <div class="flex flex-col md:flex-row items-center justify-between gap-4">
                 <div class="flex items-center space-x-3">
-                    <img src="images/lion.jfif" alt="Emblem" class="w-8 h-8 rounded-lg object-cover border border-amber-500/50">
+                    <div class="w-8 h-8 rounded-lg p-0.5 bg-slate-900 border border-slate-700 flex items-center justify-center">
+                        <img src="images/police_siren_logo.svg" alt="VehicleGuard Police Siren" class="w-full h-full object-contain">
+                    </div>
                     <div>
                         <span class="font-extrabold text-sm text-white" data-i18n="brand_name">VehicleGuard AI</span>
-                        <p class="text-[11px] text-slate-400" data-i18n="brand_subtitle">Tamil Nadu Police Stolen Vehicle Verification Portal</p>
+                        <p class="text-[11px] text-slate-400" data-i18n="brand_subtitle">Law Enforcement Stolen Vehicle Verification Portal</p>
                     </div>
                 </div>
 

@@ -503,33 +503,38 @@ function initHeaderAndNav() {
 
     // Auth status badge in nav
     updateNavAuthBadge();
-
-    // Universal Logout Button Binding
-    document.querySelectorAll('#btn-nav-logout, .btn-logout, #btn-mobile-logout').forEach(btn => {
-        btn.addEventListener('click', handleLogout);
-    });
 }
 
 /**
  * Universal Logout Handler
  */
 function handleLogout(e) {
-    if (e) e.preventDefault();
+    if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
     localStorage.removeItem('vg_auth');
+    sessionStorage.removeItem('vg_auth');
     updateNavAuthBadge();
     showToast(getCurrentLanguage() === 'ta' ? 'வெற்றிகரமாக வெளியேறியது.' : 'Logged out successfully.', 'info', 2000);
     
-    // If currently on dashboard, redirect to login page or home
-    if (window.location.pathname.includes('dashboard.html')) {
-        setTimeout(() => {
+    // Redirect cleanly
+    setTimeout(() => {
+        if (window.location.pathname.includes('dashboard.html')) {
             window.location.href = 'login.html';
-        }, 600);
-    } else {
-        setTimeout(() => {
-            window.location.reload();
-        }, 500);
-    }
+        } else {
+            window.location.href = 'index.html';
+        }
+    }, 350);
 }
+
+// Global delegated click listener for any logout button across the entire page
+document.addEventListener('click', (e) => {
+    const logoutBtn = e.target.closest('#btn-nav-logout, .btn-logout, #btn-mobile-logout');
+    if (logoutBtn) {
+        handleLogout(e);
+    }
+});
 
 /**
  * Check and render auth state in navbar (Desktop & Mobile)
@@ -549,6 +554,8 @@ function updateNavAuthBadge() {
     // Desktop Nav Elements
     const navLoginLink = document.getElementById('nav-login-link');
     const navUserBadge = document.getElementById('nav-user-badge');
+    const navOfficerId = document.getElementById('nav-officer-id');
+    const navOfficerRank = document.getElementById('nav-officer-rank');
     const navOfficerName = document.getElementById('nav-officer-name');
 
     // Mobile Menu Elements
@@ -560,8 +567,10 @@ function updateNavAuthBadge() {
         if (navLoginLink) navLoginLink.classList.add('hidden');
         if (navUserBadge) {
             navUserBadge.classList.remove('hidden');
-            navUserBadge.classList.add('flex');
-            if (navOfficerName) navOfficerName.textContent = `${officer.id} (${officer.rank || 'Officer'})`;
+            navUserBadge.classList.add('inline-flex');
+            if (navOfficerId) navOfficerId.textContent = officer.id || 'DEMO001';
+            if (navOfficerRank) navOfficerRank.textContent = officer.name ? `• ${officer.name.split(' ').slice(0, 2).join(' ')}` : '• Officer';
+            if (navOfficerName) navOfficerName.textContent = `${officer.id} (SI)`;
         }
 
         if (mobileLoginLink) mobileLoginLink.classList.add('hidden');
@@ -571,10 +580,13 @@ function updateNavAuthBadge() {
             if (mobileOfficerName) mobileOfficerName.textContent = `${officer.name || officer.id} (${officer.id})`;
         }
     } else {
-        if (navLoginLink) navLoginLink.classList.remove('hidden');
+        if (navLoginLink) {
+            navLoginLink.classList.remove('hidden');
+            navLoginLink.classList.add('inline-flex');
+        }
         if (navUserBadge) {
             navUserBadge.classList.add('hidden');
-            navUserBadge.classList.remove('flex');
+            navUserBadge.classList.remove('inline-flex', 'flex');
         }
 
         if (mobileLoginLink) mobileLoginLink.classList.remove('hidden');
@@ -594,3 +606,4 @@ document.addEventListener('DOMContentLoaded', () => {
         setLanguage(lang);
     }
 });
+
