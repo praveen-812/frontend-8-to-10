@@ -1,382 +1,272 @@
 /**
  * VehicleGuard AI - Police Command & Intelligence Dashboard
- * Handles dynamic KPI computation, live plate search, filterable tables, 
- * CSV exports, Stolen Database management, and Citizen Submission Approval / FIR Promotion workflow.
+ * Manages KPI metrics, search console, scan audit logs, active stolen database,
+ * citizen complaint scrutiny & FIR promotion, and district distribution charts.
  */
 
-let activeComplaintFilter = 'ALL';
+let currentScanFilter = 'ALL';
+let currentComplaintFilter = 'ALL';
 
 document.addEventListener('DOMContentLoaded', () => {
     initDashboard();
 });
 
-function initDashboard() {
-    renderKPIs();
+window.addEventListener('languageChanged', () => {
+    renderDashboardScans();
+    renderDashboardStolenDB();
+    renderDashboardComplaints();
     renderRecentAlertsFeed();
-    renderScansTable('ALL');
-    renderStolenDbTable();
-    renderComplaintsTable('ALL');
-    renderDistrictAnalytics();
-    initDashboardSearch();
-    initFilterTabs();
-    initComplaintFilterTabs();
-    initAddStolenModal();
-
-    // Export and Clear buttons
-    const exportBtn = document.getElementById('btn-export-csv');
-    if (exportBtn) exportBtn.addEventListener('click', exportScansToCSV);
-
-    const clearBtn = document.getElementById('btn-clear-history');
-    if (clearBtn) clearBtn.addEventListener('click', handleClearHistory);
-}
-
-/**
- * Render KPI Statistic Counters
- */
-function renderKPIs() {
-    const scanHistory = getScanHistory();
-    const stolenDb = getStolenDatabase();
-    const complaints = getComplaints();
-
-    const totalScans = scanHistory.length;
-    const stolenHits = scanHistory.filter(s => s.result === 'STOLEN').length;
-    const cleanScans = scanHistory.filter(s => s.result === 'CLEAN').length;
-    const pendingVerifications = complaints.filter(c => c.statusCode === 'PENDING').length;
-    const activeFIRs = stolenDb.length;
-
-    const elTotal = document.getElementById('kpi-total-scans');
-    const elStolen = document.getElementById('kpi-stolen-hits');
-    const elClean = document.getElementById('kpi-clean-scans');
-    const elPending = document.getElementById('kpi-pending');
-    const elFIRs = document.getElementById('kpi-active-firs');
-
-    if (elTotal) elTotal.textContent = (1240 + totalScans).toLocaleString();
-    if (elStolen) elStolen.textContent = (15 + stolenHits).toLocaleString();
-    if (elClean) elClean.textContent = (1199 + cleanScans).toLocaleString();
-    if (elPending) elPending.textContent = pendingVerifications.toLocaleString();
-    if (elFIRs) elFIRs.textContent = activeFIRs.toLocaleString();
-}
-
-/**
- * Render Recent High Priority Alerts
- */
-function renderRecentAlertsFeed() {
-    const container = document.getElementById('recent-alerts-feed');
-    if (!container) return;
-
-    const stolenScans = getScanHistory().filter(s => s.result === 'STOLEN').slice(0, 4);
-    if (stolenScans.length === 0) {
-        container.innerHTML = `<div class="p-4 text-center text-slate-500 text-xs">No recent stolen vehicle alerts logged.</div>`;
-        return;
+    renderDistrictCrimeDistribution();
+    updateDashboardKPIs();
+    if (typeof applyTranslations === 'function') {
+        applyTranslations();
     }
+});
 
-    container.innerHTML = stolenScans.map(item => `
-        <div class="p-3 bg-rose-950/30 border border-rose-600/40 rounded-lg flex items-center justify-between hover:bg-rose-950/50 transition">
-            <div class="flex items-center space-x-3">
-                <span class="text-xl">🚨</span>
-                <div>
-                    <div class="font-mono font-bold text-rose-300 text-sm">${item.vehicleNumber}</div>
-                    <div class="text-xs text-slate-400">${item.details || 'Stolen Vehicle Match'} • ${item.location || 'Checkpoint'}</div>
-                </div>
-            </div>
-            <div class="text-right">
-                <span class="text-xs font-mono text-slate-400 block">${(item.timestamp || '').split(' ')[1] || item.timestamp}</span>
-                <span class="text-[10px] uppercase font-bold text-rose-400 bg-rose-900/60 px-2 py-0.5 rounded">ALERT</span>
-            </div>
-        </div>
-    `).join('');
-}
+function initDashboard() {
+    updateDashboardKPIs();
+    renderRecentAlertsFeed();
+    renderDashboardScans();
+    renderDashboardStolenDB();
+    renderDashboardComplaints();
+    renderDistrictCrimeDistribution();
 
-/**
- * Initialize Live Search on Dashboard
- */
-function initDashboardSearch() {
-    const input = document.getElementById('dash-search-input');
-    const btn = document.getElementById('btn-dash-search');
-
-    if (btn && input) {
-        btn.addEventListener('click', () => {
-            handleDashSearch(input.value);
-        });
-        input.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                handleDashSearch(input.value);
-            }
+    // Direct Search Console
+    const searchBtn = document.getElementById('btn-dash-search');
+    const searchInput = document.getElementById('dash-search-input');
+    if (searchBtn && searchInput) {
+        searchBtn.addEventListener('click', handleDirectSearch);
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleDirectSearch();
         });
     }
-}
 
-function handleDashSearch(query) {
-    if (!query || query.trim() === '') {
-        showToast("Please enter a registration number to search.", "warning");
-        return;
-    }
-    const normalized = normalizeVehicleNumber(query);
-    const stolenDb = getStolenDatabase();
-    const match = stolenDb.find(s => normalizeVehicleNumber(s.vehicleNumber) === normalized);
-
-    if (match) {
-        openDossierModal(match);
-        showToast(`Match Found: ${match.vehicleNumber} is reported STOLEN`, 'stolen');
-    } else {
-        showToast(`No Stolen Vehicle Record found for ${normalized}`, 'success');
-    }
-}
-
-/**
- * Filter Tabs in Dashboard Scans Table
- */
-function initFilterTabs() {
+    // Scans Filter Tabs
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             document.querySelectorAll('.tab-btn').forEach(b => {
                 b.classList.remove('bg-blue-600', 'text-white');
                 b.classList.add('bg-slate-800', 'text-slate-400');
             });
-            e.currentTarget.classList.remove('bg-slate-800', 'text-slate-400');
             e.currentTarget.classList.add('bg-blue-600', 'text-white');
+            e.currentTarget.classList.remove('bg-slate-800', 'text-slate-400');
 
-            const filter = e.currentTarget.dataset.filter || 'ALL';
-            renderScansTable(filter);
+            currentScanFilter = e.currentTarget.dataset.filter;
+            renderDashboardScans();
         });
     });
-}
 
-/**
- * Complaint Filter Tabs
- */
-function initComplaintFilterTabs() {
+    // Complaint Filter Tabs
     document.querySelectorAll('.complaint-tab-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             document.querySelectorAll('.complaint-tab-btn').forEach(b => {
                 b.classList.remove('bg-blue-600', 'text-white');
                 b.classList.add('bg-slate-800', 'text-slate-400');
             });
-            e.currentTarget.classList.remove('bg-slate-800', 'text-slate-400');
             e.currentTarget.classList.add('bg-blue-600', 'text-white');
+            e.currentTarget.classList.remove('bg-slate-800', 'text-slate-400');
 
-            activeComplaintFilter = e.currentTarget.dataset.cfilter || 'ALL';
-            renderComplaintsTable(activeComplaintFilter);
+            currentComplaintFilter = e.currentTarget.dataset.cfilter;
+            renderDashboardComplaints();
         });
     });
+
+    // CSV Export & Clear History
+    const exportBtn = document.getElementById('btn-export-csv');
+    const clearBtn = document.getElementById('btn-clear-history');
+    const addStolenBtn = document.getElementById('btn-open-add-stolen');
+
+    if (exportBtn) exportBtn.addEventListener('click', exportScansCSV);
+    if (clearBtn) clearBtn.addEventListener('click', handleClearHistory);
+    if (addStolenBtn) addStolenBtn.addEventListener('click', openAddStolenModal);
 }
 
 /**
- * Render Scans Table with Filters
+ * Calculate & Update KPI Numbers
  */
-function renderScansTable(filter = 'ALL') {
+function updateDashboardKPIs() {
+    const stolenDB = getStolenDatabase();
+    const history = getScanHistory();
+    const complaints = getComplaints();
+
+    const totalScans = 1240 + history.length;
+    const stolenHits = history.filter(h => h.result === 'STOLEN').length + 15;
+    const cleanScans = totalScans - stolenHits;
+    const pendingVerifs = complaints.filter(c => c.statusCode === 'PENDING' || c.statusCode === 'UNDER_REVIEW').length + 24;
+
+    const elTotal = document.getElementById('kpi-total-scans');
+    const elStolen = document.getElementById('kpi-stolen-hits');
+    const elClean = document.getElementById('kpi-clean-scans');
+    const elPending = document.getElementById('kpi-pending');
+    const elFirs = document.getElementById('kpi-active-firs');
+
+    if (elTotal) elTotal.textContent = totalScans.toLocaleString();
+    if (elStolen) elStolen.textContent = stolenHits.toLocaleString();
+    if (elClean) elClean.textContent = cleanScans.toLocaleString();
+    if (elPending) elPending.textContent = pendingVerifs.toLocaleString();
+    if (elFirs) elFirs.textContent = stolenDB.length.toLocaleString();
+}
+
+/**
+ * Render High-Priority Recent Alert Feed
+ */
+function renderRecentAlertsFeed() {
+    const feed = document.getElementById('recent-alerts-feed');
+    if (!feed) return;
+
+    const stolenDB = getStolenDatabase();
+    const recentStolen = stolenDB.slice(0, 3);
+
+    feed.innerHTML = recentStolen.map(item => `
+        <div class="flex items-center justify-between p-2.5 bg-slate-950/80 rounded-xl border border-rose-900/40 text-xs">
+            <div class="flex items-center space-x-2.5">
+                <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+                <div>
+                    <span class="font-mono font-bold text-rose-300">${item.vehicleNumber}</span>
+                    <span class="text-slate-400 text-[11px] ml-1.5">• ${item.make} ${item.model}</span>
+                </div>
+            </div>
+            <span class="font-mono text-[10px] text-slate-500">${item.district}</span>
+        </div>
+    `).join('');
+}
+
+/**
+ * Render Scans Table with Active Filters
+ */
+function renderDashboardScans() {
     const tbody = document.getElementById('dash-scans-tbody');
     if (!tbody) return;
 
     let history = getScanHistory();
-    if (filter === 'STOLEN') {
+
+    if (currentScanFilter === 'STOLEN') {
         history = history.filter(h => h.result === 'STOLEN');
-    } else if (filter === 'CLEAN') {
+    } else if (currentScanFilter === 'CLEAN') {
         history = history.filter(h => h.result === 'CLEAN');
     }
 
     if (history.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-slate-500 text-sm">No records match the selected filter.</td></tr>`;
+        const noText = typeof t === 'function' ? t('no_recent_scans') : "No scan records found.";
+        tbody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-slate-500">${noText}</td></tr>`;
         return;
     }
 
-    tbody.innerHTML = history.map(item => {
+    const stolenText = typeof t === 'function' ? t('verdict_stolen') : "🔴 STOLEN";
+    const cleanText = typeof t === 'function' ? t('verdict_clean') : "🟢 NO MATCH";
+
+    tbody.innerHTML = history.slice(0, 15).map(item => {
         const isStolen = item.result === 'STOLEN';
+        const badgeClass = isStolen ? 'bg-rose-900/60 text-rose-200 border-rose-500/50' : 'bg-emerald-900/60 text-emerald-200 border-emerald-500/50';
+        const verdictLabel = isStolen ? stolenText : cleanText;
+
         return `
-            <tr class="border-b border-slate-700/40 hover:bg-slate-800/40 transition">
-                <td class="py-3 px-4 font-mono font-bold ${isStolen ? 'text-rose-400' : 'text-emerald-400'}">
-                    ${item.vehicleNumber}
-                </td>
-                <td class="py-3 px-4 text-xs text-slate-400">${item.timestamp}</td>
+            <tr class="border-b border-slate-800/60 hover:bg-slate-800/40 transition">
+                <td class="py-3 px-4 font-mono font-bold text-white">${item.vehicleNumber}</td>
+                <td class="py-3 px-4 text-slate-400 font-mono text-[11px]">${item.timestamp}</td>
                 <td class="py-3 px-4">
-                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold ${
-                        isStolen ? 'bg-rose-900/60 text-rose-300 border border-rose-500/50' : 'bg-emerald-900/60 text-emerald-300 border border-emerald-500/50'
-                    }">
-                        ${isStolen ? '🔴 STOLEN' : '🟢 NO MATCH'}
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-black uppercase border ${badgeClass}">
+                        ${verdictLabel}
                     </span>
                 </td>
-                <td class="py-3 px-4 text-xs text-slate-300">${item.officer || 'Officer DEMO001'}</td>
-                <td class="py-3 px-4 text-xs text-slate-400">${item.details || '-'}</td>
+                <td class="py-3 px-4 text-slate-300 text-xs">${item.officer || 'SI K. Arumugam (DEMO001)'}</td>
+                <td class="py-3 px-4 text-slate-400 text-xs">${item.details || 'Routine Check'}</td>
             </tr>
         `;
     }).join('');
 }
 
 /**
- * Render Stolen Vehicles Database Table
+ * Render Active Stolen Database Repository Table
  */
-function renderStolenDbTable() {
+function renderDashboardStolenDB() {
     const tbody = document.getElementById('dash-stolendb-tbody');
     if (!tbody) return;
 
-    const db = getStolenDatabase();
-    if (db.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" class="py-8 text-center text-slate-500 text-sm">No active stolen records in database.</td></tr>`;
-        return;
-    }
+    const stolenDB = getStolenDatabase();
+    const btnDossierTxt = typeof t === 'function' ? t('btn_dossier') : "Dossier";
 
-    tbody.innerHTML = db.map((item, index) => `
-        <tr class="border-b border-slate-700/40 hover:bg-slate-800/40 transition">
-            <td class="py-3 px-4 font-mono font-bold text-rose-400">${item.vehicleNumber}</td>
-            <td class="py-3 px-4 text-xs text-slate-200">${item.make} ${item.model || ''}</td>
-            <td class="py-3 px-4 text-xs text-slate-400">${item.vehicleType}</td>
-            <td class="py-3 px-4 font-mono text-xs text-slate-300">${item.complaintNumber}</td>
-            <td class="py-3 px-4 text-xs text-slate-300">${item.policeStation} (${item.district || 'Chennai'})</td>
-            <td class="py-3 px-4 text-xs text-slate-400">${item.complaintDate}</td>
+    tbody.innerHTML = stolenDB.map((item, idx) => `
+        <tr class="border-b border-slate-800/60 hover:bg-slate-800/40 transition">
+            <td class="py-3 px-4 font-mono font-bold text-rose-300">${item.vehicleNumber}</td>
+            <td class="py-3 px-4 text-white font-medium">${item.make} ${item.model}</td>
+            <td class="py-3 px-4 text-slate-300">${item.vehicleType}</td>
+            <td class="py-3 px-4 font-mono text-slate-300">${item.complaintNumber}</td>
+            <td class="py-3 px-4 text-slate-300">${item.policeStation} (${item.district})</td>
+            <td class="py-3 px-4 text-slate-400 font-mono text-[11px]">${item.complaintDate}</td>
             <td class="py-3 px-4 text-right">
-                <button class="px-2.5 py-1 bg-blue-900/40 hover:bg-blue-800/60 border border-blue-600/50 text-blue-300 rounded text-xs transition" onclick='openDossierModalByIndex(${index})'>
-                    Dossier
+                <button onclick="showDossierByIndex(${idx})" class="px-2.5 py-1 bg-rose-900/60 hover:bg-rose-800 text-rose-200 rounded text-[11px] font-semibold border border-rose-700/50">
+                    ${btnDossierTxt}
                 </button>
             </td>
         </tr>
     `).join('');
 }
 
-window.openDossierModalByIndex = function(index) {
-    const db = getStolenDatabase();
-    if (db[index]) {
-        openDossierModal(db[index]);
+function showDossierByIndex(index) {
+    const stolenDB = getStolenDatabase();
+    if (stolenDB[index] && typeof showCrimeDossierModal === 'function') {
+        showCrimeDossierModal(stolenDB[index]);
     }
-};
-
-/**
- * Open Crime Dossier Modal for Stolen Record
- */
-function openDossierModal(record) {
-    const existing = document.getElementById('fir-dossier-modal');
-    if (existing) existing.remove();
-
-    const modal = document.createElement('div');
-    modal.id = 'fir-dossier-modal';
-    modal.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm overflow-y-auto';
-    modal.innerHTML = `
-        <div class="bg-slate-900 border-2 border-rose-500/60 rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl text-slate-100 print-area space-y-6">
-            <div class="flex justify-between items-start border-b border-slate-700 pb-4">
-                <div class="flex items-center space-x-3">
-                    <img src="images/tn_police_emblem.svg" alt="TN Police" class="w-12 h-12 object-contain">
-                    <div>
-                        <span class="text-[10px] font-mono uppercase tracking-widest text-rose-400 font-bold block">CCTNS CRIME DOSSIER • TN POLICE</span>
-                        <h3 class="text-xl sm:text-2xl font-black text-white font-mono">${record.complaintNumber}</h3>
-                    </div>
-                </div>
-                <button class="text-slate-400 hover:text-white text-2xl font-bold p-1 no-print" onclick="document.getElementById('fir-dossier-modal').remove()">&times;</button>
-            </div>
-
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 bg-slate-950/60 p-4 rounded-xl border border-slate-800 text-xs">
-                <div>
-                    <span class="text-slate-400 block mb-0.5">Vehicle Number</span>
-                    <span class="font-mono font-bold text-rose-400 text-sm">${record.vehicleNumber}</span>
-                </div>
-                <div>
-                    <span class="text-slate-400 block mb-0.5">Make & Model</span>
-                    <span class="font-semibold text-white">${record.make} ${record.model || ''}</span>
-                </div>
-                <div>
-                    <span class="text-slate-400 block mb-0.5">Category / Type</span>
-                    <span class="font-semibold text-white">${record.vehicleType}</span>
-                </div>
-                <div>
-                    <span class="text-slate-400 block mb-0.5">Primary Color</span>
-                    <span class="font-semibold text-white">${record.color || 'Standard'}</span>
-                </div>
-                <div>
-                    <span class="text-slate-400 block mb-0.5">Jurisdiction District</span>
-                    <span class="font-semibold text-white">${record.district}</span>
-                </div>
-                <div>
-                    <span class="text-slate-400 block mb-0.5">Reporting Police Station</span>
-                    <span class="font-semibold text-white">${record.policeStation}</span>
-                </div>
-                <div>
-                    <span class="text-slate-400 block mb-0.5">Theft Date</span>
-                    <span class="font-semibold text-white">${record.complaintDate}</span>
-                </div>
-                <div>
-                    <span class="text-slate-400 block mb-0.5">Complainant / Owner</span>
-                    <span class="font-semibold text-white">${record.ownerName || 'Verified Complainant'}</span>
-                </div>
-                <div>
-                    <span class="text-slate-400 block mb-0.5">Engine / Chassis Hash</span>
-                    <span class="font-mono text-slate-300">${record.engineHash || 'TN-HASH-VERIFIED'}</span>
-                </div>
-            </div>
-
-            <div class="bg-rose-950/30 border border-rose-600/40 rounded-xl p-4 text-xs space-y-1">
-                <span class="font-bold text-rose-300 uppercase tracking-wider block mb-1">Incident Report Notes & Investigation Brief</span>
-                <p class="text-slate-300 leading-relaxed">${record.notes || 'Vehicle reported stolen. High-priority intercept order active at all regional checkpoints.'}</p>
-            </div>
-
-            <div class="flex justify-between items-center pt-2 no-print border-t border-slate-800">
-                <button type="button" class="py-2.5 px-4 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-xs font-semibold text-slate-200 transition flex items-center space-x-1.5" onclick="window.print()">
-                    <span>🖨️ Print Crime Dossier</span>
-                </button>
-                <button type="button" class="py-2.5 px-6 bg-slate-700 hover:bg-slate-600 rounded-lg text-xs font-bold text-white transition" onclick="document.getElementById('fir-dossier-modal').remove()">
-                    Close
-                </button>
-            </div>
-        </div>
-    `;
-    document.body.appendChild(modal);
 }
 
 /**
- * Render Citizen Complaints & User Submissions Table with Scrutiny & Approval Action
+ * Render Citizen Complaints & User Submissions Feed
  */
-function renderComplaintsTable(filter = 'ALL') {
+function renderDashboardComplaints() {
     const tbody = document.getElementById('dash-complaints-tbody');
     if (!tbody) return;
 
     let complaints = getComplaints();
-    if (filter === 'PENDING') {
-        complaints = complaints.filter(c => c.statusCode === 'PENDING');
-    } else if (filter === 'UNDER_REVIEW') {
-        complaints = complaints.filter(c => c.statusCode === 'UNDER_REVIEW');
-    } else if (filter === 'REGISTERED') {
-        complaints = complaints.filter(c => c.statusCode === 'REGISTERED');
-    } else if (filter === 'REJECTED') {
-        complaints = complaints.filter(c => c.statusCode === 'REJECTED');
+
+    if (currentComplaintFilter !== 'ALL') {
+        complaints = complaints.filter(c => c.statusCode === currentComplaintFilter);
     }
 
     if (complaints.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" class="py-8 text-center text-slate-500 text-sm">No complaints found matching filter "${filter}".</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" class="py-6 text-center text-slate-500">No complaints matching filter.</td></tr>`;
         return;
     }
 
-    tbody.innerHTML = complaints.map((item, index) => {
-        let badgeClass = "bg-amber-900/60 text-amber-300 border-amber-500/50";
-        let statusDot = "🟡";
-        if (item.statusCode === 'REGISTERED') {
-            badgeClass = "bg-rose-900/60 text-rose-300 border-rose-500/50";
-            statusDot = "🔴";
-        } else if (item.statusCode === 'UNDER_REVIEW') {
-            badgeClass = "bg-blue-900/60 text-blue-300 border-blue-500/50";
-            statusDot = "🔵";
-        } else if (item.statusCode === 'REJECTED') {
-            badgeClass = "bg-slate-800 text-slate-400 border-slate-600";
-            statusDot = "⚪";
+    const btnScrutinyTxt = typeof t === 'function' ? t('btn_scrutiny_approval') : "Scrutiny & Approval";
+
+    tbody.innerHTML = complaints.map(c => {
+        let badgeStyle = "bg-slate-800 text-slate-300 border-slate-700";
+        let statusLabel = c.status;
+        let i18nKey = "";
+        if (c.statusCode === 'PENDING') {
+            badgeStyle = "bg-amber-950/60 text-amber-300 border-amber-500/50";
+            statusLabel = typeof t === 'function' ? t('filter_pending_approval') : c.status;
+            i18nKey = 'filter_pending_approval';
+        } else if (c.statusCode === 'UNDER_REVIEW') {
+            badgeStyle = "bg-blue-950/60 text-blue-300 border-blue-500/50";
+            statusLabel = typeof t === 'function' ? t('filter_under_review') : c.status;
+            i18nKey = 'filter_under_review';
+        } else if (c.statusCode === 'REGISTERED') {
+            badgeStyle = "bg-rose-950/60 text-rose-300 border-rose-500/50";
+            statusLabel = typeof t === 'function' ? t('status_badge_registered') : c.status;
+            i18nKey = 'status_badge_registered';
+        } else if (c.statusCode === 'REJECTED') {
+            badgeStyle = "bg-slate-800 text-slate-400 border-slate-700";
+            statusLabel = typeof t === 'function' ? t('filter_rejected') : c.status;
+            i18nKey = 'filter_rejected';
         }
 
         return `
-            <tr class="border-b border-slate-700/40 hover:bg-slate-800/40 transition">
-                <td class="py-3 px-4 font-mono font-bold text-blue-400">${item.referenceNumber}</td>
-                <td class="py-3 px-4 font-mono font-semibold text-slate-100">${item.vehicleNumber}</td>
-                <td class="py-3 px-4 text-xs">
-                    <span class="font-medium text-slate-200 block">${item.ownerName}</span>
-                    <span class="text-[10px] text-slate-400 font-mono">${item.mobile || ''}</span>
-                </td>
-                <td class="py-3 px-4 text-xs text-slate-300">${item.district}</td>
-                <td class="py-3 px-4 text-xs text-slate-400">${(item.submissionDate || item.incidentDate || '').split(' ')[0]}</td>
+            <tr class="border-b border-slate-800/60 hover:bg-slate-800/40 transition">
+                <td class="py-3 px-4 font-mono font-bold text-blue-400">${c.referenceNumber}</td>
+                <td class="py-3 px-4 font-mono font-bold text-white">${c.vehicleNumber}</td>
+                <td class="py-3 px-4 text-slate-200 font-medium">${c.ownerName}</td>
+                <td class="py-3 px-4 text-slate-300">${c.district}</td>
+                <td class="py-3 px-4 text-slate-400 font-mono text-[11px]">${c.submissionDate.substring(0, 16)}</td>
                 <td class="py-3 px-4">
-                    <span class="inline-flex items-center space-x-1 px-2.5 py-1 rounded-md text-[11px] font-bold border ${badgeClass}">
-                        <span>${statusDot}</span>
-                        <span>${item.status}</span>
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold border ${badgeStyle}" ${i18nKey ? `data-i18n="${i18nKey}"` : ''}>
+                        ${statusLabel}
                     </span>
                 </td>
                 <td class="py-3 px-4 text-right">
-                    <button class="px-3 py-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-lg text-xs font-bold transition shadow-md shadow-blue-600/20 flex items-center space-x-1 ml-auto" onclick='openComplaintApprovalModal("${item.referenceNumber}")'>
-                        <span>🔍</span>
-                        <span>Scrutiny & Approval</span>
+                    <button onclick="openComplaintScrutinyModal('${c.referenceNumber}')" class="px-2.5 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded text-[11px] font-semibold shadow">
+                        ${btnScrutinyTxt}
                     </button>
                 </td>
             </tr>
@@ -385,454 +275,379 @@ function renderComplaintsTable(filter = 'ALL') {
 }
 
 /**
- * Interactive Citizen Complaint Scrutiny & Approval Dossier Modal
- * Allows logged-in police personnel to review user details, approve FIR, mark under review, or reject.
+ * Complaint Scrutiny, Document Verification & FIR Promotion Modal
  */
-window.openComplaintApprovalModal = function(referenceNumber) {
+function openComplaintScrutinyModal(refNumber) {
     const complaints = getComplaints();
-    const record = complaints.find(c => c.referenceNumber === referenceNumber);
-    if (!record) {
-        showToast("Complaint record not found.", "error");
-        return;
-    }
+    const complaint = complaints.find(c => c.referenceNumber === refNumber);
+    if (!complaint) return;
 
-    const officer = getLoggedInOfficer() || {
-        id: "DEMO001",
-        name: "Sub-Inspector K. Arumugam",
-        rank: "Sub-Inspector of Police",
-        station: "T. Nagar Police Station (E-1)",
-        district: "Chennai City Police"
-    };
-
-    const existing = document.getElementById('complaint-approval-modal');
+    const existing = document.getElementById('scrutiny-modal');
     if (existing) existing.remove();
 
-    const isAlreadyApproved = record.statusCode === 'REGISTERED';
-    const isRejected = record.statusCode === 'REJECTED';
+    const officer = getLoggedInOfficer() || { name: "SI K. Arumugam", id: "DEMO001", station: "T. Nagar Police Station (E-1)" };
 
     const modal = document.createElement('div');
-    modal.id = 'complaint-approval-modal';
-    modal.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm overflow-y-auto';
+    modal.id = 'scrutiny-modal';
+    modal.className = 'fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md';
     modal.innerHTML = `
-        <div class="bg-slate-900 border-2 border-blue-500/60 rounded-2xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl text-slate-100 space-y-6">
-            
-            <!-- Modal Header -->
-            <div class="flex justify-between items-start border-b border-slate-700 pb-4">
-                <div class="flex items-center space-x-3">
-                    <img src="images/tn_state_emblem.svg" alt="Tamil Nadu State Symbol" class="w-12 h-12 object-contain">
+        <div class="bg-slate-900 border-2 border-blue-500 rounded-2xl max-w-2xl w-full p-4 sm:p-6 shadow-2xl space-y-4 max-h-[92vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div class="flex items-center space-x-2">
+                    <span class="text-2xl">⚖️</span>
                     <div>
-                        <span class="text-[10px] font-mono uppercase tracking-widest text-blue-400 font-bold block">CITIZEN THEFT SUBMISSION SCRUTINY</span>
-                        <h3 class="text-xl font-bold text-white flex items-center space-x-2">
-                            <span>Reference:</span>
-                            <span class="font-mono text-blue-300">${record.referenceNumber}</span>
-                        </h3>
+                        <h3 class="font-bold text-white text-base uppercase">Citizen Theft Submission Scrutiny</h3>
+                        <p class="text-xs text-blue-400 font-mono">${complaint.referenceNumber} • Vehicle: ${complaint.vehicleNumber}</p>
                     </div>
                 </div>
-                <button class="text-slate-400 hover:text-white text-2xl font-bold p-1" onclick="document.getElementById('complaint-approval-modal').remove()">&times;</button>
+                <button onclick="document.getElementById('scrutiny-modal').remove()" class="text-slate-400 hover:text-white text-2xl font-bold p-1 leading-none">&times;</button>
             </div>
 
-            <!-- Officer In-Charge Banner -->
-            <div class="bg-blue-950/40 border border-blue-600/40 rounded-xl p-3.5 flex items-center justify-between text-xs">
-                <div class="flex items-center space-x-2.5">
-                    <span class="text-xl">👮</span>
-                    <div>
-                        <span class="text-slate-400 block text-[10px] uppercase">Duty Scrutiny Officer</span>
-                        <span class="font-bold text-blue-200">${officer.name} (${officer.rank})</span>
-                    </div>
-                </div>
-                <div class="text-right font-mono text-[11px] text-slate-400">
-                    Station: ${officer.station}
-                </div>
-            </div>
-
-            <!-- Citizen & Vehicle Details Grid -->
-            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 bg-slate-950/70 p-4 rounded-xl border border-slate-800 text-xs">
+            <!-- Duty Officer Banner -->
+            <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 flex justify-between items-center text-xs">
                 <div>
-                    <span class="text-slate-400 block text-[11px]">Vehicle Registration</span>
-                    <span class="font-mono font-extrabold text-blue-300 text-sm">${record.vehicleNumber}</span>
+                    <span class="text-slate-400 block">Duty Scrutiny Officer</span>
+                    <strong class="text-white">${officer.name} (${officer.id})</strong>
                 </div>
-                <div>
-                    <span class="text-slate-400 block text-[11px]">Vehicle Category</span>
-                    <span class="font-semibold text-white">${record.vehicleType}</span>
-                </div>
-                <div>
-                    <span class="text-slate-400 block text-[11px]">Make & Model</span>
-                    <span class="font-semibold text-white">${record.make} ${record.model || ''}</span>
-                </div>
-                <div>
-                    <span class="text-slate-400 block text-[11px]">Color</span>
-                    <span class="font-semibold text-white">${record.color || 'Standard'}</span>
-                </div>
-                <div>
-                    <span class="text-slate-400 block text-[11px]">Complainant Full Name</span>
-                    <span class="font-semibold text-white">${record.ownerName}</span>
-                </div>
-                <div>
-                    <span class="text-slate-400 block text-[11px]">Complainant Mobile</span>
-                    <span class="font-mono text-white">${record.mobile}</span>
-                </div>
-                <div>
-                    <span class="text-slate-400 block text-[11px]">Incident Date & Time</span>
-                    <span class="font-medium text-white">${record.incidentDate} (${record.incidentTime || 'N/A'})</span>
-                </div>
-                <div>
-                    <span class="text-slate-400 block text-[11px]">Incident District</span>
-                    <span class="font-medium text-white">${record.district}</span>
-                </div>
-                <div>
-                    <span class="text-slate-400 block text-[11px]">Jurisdiction Police Station</span>
-                    <span class="font-medium text-white">${record.policeStation}</span>
-                </div>
-                <div class="col-span-2 sm:col-span-3 pt-2 border-t border-slate-800">
-                    <span class="text-slate-400 block text-[11px]">Theft Location / Landmark:</span>
-                    <span class="text-slate-200">${record.location || 'Roadside area'}</span>
-                </div>
-                <div class="col-span-2 sm:col-span-3">
-                    <span class="text-slate-400 block text-[11px]">Citizen Description & Identification Marks:</span>
-                    <span class="text-slate-300 italic">${record.description || 'No special marks recorded.'}</span>
+                <div class="text-right">
+                    <span class="text-slate-400 block">Station:</span>
+                    <span class="text-blue-300 font-mono">${complaint.policeStation || officer.station}</span>
                 </div>
             </div>
 
-            <!-- Current Status Box -->
-            <div class="p-3 rounded-xl border flex items-center justify-between text-xs ${
-                isAlreadyApproved ? 'bg-rose-950/40 border-rose-600/50 text-rose-200' :
-                isRejected ? 'bg-slate-800/80 border-slate-600 text-slate-300' :
-                record.statusCode === 'UNDER_REVIEW' ? 'bg-blue-950/40 border-blue-600/50 text-blue-200' :
-                'bg-amber-950/40 border-amber-600/50 text-amber-200'
-            }">
-                <div>
-                    <span class="text-[10px] uppercase font-bold block opacity-80">Current Scrutiny Verdict</span>
-                    <span class="font-extrabold text-sm">${record.status}</span>
+            <!-- Complaint Details Grid -->
+            <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800 space-y-2 text-xs">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <div><span class="text-slate-400">Complainant:</span> <strong class="text-white">${complaint.ownerName}</strong> (${complaint.mobile})</div>
+                    <div><span class="text-slate-400">Vehicle:</span> <strong class="text-rose-300 font-mono">${complaint.vehicleNumber}</strong> (${complaint.make} ${complaint.model || ''})</div>
+                    <div><span class="text-slate-400">Category:</span> <span class="text-slate-200">${complaint.vehicleType}</span></div>
+                    <div><span class="text-slate-400">Color:</span> <span class="text-slate-200">${complaint.color || 'N/A'}</span></div>
+                    <div><span class="text-slate-400">Incident Date/Time:</span> <span class="text-slate-200">${complaint.incidentDate} ${complaint.incidentTime || ''}</span></div>
+                    <div><span class="text-slate-400">District:</span> <span class="text-slate-200">${complaint.district}</span></div>
+                    <div class="sm:col-span-2"><span class="text-slate-400">Location:</span> <span class="text-slate-200">${complaint.location}</span></div>
+                    <div class="sm:col-span-2"><span class="text-slate-400">Description:</span> <p class="text-slate-300 italic mt-0.5">${complaint.description || 'Routine stolen vehicle report submitted via citizen portal.'}</p></div>
                 </div>
-                <span class="text-xs font-mono text-slate-400">Submission: ${record.submissionDate}</span>
             </div>
 
-            <!-- Officer Review Remarks Form -->
-            <div class="space-y-2">
-                <label for="officer-scrutiny-remarks" class="block text-xs font-bold text-slate-300 uppercase tracking-wider">
-                    Officer Scrutiny Assessment & Action Remarks:
-                </label>
-                <textarea id="officer-scrutiny-remarks" rows="2" class="w-full bg-slate-950 border border-slate-700 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-blue-500" placeholder="Enter scrutiny findings, RC verification remarks, or FIR assignment details...">${record.remarks || ''}</textarea>
+            <!-- Current Scrutiny State -->
+            <div class="p-3 bg-slate-800/60 rounded-xl text-xs space-y-1">
+                <div class="flex justify-between items-center">
+                    <span class="text-slate-400">Current Scrutiny Verdict:</span>
+                    <span class="font-bold text-amber-300 uppercase">${complaint.status}</span>
+                </div>
+                <div>
+                    <label class="block text-slate-300 font-semibold mt-2 mb-1">Officer Scrutiny Assessment & Action Remarks:</label>
+                    <textarea id="officer-scrutiny-remarks" rows="2" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2 text-xs text-white" placeholder="Document verified. Recommend issuing formal FIR and syncing into ANPR checkpoint registry.">${complaint.remarks || ''}</textarea>
+                </div>
             </div>
 
-            <!-- Action Buttons Grid -->
-            <div class="flex flex-col sm:flex-row gap-2.5 pt-2 border-t border-slate-800">
-                <!-- Approve & Register FIR Button -->
-                <button type="button" id="btn-modal-approve-fir" class="flex-1 py-3 px-4 bg-gradient-to-r from-rose-600 to-rose-700 hover:from-rose-500 hover:to-rose-600 text-white font-bold rounded-xl text-xs shadow-lg shadow-rose-600/30 transition flex items-center justify-center space-x-1.5">
-                    <span>✅</span>
-                    <span>Approve & Issue Formal FIR</span>
+            <!-- Officer Action Decisions -->
+            <div class="flex flex-wrap items-center justify-end gap-2 pt-2 border-t border-slate-800">
+                <button onclick="updateComplaintStatus('${complaint.referenceNumber}', 'REJECTED')" class="px-3.5 py-2 bg-slate-800 hover:bg-rose-950 text-rose-300 hover:text-rose-200 rounded-lg text-xs font-semibold border border-slate-700 transition">
+                    ❌ Reject
                 </button>
-
-                <!-- Mark Under Review Button -->
-                <button type="button" id="btn-modal-under-review" class="py-3 px-4 bg-blue-800 hover:bg-blue-700 text-blue-100 font-semibold rounded-xl text-xs border border-blue-600/50 transition">
-                    <span>🔍 Mark Under Review</span>
+                <button onclick="updateComplaintStatus('${complaint.referenceNumber}', 'UNDER_REVIEW')" class="px-3.5 py-2 bg-blue-900/60 hover:bg-blue-800 text-blue-200 rounded-lg text-xs font-semibold border border-blue-700/50 transition">
+                    🔍 Mark Under Review
                 </button>
-
-                <!-- Reject Complaint Button -->
-                <button type="button" id="btn-modal-reject" class="py-3 px-3.5 bg-slate-800 hover:bg-rose-950/80 hover:text-rose-300 border border-slate-700 text-slate-300 font-semibold rounded-xl text-xs transition">
-                    <span>❌ Reject</span>
-                </button>
-
-                <!-- Close Button -->
-                <button type="button" class="py-3 px-4 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold rounded-xl text-xs border border-slate-700 transition" onclick="document.getElementById('complaint-approval-modal').remove()">
-                    Close
+                <button onclick="promoteToOfficialFIR('${complaint.referenceNumber}')" class="px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white rounded-lg text-xs font-bold shadow-lg shadow-rose-600/30 transition">
+                    🔴 Approve & Issue Formal FIR
                 </button>
             </div>
         </div>
     `;
     document.body.appendChild(modal);
-
-    // Event Handlers for Modal Buttons
-    const btnApprove = document.getElementById('btn-modal-approve-fir');
-    const btnReview = document.getElementById('btn-modal-under-review');
-    const btnReject = document.getElementById('btn-modal-reject');
-    const remarksInput = document.getElementById('officer-scrutiny-remarks');
-
-    if (btnApprove) {
-        btnApprove.addEventListener('click', () => {
-            const remarks = remarksInput.value.trim() || "Documents and identity verified by duty officer. FIR generated and added to CCTNS ANPR tracking watchlist.";
-            handleApproveComplaint(record.referenceNumber, remarks, officer);
-        });
-    }
-
-    if (btnReview) {
-        btnReview.addEventListener('click', () => {
-            const remarks = remarksInput.value.trim() || "RC copy verification under inquiry with local jurisdictional station.";
-            handleUpdateComplaintStatus(record.referenceNumber, "Under Police Review", "UNDER_REVIEW", remarks);
-        });
-    }
-
-    if (btnReject) {
-        btnReject.addEventListener('click', () => {
-            const remarks = remarksInput.value.trim() || "Submission rejected due to invalid vehicle registration or lack of physical documentation.";
-            handleUpdateComplaintStatus(record.referenceNumber, "Rejected — Incomplete Details", "REJECTED", remarks);
-        });
-    }
-};
+}
 
 /**
- * Approve Complaint & Promote to Active Stolen Watchlist (vg_stolen_db)
+ * Promote Citizen Complaint to Official FIR & Central Stolen Watchlist
  */
-function handleApproveComplaint(refNumber, remarks, officer) {
+function promoteToOfficialFIR(refNumber) {
     const complaints = getComplaints();
-    const index = complaints.findIndex(c => c.referenceNumber === refNumber);
-    if (index === -1) return;
+    const complaintIndex = complaints.findIndex(c => c.referenceNumber === refNumber);
+    if (complaintIndex === -1) return;
 
-    const comp = complaints[index];
+    const complaint = complaints[complaintIndex];
+    const remarks = document.getElementById('officer-scrutiny-remarks')?.value || "Approved by Sub-Inspector of Police. Formal FIR generated and synced into ANPR watchlist.";
 
-    // Generate district code based FIR Number: e.g. FIR-2026-CHN-00812
-    const distCode = (comp.district || 'CHN').substring(0, 3).toUpperCase();
-    const randomFirDigits = Math.floor(10000 + Math.random() * 90000);
-    const firNumber = `FIR-2026-${distCode}-${randomFirDigits}`;
+    const firNo = "FIR-2026-" + (complaint.district.substring(0, 3).toUpperCase()) + "-" + Math.floor(10000 + Math.random() * 90000);
 
-    // Update complaint record
-    comp.status = "FIR Registered — Approved";
-    comp.statusCode = "REGISTERED";
-    comp.firNumber = firNumber;
-    comp.approvedBy = `${officer.name} (${officer.id})`;
-    comp.approvalDate = new Date().toISOString().replace('T', ' ').substring(0, 19);
-    comp.remarks = remarks;
-
-    // Save complaints
+    // Update Complaint Record
+    complaints[complaintIndex].status = "FIR Registered — Demo Status";
+    complaints[complaintIndex].statusCode = "REGISTERED";
+    complaints[complaintIndex].remarks = remarks;
+    complaints[complaintIndex].firNumber = firNo;
     localStorage.setItem('vg_complaints', JSON.stringify(complaints));
 
-    // Promote to Active Stolen Watchlist (vg_stolen_db)
-    const stolenDb = getStolenDatabase();
-    const normalizedVeh = normalizeVehicleNumber(comp.vehicleNumber);
-    
-    // Check if not already in stolen db
-    const existingStolen = stolenDb.find(s => normalizeVehicleNumber(s.vehicleNumber) === normalizedVeh);
-    if (!existingStolen) {
-        stolenDb.unshift({
-            vehicleNumber: normalizedVeh,
-            vehicleType: comp.vehicleType,
-            make: comp.make,
-            model: comp.model || "Standard",
-            color: comp.color || "Standard",
-            complaintNumber: firNumber,
-            policeStation: comp.policeStation || `${comp.district} Police Station`,
-            district: comp.district,
-            complaintDate: comp.incidentDate || new Date().toISOString().split('T')[0],
-            theftLocation: comp.location || "Public area",
-            ownerName: comp.ownerName,
-            engineHash: `TN${distCode}${Math.floor(100000 + Math.random() * 900000)}X`,
+    // Inject into Central Stolen DB Watchlist
+    const stolenDB = getStolenDatabase();
+    const alreadyExists = stolenDB.some(s => normalizeVehicleNumber(s.vehicleNumber) === normalizeVehicleNumber(complaint.vehicleNumber));
+
+    if (!alreadyExists) {
+        stolenDB.unshift({
+            vehicleNumber: normalizeVehicleNumber(complaint.vehicleNumber),
+            vehicleType: complaint.vehicleType,
+            make: complaint.make,
+            model: complaint.model || "Standard Model",
+            color: complaint.color || "Black",
+            complaintNumber: firNo,
+            policeStation: complaint.policeStation || "Jurisdiction Police Station",
+            district: complaint.district,
+            complaintDate: complaint.incidentDate || new Date().toISOString().substring(0, 10),
+            theftLocation: complaint.location,
+            ownerName: complaint.ownerName,
+            engineHash: "CHAS" + Math.floor(1000000 + Math.random() * 9000000),
             status: "STOLEN",
             severity: "HIGH_PRIORITY",
-            notes: `FIR approved from citizen submission (${refNumber}). Verified by ${officer.name} (${officer.id}). ${remarks}`
+            notes: `Promoted from citizen complaint ${complaint.referenceNumber}. Flagged for instant intercept.`
         });
-        localStorage.setItem('vg_stolen_db', JSON.stringify(stolenDb));
+        localStorage.setItem('vg_stolen_db', JSON.stringify(stolenDB));
     }
 
-    // Close modal
-    const modal = document.getElementById('complaint-approval-modal');
-    if (modal) modal.remove();
+    document.getElementById('scrutiny-modal')?.remove();
+    showToast(`✅ Formal FIR ${firNo} Issued! Added to Live ANPR Watchlist.`, "success", 5000);
 
-    // Re-render UI
-    renderKPIs();
-    renderComplaintsTable(activeComplaintFilter);
-    renderStolenDbTable();
-
-    playAlertSound('stolen');
-    showToast(`✅ Complaint Approved! FIR Registered: ${firNumber} & Added to Watchlist`, "success", 5000);
+    // Refresh UI
+    updateDashboardKPIs();
+    renderDashboardComplaints();
+    renderDashboardStolenDB();
+    renderRecentAlertsFeed();
 }
 
 /**
- * Update Complaint Status (Under Review / Rejected)
+ * Update General Complaint Status
  */
-function handleUpdateComplaintStatus(refNumber, newStatusText, newStatusCode, remarks) {
+function updateComplaintStatus(refNumber, newStatusCode) {
     const complaints = getComplaints();
-    const index = complaints.findIndex(c => c.referenceNumber === refNumber);
-    if (index === -1) return;
+    const idx = complaints.findIndex(c => c.referenceNumber === refNumber);
+    if (idx === -1) return;
 
-    complaints[index].status = newStatusText;
-    complaints[index].statusCode = newStatusCode;
-    complaints[index].remarks = remarks;
+    const remarks = document.getElementById('officer-scrutiny-remarks')?.value || "";
+
+    if (newStatusCode === 'UNDER_REVIEW') {
+        complaints[idx].status = "Under Police Review";
+        complaints[idx].statusCode = "UNDER_REVIEW";
+        complaints[idx].remarks = remarks || "RC verification and jurisdictional scrutiny in progress.";
+    } else if (newStatusCode === 'REJECTED') {
+        complaints[idx].status = "Submission Rejected";
+        complaints[idx].statusCode = "REJECTED";
+        complaints[idx].remarks = remarks || "Insufficient ownership documentation provided.";
+    }
 
     localStorage.setItem('vg_complaints', JSON.stringify(complaints));
+    document.getElementById('scrutiny-modal')?.remove();
+    showToast("Complaint status updated to " + complaints[idx].status, "info");
 
-    const modal = document.getElementById('complaint-approval-modal');
-    if (modal) modal.remove();
-
-    renderKPIs();
-    renderComplaintsTable(activeComplaintFilter);
-
-    showToast(`Status updated: ${newStatusText}`, "info", 3500);
+    updateDashboardKPIs();
+    renderDashboardComplaints();
 }
 
 /**
- * Render Tamil Nadu District Activity Chart Breakdown
+ * Direct Stolen Vehicle Lookup from Dashboard Search Console
  */
-function renderDistrictAnalytics() {
+function handleDirectSearch() {
+    const input = document.getElementById('dash-search-input');
+    const val = normalizeVehicleNumber(input ? input.value : '');
+
+    if (!val) {
+        showToast("Please enter a vehicle registration number.", "warning");
+        return;
+    }
+
+    const stolenDB = getStolenDatabase();
+    const record = stolenDB.find(v => normalizeVehicleNumber(v.vehicleNumber) === val);
+
+    if (record) {
+        playAlertSound('stolen');
+        showToast("🔴 STOLEN MATCH FOUND: " + record.vehicleNumber, "stolen");
+        if (typeof showCrimeDossierModal === 'function') {
+            showCrimeDossierModal(record);
+        }
+    } else {
+        playAlertSound('clean');
+        showToast("🟢 No active stolen report found for " + val, "success");
+    }
+}
+
+/**
+ * Add Stolen Vehicle Watchlist Modal Dialog
+ */
+function openAddStolenModal() {
+    const existing = document.getElementById('add-stolen-modal');
+    if (existing) existing.remove();
+
+    const modal = document.createElement('div');
+    modal.id = 'add-stolen-modal';
+    modal.className = 'fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md';
+    modal.innerHTML = `
+        <div class="bg-slate-900 border-2 border-rose-600 rounded-2xl max-w-lg w-full p-4 sm:p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div class="flex items-center space-x-2">
+                    <span class="text-xl">➕</span>
+                    <h3 class="font-bold text-white text-base">Add Stolen Vehicle to Central Watchlist</h3>
+                </div>
+                <button onclick="document.getElementById('add-stolen-modal').remove()" class="text-slate-400 hover:text-white text-2xl font-bold p-1 leading-none">&times;</button>
+            </div>
+
+            <form id="add-stolen-form" class="space-y-3 text-xs">
+                <div>
+                    <label class="block text-slate-300 font-semibold mb-1">Vehicle Registration Number *</label>
+                    <input type="text" id="add-veh-num" required placeholder="e.g. TN02XY9988" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-sm font-mono uppercase text-white">
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-slate-300 font-semibold mb-1">Make / Brand *</label>
+                        <input type="text" id="add-make" required placeholder="e.g. Hyundai" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white">
+                    </div>
+                    <div>
+                        <label class="block text-slate-300 font-semibold mb-1">Model Name</label>
+                        <input type="text" id="add-model" placeholder="e.g. Creta SX" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-slate-300 font-semibold mb-1">Vehicle Type</label>
+                        <select id="add-veh-type" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white">
+                            <option value="Motorcycle">Motorcycle</option>
+                            <option value="Scooter">Scooter</option>
+                            <option value="Car / Sedan">Car / Sedan</option>
+                            <option value="SUV">SUV</option>
+                            <option value="Commercial / Auto">Commercial / Auto</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-slate-300 font-semibold mb-1">Primary Color</label>
+                        <input type="text" id="add-color" placeholder="e.g. White" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-slate-300 font-semibold mb-1">FIR / Crime Number *</label>
+                        <input type="text" id="add-fir" required placeholder="FIR-2026-CHN-00999" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 font-mono text-white">
+                    </div>
+                    <div>
+                        <label class="block text-slate-300 font-semibold mb-1">Police Station</label>
+                        <input type="text" id="add-station" placeholder="e.g. Anna Nagar Station" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-slate-300 font-semibold mb-1">District</label>
+                        <input type="text" id="add-district" placeholder="e.g. Chennai" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white">
+                    </div>
+                    <div>
+                        <label class="block text-slate-300 font-semibold mb-1">Complaint Date</label>
+                        <input type="date" id="add-date" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white">
+                    </div>
+                </div>
+
+                <div class="flex justify-end space-x-2 pt-3 border-t border-slate-800">
+                    <button type="button" onclick="document.getElementById('add-stolen-modal').remove()" class="px-4 py-2 bg-slate-800 text-slate-300 hover:text-white rounded-lg">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white font-bold rounded-lg shadow">Save to Watchlist</button>
+                </div>
+            </form>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    document.getElementById('add-stolen-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const newRecord = {
+            vehicleNumber: normalizeVehicleNumber(document.getElementById('add-veh-num').value),
+            make: document.getElementById('add-make').value.trim(),
+            model: document.getElementById('add-model').value.trim() || "Standard",
+            vehicleType: document.getElementById('add-veh-type').value,
+            color: document.getElementById('add-color').value.trim() || "Black",
+            complaintNumber: document.getElementById('add-fir').value.trim(),
+            policeStation: document.getElementById('add-station').value.trim() || "Local Police Station",
+            district: document.getElementById('add-district').value.trim() || "Chennai",
+            complaintDate: document.getElementById('add-date').value || new Date().toISOString().substring(0, 10),
+            theftLocation: "Reported in Zone",
+            ownerName: "Verified Owner",
+            engineHash: "CHAS" + Math.floor(1000000 + Math.random() * 9000000),
+            status: "STOLEN",
+            severity: "HIGH_PRIORITY",
+            notes: "Added by Command Officer via Central Dashboard."
+        };
+
+        const stolenDB = getStolenDatabase();
+        stolenDB.unshift(newRecord);
+        localStorage.setItem('vg_stolen_db', JSON.stringify(stolenDB));
+
+        document.getElementById('add-stolen-modal').remove();
+        showToast("✅ Vehicle " + newRecord.vehicleNumber + " added to live ANPR watchlist.", "success");
+
+        updateDashboardKPIs();
+        renderDashboardStolenDB();
+        renderRecentAlertsFeed();
+    });
+}
+
+/**
+ * Render Tamil Nadu District Crime Distribution Bars
+ */
+function renderDistrictCrimeDistribution() {
     const container = document.getElementById('district-analytics-bars');
     if (!container) return;
 
-    const districtStats = [
-        { name: "Chennai Zone", count: 48, percentage: 85, color: "bg-rose-500" },
-        { name: "Coimbatore Zone", count: 32, percentage: 65, color: "bg-blue-500" },
-        { name: "Madurai City", count: 26, percentage: 55, color: "bg-amber-500" },
-        { name: "Salem Sub-Division", count: 18, percentage: 40, color: "bg-cyan-500" },
-        { name: "Trichy Zone", count: 15, percentage: 35, color: "bg-emerald-500" },
-        { name: "Tirunelveli Zone", count: 11, percentage: 28, color: "bg-purple-500" }
+    const districts = [
+        { name: "Chennai City", stolen: 42, recovered: 36, rate: "85%" },
+        { name: "Coimbatore", stolen: 28, recovered: 22, rate: "78%" },
+        { name: "Madurai", stolen: 24, recovered: 19, rate: "79%" },
+        { name: "Tiruchirappalli", stolen: 18, recovered: 14, rate: "77%" },
+        { name: "Salem", stolen: 15, recovered: 11, rate: "73%" },
+        { name: "Tirunelveli", stolen: 12, recovered: 9, rate: "75%" }
     ];
 
-    container.innerHTML = districtStats.map(d => `
-        <div class="space-y-1.5">
-            <div class="flex justify-between text-xs">
-                <span class="font-medium text-slate-300">${d.name}</span>
-                <span class="font-mono text-slate-400">${d.count} Alerts</span>
+    container.innerHTML = districts.map(d => `
+        <div class="p-3.5 bg-slate-950 rounded-xl border border-slate-800 space-y-2">
+            <div class="flex justify-between items-center text-xs">
+                <span class="font-bold text-white">${d.name}</span>
+                <span class="text-emerald-400 font-mono text-[11px] font-bold">Recovery: ${d.rate}</span>
             </div>
-            <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
-                <div class="${d.color} h-2 rounded-full transition-all duration-500" style="width: ${d.percentage}%"></div>
+            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden flex">
+                <div class="bg-rose-500 h-full" style="width: 45%;"></div>
+                <div class="bg-emerald-500 h-full" style="width: 55%;"></div>
+            </div>
+            <div class="flex justify-between text-[10px] text-slate-400 font-mono">
+                <span>Stolen Logs: ${d.stolen}</span>
+                <span>Recovered: ${d.recovered}</span>
             </div>
         </div>
     `).join('');
 }
 
 /**
- * Modal to Add New Stolen Vehicle Record to Demo Database
+ * CSV Export
  */
-function initAddStolenModal() {
-    const addBtn = document.getElementById('btn-open-add-stolen');
-    if (!addBtn) return;
-
-    addBtn.addEventListener('click', () => {
-        const modal = document.createElement('div');
-        modal.id = 'add-stolen-modal';
-        modal.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm';
-        modal.innerHTML = `
-            <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-lg w-full p-6 shadow-2xl text-slate-100">
-                <div class="flex justify-between items-center border-b border-slate-700 pb-3 mb-4">
-                    <h3 class="font-bold text-lg text-white">Add Stolen Vehicle to Central Watchlist</h3>
-                    <button class="text-slate-400 hover:text-white text-xl" onclick="document.getElementById('add-stolen-modal').remove()">&times;</button>
-                </div>
-                <form id="add-stolen-form" class="space-y-3 text-xs">
-                    <div>
-                        <label class="block text-slate-400 mb-1">Registration Number *</label>
-                        <input type="text" id="add-veh-num" required placeholder="e.g. TN02XX9999" class="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white font-mono uppercase focus:ring-2 focus:ring-blue-500">
-                    </div>
-                    <div class="grid grid-cols-2 gap-2">
-                        <div>
-                            <label class="block text-slate-400 mb-1">Vehicle Type *</label>
-                            <select id="add-veh-type" class="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white">
-                                <option>Motorcycle</option>
-                                <option>Scooter</option>
-                                <option>Car / Sedan</option>
-                                <option>SUV</option>
-                                <option>Commercial / Auto</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-slate-400 mb-1">Make & Model *</label>
-                            <input type="text" id="add-veh-make" required placeholder="e.g. Bajaj Pulsar 150" class="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white">
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-2">
-                        <div>
-                            <label class="block text-slate-400 mb-1">Color *</label>
-                            <input type="text" id="add-veh-color" required placeholder="e.g. Crimson Red" class="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white">
-                        </div>
-                        <div>
-                            <label class="block text-slate-400 mb-1">District *</label>
-                            <select id="add-veh-district" class="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white">
-                                <option>Chennai</option>
-                                <option>Coimbatore</option>
-                                <option>Madurai</option>
-                                <option>Salem</option>
-                                <option>Tiruchirappalli</option>
-                                <option>Tirunelveli</option>
-                                <option>Erode</option>
-                                <option>Vellore</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-slate-400 mb-1">Police Station & FIR *</label>
-                        <input type="text" id="add-veh-fir" required placeholder="e.g. FIR-2026-CHN-00998 (Anna Salai PS)" class="w-full p-2.5 bg-slate-800 border border-slate-700 rounded-lg text-white">
-                    </div>
-                    <div class="flex justify-end space-x-3 pt-3">
-                        <button type="button" class="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-slate-200" onclick="document.getElementById('add-stolen-modal').remove()">Cancel</button>
-                        <button type="submit" class="px-4 py-2 bg-rose-600 hover:bg-rose-500 rounded-lg text-white font-semibold">Save to Watchlist</button>
-                    </div>
-                </form>
-            </div>
-        `;
-        document.body.appendChild(modal);
-
-        document.getElementById('add-stolen-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const num = normalizeVehicleNumber(document.getElementById('add-veh-num').value);
-            const type = document.getElementById('add-veh-type').value;
-            const make = document.getElementById('add-veh-make').value;
-            const color = document.getElementById('add-veh-color').value;
-            const district = document.getElementById('add-veh-district').value;
-            const fir = document.getElementById('add-veh-fir').value;
-
-            if (!validateVehicleNumber(num)) {
-                showToast("Invalid registration format. Please enter a valid vehicle number.", "error");
-                return;
-            }
-
-            const db = getStolenDatabase();
-            db.unshift({
-                vehicleNumber: num,
-                vehicleType: type,
-                make: make,
-                model: "Model Spec",
-                color: color,
-                complaintNumber: fir,
-                policeStation: `${district} Central Station`,
-                district: district,
-                complaintDate: new Date().toISOString().split('T')[0],
-                status: "STOLEN",
-                severity: "ACTIVE"
-            });
-            localStorage.setItem('vg_stolen_db', JSON.stringify(db));
-
-            modal.remove();
-            renderKPIs();
-            renderStolenDbTable();
-            showToast(`Vehicle ${num} added to Stolen Vehicle Watchlist!`, "success");
-        });
-    });
-}
-
-/**
- * Export Scans to CSV file
- */
-function exportScansToCSV() {
+function exportScansCSV() {
     const history = getScanHistory();
-    if (history.length === 0) {
-        showToast("No scan records available to export.", "warning");
-        return;
-    }
-
-    let csvContent = "data:text/csv;charset=utf-8,";
-    csvContent += "Scan ID,Vehicle Number,Timestamp,Result,Officer,Location,Details\n";
-
-    history.forEach(row => {
-        const line = `"${row.id}","${row.vehicleNumber}","${row.timestamp}","${row.result}","${row.officer || ''}","${row.location || ''}","${row.details || ''}"`;
-        csvContent += line + "\n";
+    let csv = "Scan_ID,Vehicle_Number,Timestamp,Verdict,Officer,Details\n";
+    history.forEach(h => {
+        csv += `"${h.id || ''}","${h.vehicleNumber || ''}","${h.timestamp || ''}","${h.result || ''}","${h.officer || ''}","${(h.details || '').replace(/"/g, '""')}"\n`;
     });
 
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `VehicleGuard_Scan_Logs_${new Date().toISOString().split('T')[0]}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    showToast("Scan logs exported to CSV successfully.", "success");
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `VehicleGuard_Scans_${new Date().toISOString().substring(0, 10)}.csv`;
+    a.click();
+    showToast("CSV file exported successfully.", "success");
 }
 
 /**
  * Clear Local History
  */
 function handleClearHistory() {
-    if (confirm("Are you sure you want to reset demo scan logs to initial defaults?")) {
-        localStorage.setItem('vg_scan_history', JSON.stringify(INITIAL_SCAN_HISTORY));
-        renderKPIs();
-        renderScansTable('ALL');
-        renderRecentAlertsFeed();
-        showToast("Demo scan history has been reset.", "info");
+    if (confirm("Are you sure you want to clear the local field scan history?")) {
+        localStorage.setItem('vg_scan_history', JSON.stringify([]));
+        updateDashboardKPIs();
+        renderDashboardScans();
+        showToast("Local scan logs cleared.", "info");
     }
 }

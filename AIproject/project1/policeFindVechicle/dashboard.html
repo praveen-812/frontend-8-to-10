@@ -20,112 +20,87 @@
     </script>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="dark bg-[#070d18] text-slate-100 min-h-screen flex flex-col antialiased transition-colors duration-200">
+<body class="dark bg-[#070d18] text-slate-100 min-h-screen flex flex-col antialiased transition-colors duration-200 overflow-x-hidden">
 
     <!-- Top Demo Disclaimer Banner -->
-    <div class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-slate-950 font-bold text-xs py-1.5 px-4 text-center tracking-wide shadow-md flex items-center justify-center space-x-2">
-        <span>⚠️</span>
-        <span data-i18n="demo_banner">DEMO PROTOTYPE — NOT CONNECTED TO LIVE GOVERNMENT DATABASES (FOR DEMO & EVALUATION ONLY)</span>
-        <span>⚠️</span>
+    <div class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-slate-950 font-bold text-[11px] sm:text-xs py-1.5 px-3 text-center tracking-wide shadow-md flex items-center justify-center space-x-1.5 sm:space-x-2">
+        <span class="flex-shrink-0">⚠️</span>
+        <span data-i18n="demo_banner" class="leading-tight">DEMO PROTOTYPE — NOT CONNECTED TO LIVE GOVERNMENT DATABASES (FOR DEMO & EVALUATION ONLY)</span>
+        <span class="flex-shrink-0">⚠️</span>
     </div>
 
-    <!-- Header Navigation -->
-    <header class="sticky top-0 z-40 bg-slate-900/90 dark:bg-[#0d1527]/95 backdrop-blur-md border-b border-slate-800 transition-colors">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <!-- Creative & Professional Police Siren Logo & Title -->
-                <div class="flex items-center space-x-3">
-                    <a href="index.html" class="flex items-center space-x-3 group">
-                        <div class="relative flex items-center justify-center p-1 rounded-xl bg-slate-950 border border-slate-700/80 shadow-md group-hover:scale-105 transition transform w-11 h-11 sm:w-12 sm:h-12 overflow-hidden">
+    <!-- Header Navigation (Guaranteed 100% Fit & Visibility for Logout Button in Tamil) -->
+    <header class="sticky top-0 z-40 bg-slate-900/95 dark:bg-[#070e1e]/95 backdrop-blur-md border-b border-slate-800 transition-colors shadow-xl shadow-black/40">
+        <div class="max-w-7xl mx-auto px-3 sm:px-4 lg:px-5 w-full">
+            <div class="flex items-center justify-between h-16 sm:h-20 gap-2 sm:gap-3 xl:gap-4 w-full">
+                
+                <!-- Police Siren Logo & Stacked Title/Badge -->
+                <div class="flex items-center space-x-2 sm:space-x-2.5 flex-shrink-0">
+                    <a href="index.html" class="flex items-center space-x-2.5 sm:space-x-3 group">
+                        <div class="relative flex items-center justify-center p-1 rounded-xl bg-slate-950 border border-slate-700/80 shadow-md group-hover:scale-105 transition transform w-8 h-8 sm:w-9 sm:h-9 overflow-hidden flex-shrink-0">
                             <img src="images/police_siren_logo.svg" alt="Police Siren Beacon" class="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]">
                         </div>
-                        <div>
-                            <div class="flex items-center space-x-2">
-                                <span class="font-black text-lg sm:text-xl tracking-tight text-white group-hover:text-blue-400 transition uppercase">VehicleGuard AI</span>
-                                <span class="text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/40">POLICE IT</span>
+                        <div class="flex flex-col justify-center">
+                            <span class="font-black text-xs sm:text-sm lg:text-base tracking-tight text-white group-hover:text-blue-400 transition uppercase whitespace-nowrap leading-tight" data-i18n="brand_name">VehicleGuard AI</span>
+                            <div class="flex items-center space-x-1 mt-0.5 leading-none">
+                                <span class="text-[8px] sm:text-[9px] font-mono font-bold uppercase px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-300 border border-blue-500/40 whitespace-nowrap tracking-wider inline-block leading-none" data-i18n="brand_badge">POLICE IT</span>
                             </div>
-                            <p class="text-[11px] text-slate-300 hidden sm:block tracking-wide font-medium">Stolen Vehicle Detection & ANPR Verification Portal</p>
                         </div>
                     </a>
                 </div>
 
-                <nav class="hidden lg:flex items-center space-x-1">
-                    <a href="index.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_home">Home</a>
-                    <a href="scan.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_scan">Vehicle Scan</a>
-                    <a href="report.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_report">Report Vehicle</a>
-                    <a href="status.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_status">Check Status</a>
-                    <a href="dashboard.html" class="px-3.5 py-2 rounded-lg text-sm font-semibold text-blue-400 bg-slate-800/80 transition" data-i18n="nav_dashboard">Police Dashboard</a>
-                    <a href="help.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_help">Help & FAQ</a>
+                <nav class="hidden lg:flex items-center space-x-1 xl:space-x-1.5 flex-shrink-0">
+                    <a href="index.html" class="px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg text-xs xl:text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition whitespace-nowrap" data-i18n="nav_home">Home</a>
+                    <a href="scan.html" class="px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg text-xs xl:text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition whitespace-nowrap" data-i18n="nav_scan">Vehicle Scan</a>
+                    <a href="report.html" class="px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg text-xs xl:text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition whitespace-nowrap" data-i18n="nav_report">Report Vehicle</a>
+                    <a href="status.html" class="px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg text-xs xl:text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition whitespace-nowrap" data-i18n="nav_status">Check Status</a>
+                    <a href="dashboard.html" class="px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg text-xs xl:text-sm font-semibold text-blue-400 bg-slate-800/90 transition whitespace-nowrap" data-i18n="nav_dashboard">Police Dashboard</a>
+                    <a href="help.html" class="px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg text-xs xl:text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition whitespace-nowrap" data-i18n="nav_help">Help & FAQ</a>
                 </nav>
 
-                <div class="hidden sm:flex items-center space-x-3">
-                    <div class="flex items-center bg-slate-800/80 dark:bg-slate-900 border border-slate-700/80 rounded-lg p-1 text-xs">
-                        <button class="btn-switch-lang lang-btn-en px-2.5 py-1 rounded font-semibold text-blue-400 transition" data-lang="en">EN</button>
+                <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+                    <div class="flex items-center bg-slate-800/80 dark:bg-slate-900 border border-slate-700/80 rounded-lg p-0.5 text-xs flex-shrink-0 shadow-sm">
+                        <button class="btn-switch-lang lang-btn-en px-1.5 sm:px-2 py-0.5 rounded font-semibold text-blue-400 transition" data-lang="en">EN</button>
                         <span class="text-slate-600">|</span>
-                        <button class="btn-switch-lang lang-btn-ta px-2.5 py-1 rounded font-semibold text-slate-400 hover:text-white transition" data-lang="ta">தமிழ்</button>
+                        <button class="btn-switch-lang lang-btn-ta px-1.5 sm:px-2 py-0.5 rounded font-semibold text-slate-400 hover:text-white transition" data-lang="ta">தமிழ்</button>
                     </div>
 
-                    <button class="theme-toggle-btn p-2 rounded-lg bg-slate-800/80 dark:bg-slate-900 border border-slate-700/80 text-slate-300 hover:text-white transition">
-                        <span class="theme-icon text-sm">🌙</span>
+                    <button class="theme-toggle-btn p-1.5 rounded-lg bg-slate-800/80 dark:bg-slate-900 border border-slate-700/80 text-slate-300 hover:text-white transition flex-shrink-0 shadow-sm">
+                        <span class="theme-icon text-xs sm:text-sm">🌙</span>
                     </button>
 
-                    <!-- Auth status badge in nav (Unified Single-Line Flex Pill) -->
+                    <!-- Exact Single Login ↔ Logout Button in Same Location -->
                     <div id="nav-auth-container" class="flex-shrink-0 flex items-center">
-                        <a id="nav-login-link" href="login.html" class="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-slate-200 hover:text-white border border-slate-700/80 hover:border-blue-500/60 bg-slate-800/80 hover:bg-slate-700/90 shadow-sm transition whitespace-nowrap flex-shrink-0">
-                            <span class="text-sm">👮</span>
-                            <span data-i18n="nav_login">Police Login</span>
-                        </a>
-                        <div id="nav-user-badge" class="hidden items-center space-x-2 px-3 py-1.5 rounded-xl bg-slate-800/90 border border-blue-500/40 text-xs shadow-md shrink-0 whitespace-nowrap">
-                            <div class="flex items-center space-x-1.5">
-                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                                <span class="text-blue-300 font-mono font-bold" id="nav-officer-id">DEMO001</span>
-                                <span class="text-slate-300 font-medium text-[11px] hidden xl:inline" id="nav-officer-rank">• SI Arumugam</span>
-                            </div>
-                            <button id="btn-nav-logout" type="button" class="btn-logout px-2.5 py-1 rounded-lg bg-rose-600/90 hover:bg-rose-500 text-white text-[11px] font-bold transition shadow-sm" data-i18n="nav_logout">Logout</button>
-                        </div>
+                        <button type="button" id="nav-auth-btn" class="btn-auth-toggle inline-flex items-center space-x-1 sm:space-x-1.5 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl text-xs font-bold text-slate-200 hover:text-white border border-slate-700/80 hover:border-blue-500/60 bg-slate-800/80 hover:bg-slate-700/90 shadow-sm transition whitespace-nowrap flex-shrink-0 cursor-pointer" data-auth-state="logged-out">
+                            <span class="auth-btn-icon text-sm">👮</span>
+                            <span class="auth-btn-text" data-i18n="nav_login">Login</span>
+                        </button>
                     </div>
-                </div>
 
-                <div class="flex lg:hidden items-center space-x-2">
-                    <button class="theme-toggle-btn p-2 rounded-lg bg-slate-800 border border-slate-700 text-slate-300">
-                        <span class="theme-icon text-sm">🌙</span>
-                    </button>
-                    <button id="mobile-menu-btn" class="p-2.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white border border-slate-700">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    <button id="mobile-menu-btn" class="lg:hidden p-1.5 sm:p-2 rounded-lg bg-slate-800 text-slate-300 hover:text-white border border-slate-700 flex-shrink-0">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                     </button>
                 </div>
             </div>
         </div>
 
-        <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-800 bg-slate-900/95 px-4 pt-3 pb-6 space-y-2">
-            <a href="index.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300" data-i18n="nav_home">Home</a>
-            <a href="scan.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300" data-i18n="nav_scan">Vehicle Scan</a>
-            <a href="report.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300" data-i18n="nav_report">Report Vehicle</a>
-            <a href="status.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300" data-i18n="nav_status">Check Status</a>
-            <a href="dashboard.html" class="block px-3 py-2 rounded-lg text-base font-semibold text-blue-400 bg-slate-800" data-i18n="nav_dashboard">Police Dashboard</a>
-            <a href="help.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300" data-i18n="nav_help">Help & FAQ</a>
+        <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-800 bg-slate-900/98 px-4 pt-3 pb-6 space-y-2 shadow-2xl">
+            <a href="index.html" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300" data-i18n="nav_home">Home</a>
+            <a href="scan.html" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800" data-i18n="nav_scan">Vehicle Scan</a>
+            <a href="report.html" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800" data-i18n="nav_report">Report Vehicle</a>
+            <a href="status.html" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800" data-i18n="nav_status">Check Status</a>
+            <a href="dashboard.html" class="block px-3 py-2.5 rounded-lg text-sm font-semibold text-blue-400 bg-slate-800" data-i18n="nav_dashboard">Police Dashboard</a>
+            <a href="help.html" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800" data-i18n="nav_help">Help & FAQ</a>
             
-            <div id="mobile-auth-section" class="pt-2 border-t border-slate-800">
-                <a id="mobile-login-link" href="login.html" class="inline-flex items-center space-x-2 w-full px-3.5 py-2.5 rounded-xl text-sm font-bold text-blue-400 bg-slate-800/90 hover:bg-slate-700 border border-slate-700/70 transition whitespace-nowrap">
-                    <span class="text-base">👮</span>
-                    <span data-i18n="nav_login">Police Login</span>
-                </a>
-                <div id="mobile-user-badge" class="hidden flex-col space-y-2 p-3 bg-slate-800/90 border border-blue-500/40 rounded-xl whitespace-nowrap">
-                    <div class="flex items-center justify-between text-xs">
-                        <div class="flex items-center space-x-2">
-                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                            <span id="mobile-officer-name" class="font-bold text-white">DEMO001</span>
-                        </div>
-                        <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-blue-900/60 text-blue-300 border border-blue-500/40">ON DUTY</span>
-                    </div>
-                    <button id="btn-mobile-logout" type="button" class="btn-logout w-full py-2 bg-rose-600 hover:bg-rose-500 text-white rounded-lg text-xs font-bold transition shadow-md" data-i18n="nav_logout">
-                        Logout from Portal
-                    </button>
-                </div>
+            <div class="pt-2 border-t border-slate-800">
+                <button type="button" id="mobile-auth-btn" class="btn-auth-toggle w-full flex items-center justify-center space-x-2 py-2.5 rounded-xl text-sm font-bold text-slate-200 bg-slate-800/90 border border-slate-700/80 transition" data-auth-state="logged-out">
+                    <span class="auth-btn-icon text-base">👮</span>
+                    <span class="auth-btn-text" data-i18n="nav_login">Login</span>
+                </button>
             </div>
 
-            <div class="pt-4 border-t border-slate-800 flex items-center justify-between">
-                <span class="text-xs text-slate-400">Language / மொழி:</span>
+            <div class="pt-3 border-t border-slate-800 flex items-center justify-between">
+                <span class="text-xs text-slate-400" data-i18n="lang_label">Language / மொழி:</span>
                 <div class="flex space-x-2">
                     <button class="btn-switch-lang px-3 py-1 bg-slate-800 rounded text-xs font-bold text-blue-400" data-lang="en">EN</button>
                     <button class="btn-switch-lang px-3 py-1 bg-slate-800 rounded text-xs font-bold text-slate-400" data-lang="ta">தமிழ்</button>
@@ -135,143 +110,129 @@
     </header>
 
     <!-- Main Content -->
-    <main class="flex-grow py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full space-y-8">
+    <main class="flex-grow py-6 sm:py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full space-y-6 sm:space-y-8">
         
-        <!-- Header Bar with Siren Emblem & Live Search -->
         <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 pb-4 border-b border-slate-800">
-            <div class="flex items-center space-x-4">
-                <div class="flex items-center justify-center p-2 rounded-2xl bg-slate-950/90 border border-slate-700/80 shadow-xl w-14 h-14">
+            <div class="flex items-center space-x-3 sm:space-x-4 min-w-0">
+                <div class="flex items-center justify-center p-2 rounded-2xl bg-slate-950/90 border border-slate-700/80 shadow-xl w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0">
                     <img src="images/police_siren_logo.svg" alt="Police Siren" class="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]">
                 </div>
-                <div>
+                <div class="min-w-0">
                     <div class="flex items-center space-x-2">
-                        <span class="text-xl">🚔</span>
-                        <h1 class="text-xl sm:text-2xl lg:text-3xl font-black text-white" data-i18n="dash_title">Police Command & Intelligence Dashboard</h1>
+                        <span class="text-xl sm:text-2xl">🚔</span>
+                        <h1 class="text-lg sm:text-2xl lg:text-3xl font-black text-white" data-i18n="dash_title">Police Command & Intelligence Dashboard</h1>
                     </div>
                     <p class="text-slate-400 text-xs sm:text-sm mt-1" data-i18n="dash_subtitle">Real-time ANPR scan metrics, stolen vehicle hits, and citizen submission scrutiny.</p>
                 </div>
             </div>
 
-            <!-- Header Quick Actions -->
-            <div class="flex flex-wrap items-center gap-3">
-                <button id="btn-open-add-stolen" class="px-4 py-2.5 rounded-xl font-bold text-xs bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-600/30 transition flex items-center space-x-2" data-i18n="btn_add_stolen">
+            <div class="flex flex-wrap items-center gap-2.5 sm:gap-3 flex-shrink-0">
+                <button id="btn-open-add-stolen" class="px-3.5 sm:px-4 py-2.5 rounded-xl font-bold text-xs bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-600/30 transition flex items-center space-x-1.5" data-i18n="btn_add_stolen">
                     <span>+ Add Stolen Vehicle Record</span>
                 </button>
-                <a href="scan.html" class="px-4 py-2.5 rounded-xl font-bold text-xs bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/30 transition flex items-center space-x-2">
+                <a href="scan.html" class="px-3.5 sm:px-4 py-2.5 rounded-xl font-bold text-xs bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-600/30 transition flex items-center space-x-1.5" data-i18n="btn_launch_scanner">
                     <span>⚡ Launch Field Scanner</span>
                 </a>
             </div>
         </div>
 
         <!-- Top Statistics KPI Cards -->
-        <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
-            <!-- Total Scans -->
-            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 relative overflow-hidden shadow-lg">
-                <span class="text-xs text-slate-400 uppercase tracking-wider font-semibold block" data-i18n="kpi_total_scans">Total Field Scans</span>
-                <div id="kpi-total-scans" class="text-2xl sm:text-3xl font-mono font-black text-white mt-1">1,248</div>
+        <div class="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
+            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 relative overflow-hidden shadow-lg min-w-0">
+                <span class="text-[11px] sm:text-xs text-slate-400 uppercase tracking-wider font-semibold block" data-i18n="kpi_total_scans">Total Field Scans</span>
+                <div id="kpi-total-scans" class="text-xl sm:text-3xl font-mono font-black text-white mt-1">1,248</div>
                 <div class="text-[10px] text-blue-400 mt-2 font-mono flex items-center">
-                    <span class="w-1.5 h-1.5 rounded-full bg-blue-400 mr-1.5"></span> LIVE SYNCED
+                    <span class="w-1.5 h-1.5 rounded-full bg-blue-400 mr-1.5"></span> <span data-i18n="kpi_live_synced">LIVE SYNCED</span>
                 </div>
             </div>
 
-            <!-- Stolen Matches -->
-            <div class="bg-slate-900/90 border border-rose-600/40 rounded-2xl p-5 relative overflow-hidden shadow-lg">
-                <span class="text-xs text-rose-300 uppercase tracking-wider font-semibold block" data-i18n="kpi_stolen_hits">Stolen Matches</span>
-                <div id="kpi-stolen-hits" class="text-2xl sm:text-3xl font-mono font-black text-rose-400 mt-1">17</div>
+            <div class="bg-slate-900/90 border border-rose-600/40 rounded-2xl p-4 sm:p-5 relative overflow-hidden shadow-lg min-w-0">
+                <span class="text-[11px] sm:text-xs text-rose-300 uppercase tracking-wider font-semibold block" data-i18n="kpi_stolen_hits">Stolen Matches</span>
+                <div id="kpi-stolen-hits" class="text-xl sm:text-3xl font-mono font-black text-rose-400 mt-1">17</div>
                 <div class="text-[10px] text-rose-400 mt-2 font-mono flex items-center">
-                    <span class="w-1.5 h-1.5 rounded-full bg-rose-500 mr-1.5 animate-ping"></span> HIGH PRIORITY
+                    <span class="w-1.5 h-1.5 rounded-full bg-rose-500 mr-1.5 animate-ping"></span> <span data-i18n="kpi_high_priority">HIGH PRIORITY</span>
                 </div>
             </div>
 
-            <!-- Clean Scans -->
-            <div class="bg-slate-900/90 border border-emerald-600/40 rounded-2xl p-5 relative overflow-hidden shadow-lg">
-                <span class="text-xs text-emerald-300 uppercase tracking-wider font-semibold block" data-i18n="kpi_clean_scans">Clean Scans</span>
-                <div id="kpi-clean-scans" class="text-2xl sm:text-3xl font-mono font-black text-emerald-400 mt-1">1,205</div>
+            <div class="bg-slate-900/90 border border-emerald-600/40 rounded-2xl p-4 sm:p-5 relative overflow-hidden shadow-lg min-w-0">
+                <span class="text-[11px] sm:text-xs text-emerald-300 uppercase tracking-wider font-semibold block" data-i18n="kpi_clean_scans">Clean Scans</span>
+                <div id="kpi-clean-scans" class="text-xl sm:text-3xl font-mono font-black text-emerald-400 mt-1">1,205</div>
                 <div class="text-[10px] text-emerald-400 mt-2 font-mono flex items-center">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span> VERIFIED CLEAR
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span> <span data-i18n="kpi_verified_clear">VERIFIED CLEAR</span>
                 </div>
             </div>
 
-            <!-- Pending Verifications -->
-            <div class="bg-slate-900/90 border border-amber-600/40 rounded-2xl p-5 relative overflow-hidden shadow-lg">
-                <span class="text-xs text-amber-300 uppercase tracking-wider font-semibold block" data-i18n="kpi_pending">Pending Verification</span>
-                <div id="kpi-pending" class="text-2xl sm:text-3xl font-mono font-black text-amber-400 mt-1">26</div>
+            <div class="bg-slate-900/90 border border-amber-600/40 rounded-2xl p-4 sm:p-5 relative overflow-hidden shadow-lg min-w-0">
+                <span class="text-[11px] sm:text-xs text-amber-300 uppercase tracking-wider font-semibold block" data-i18n="kpi_pending">Pending Verification</span>
+                <div id="kpi-pending" class="text-xl sm:text-3xl font-mono font-black text-amber-400 mt-1">26</div>
                 <div class="text-[10px] text-amber-400 mt-2 font-mono flex items-center">
-                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1.5"></span> IN SCRUTINY
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1.5"></span> <span data-i18n="kpi_in_scrutiny">IN SCRUTINY</span>
                 </div>
             </div>
 
-            <!-- Active Watchlist FIRs -->
-            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 relative overflow-hidden shadow-lg col-span-2 lg:col-span-1">
-                <span class="text-xs text-slate-400 uppercase tracking-wider font-semibold block" data-i18n="kpi_firs">Active Stolen Database</span>
-                <div id="kpi-active-firs" class="text-2xl sm:text-3xl font-mono font-black text-blue-400 mt-1">7</div>
-                <div class="text-[10px] text-slate-400 mt-2 font-mono">TN ZONAL REGISTRY</div>
+            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-5 relative overflow-hidden shadow-lg col-span-2 lg:col-span-1 min-w-0">
+                <span class="text-[11px] sm:text-xs text-slate-400 uppercase tracking-wider font-semibold block" data-i18n="kpi_firs">Active Stolen Database</span>
+                <div id="kpi-active-firs" class="text-xl sm:text-3xl font-mono font-black text-blue-400 mt-1">7</div>
+                <div class="text-[10px] text-slate-400 mt-2 font-mono" data-i18n="kpi_tn_zonal">TN ZONAL REGISTRY</div>
             </div>
         </div>
 
         <!-- Dashboard Central Search & Recent Alert Feed -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            
-            <!-- Quick Vehicle Lookup Box -->
-            <div class="lg:col-span-6 bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
+            <div class="lg:col-span-6 bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-6 shadow-xl space-y-3 sm:space-y-4 min-w-0">
                 <div class="flex items-center justify-between">
-                    <h3 class="font-bold text-sm text-white uppercase tracking-wider flex items-center space-x-2">
+                    <h3 class="font-bold text-xs sm:text-sm text-white uppercase tracking-wider flex items-center space-x-2">
                         <span>🔍</span>
-                        <span>Direct Stolen Vehicle Lookup</span>
+                        <span data-i18n="dash_direct_lookup">Direct Stolen Vehicle Lookup</span>
                     </h3>
-                    <span class="text-[10px] font-mono text-slate-400">INSTANT MATCH</span>
+                    <span class="text-[10px] font-mono text-slate-400" data-i18n="dash_instant_match">INSTANT MATCH</span>
                 </div>
                 <div class="flex gap-2">
-                    <input type="text" id="dash-search-input" placeholder="Enter Registration (e.g. TN09AB1234)" class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 text-sm font-mono uppercase text-white focus:outline-none focus:border-blue-500">
-                    <button id="btn-dash-search" class="px-5 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold uppercase transition">
+                    <input type="text" id="dash-search-input" placeholder="Enter Registration (e.g. TN09AB1234)" data-i18n-placeholder="dash_search_placeholder" class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-mono uppercase text-white focus:outline-none focus:border-blue-500">
+                    <button id="btn-dash-search" class="px-4 sm:px-5 py-2.5 sm:py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold uppercase transition flex-shrink-0" data-i18n="btn_search">
                         Search
                     </button>
                 </div>
-                <p class="text-[11px] text-slate-400">
+                <p class="text-[11px] text-slate-400" data-i18n="dash_lookup_desc">
                     Instant lookup opens full FIR crime dossier, owner contact, and reporting station records.
                 </p>
             </div>
 
-            <!-- Recent High-Priority Alerts Feed -->
-            <div class="lg:col-span-6 bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-3">
+            <div class="lg:col-span-6 bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-6 shadow-xl space-y-3 min-w-0">
                 <div class="flex items-center justify-between border-b border-slate-800 pb-2">
-                    <h3 class="font-bold text-sm text-rose-400 uppercase tracking-wider flex items-center space-x-2">
+                    <h3 class="font-bold text-xs sm:text-sm text-rose-400 uppercase tracking-wider flex items-center space-x-2">
                         <span class="animate-pulse">🚨</span>
-                        <span>Recent Stolen Hits (Field Checkpoints)</span>
+                        <span data-i18n="dash_recent_alerts">Recent Stolen Hits (Field Checkpoints)</span>
                     </h3>
-                    <span class="text-[10px] font-mono text-slate-400">AUTO-LOGGED</span>
+                    <span class="text-[10px] font-mono text-slate-400" data-i18n="dash_auto_logged">AUTO-LOGGED</span>
                 </div>
                 <div id="recent-alerts-feed" class="space-y-2 max-h-48 overflow-y-auto pr-1">
-                    <!-- Populated by JS -->
                 </div>
             </div>
-
         </div>
 
-        <!-- Main Data Management Section: Scans / Stolen DB / Complaints / Analytics -->
-        <div class="bg-slate-900/95 border border-slate-800 rounded-2xl p-6 shadow-2xl space-y-6">
+        <!-- Main Data Management Section -->
+        <div class="bg-slate-900/95 border border-slate-800 rounded-2xl p-4 sm:p-6 shadow-2xl space-y-6 min-w-0">
             
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pb-4 border-b border-slate-800 gap-4">
-                <!-- Filters & Tabs -->
-                <div class="flex flex-wrap gap-2">
-                    <button class="tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 text-white transition" data-filter="ALL">
+                <div class="flex flex-wrap gap-1.5 sm:gap-2">
+                    <button class="tab-btn px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold bg-blue-600 text-white transition" data-filter="ALL" data-i18n="tab_all_scans">
                         All Scans
                     </button>
-                    <button class="tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-400 hover:text-white transition" data-filter="STOLEN">
+                    <button class="tab-btn px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-400 hover:text-white transition" data-filter="STOLEN" data-i18n="tab_stolen_hits">
                         🔴 Stolen Hits
                     </button>
-                    <button class="tab-btn px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-400 hover:text-white transition" data-filter="CLEAN">
+                    <button class="tab-btn px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-400 hover:text-white transition" data-filter="CLEAN" data-i18n="tab_clean_scans">
                         🟢 Clean Scans
                     </button>
                 </div>
 
-                <!-- Utilities -->
                 <div class="flex items-center space-x-2">
-                    <button id="btn-export-csv" class="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 rounded-lg text-xs font-medium transition flex items-center space-x-1.5" data-i18n="btn_export_csv">
+                    <button id="btn-export-csv" class="px-3 sm:px-3.5 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 rounded-lg text-xs font-medium transition flex items-center space-x-1.5">
                         <span>📥</span>
-                        <span>Export CSV</span>
+                        <span data-i18n="btn_export_csv">Export CSV</span>
                     </button>
-                    <button id="btn-clear-history" class="px-3.5 py-2 bg-rose-950/40 hover:bg-rose-900/60 border border-rose-800/40 text-rose-300 rounded-lg text-xs font-medium transition" data-i18n="btn_clear_history">
+                    <button id="btn-clear-history" class="px-3 sm:px-3.5 py-2 bg-rose-950/40 hover:bg-rose-900/60 border border-rose-800/40 text-rose-300 rounded-lg text-xs font-medium transition" data-i18n="btn_clear_history">
                         Clear Logs
                     </button>
                 </div>
@@ -281,18 +242,17 @@
             <div>
                 <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3" data-i18n="tab_recent_scans">Recent Field Scans</h4>
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs">
+                    <table class="w-full text-left text-xs min-w-[560px]">
                         <thead>
                             <tr class="text-slate-400 border-b border-slate-800 uppercase tracking-wider font-mono">
-                                <th class="py-3 px-4">Vehicle Registration</th>
-                                <th class="py-3 px-4">Timestamp</th>
-                                <th class="py-3 px-4">Result Verdict</th>
-                                <th class="py-3 px-4">Duty Officer</th>
-                                <th class="py-3 px-4">Details / FIR Reference</th>
+                                <th class="py-3 px-4" data-i18n="th_veh_reg">Vehicle Registration</th>
+                                <th class="py-3 px-4" data-i18n="th_timestamp">Timestamp</th>
+                                <th class="py-3 px-4" data-i18n="th_result_verdict">Result Verdict</th>
+                                <th class="py-3 px-4" data-i18n="th_duty_officer">Duty Officer</th>
+                                <th class="py-3 px-4" data-i18n="th_details_fir">Details / FIR Reference</th>
                             </tr>
                         </thead>
                         <tbody id="dash-scans-tbody">
-                            <!-- Populated dynamically by JS -->
                         </tbody>
                     </table>
                 </div>
@@ -302,36 +262,34 @@
             <div class="pt-6 border-t border-slate-800">
                 <div class="flex items-center justify-between mb-3">
                     <h4 class="text-xs font-bold uppercase tracking-wider text-rose-400" data-i18n="tab_stolen_db">Active Stolen Vehicle Watchlist (Demo Database)</h4>
-                    <span class="text-[10px] text-slate-400 font-mono">CCTNS CENTRAL REGISTRY HASH</span>
+                    <span class="text-[10px] text-slate-400 font-mono" data-i18n="cctns_registry_hash">CCTNS CENTRAL REGISTRY HASH</span>
                 </div>
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs">
+                    <table class="w-full text-left text-xs min-w-[620px]">
                         <thead>
                             <tr class="text-slate-400 border-b border-slate-800 uppercase tracking-wider font-mono">
-                                <th class="py-3 px-4">Vehicle Number</th>
-                                <th class="py-3 px-4">Make & Model</th>
-                                <th class="py-3 px-4">Type</th>
-                                <th class="py-3 px-4">FIR Number</th>
-                                <th class="py-3 px-4">Police Station (District)</th>
-                                <th class="py-3 px-4">Theft Date</th>
-                                <th class="py-3 px-4 text-right">Action</th>
+                                <th class="py-3 px-4" data-i18n="th_veh_num">Vehicle Number</th>
+                                <th class="py-3 px-4" data-i18n="lbl_make_model">Make & Model</th>
+                                <th class="py-3 px-4" data-i18n="th_type">Type</th>
+                                <th class="py-3 px-4" data-i18n="th_fir_no">FIR Number</th>
+                                <th class="py-3 px-4" data-i18n="th_ps_district">Police Station (District)</th>
+                                <th class="py-3 px-4" data-i18n="th_theft_date">Theft Date</th>
+                                <th class="py-3 px-4 text-right" data-i18n="th_action">Action</th>
                             </tr>
                         </thead>
                         <tbody id="dash-stolendb-tbody">
-                            <!-- Populated dynamically by JS -->
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Citizen Complaint Intake & Approval Table -->
+            <!-- Citizen Complaint Intake Table -->
             <div class="pt-6 border-t border-slate-800">
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
                     <div>
                         <h4 class="text-xs font-bold uppercase tracking-wider text-blue-400" data-i18n="tab_complaints">Citizen Complaints & User Submissions Feed</h4>
-                        <p class="text-[11px] text-slate-400">Review citizen vehicle theft reports, verify documents, and approve formal FIR registration.</p>
+                        <p class="text-[11px] text-slate-400" data-i18n="complaints_sub">Review citizen vehicle theft reports, verify documents, and approve formal FIR registration.</p>
                     </div>
-                    <!-- Status Filter Tabs for Complaints -->
                     <div class="flex flex-wrap gap-1.5 text-xs">
                         <button class="complaint-tab-btn px-3 py-1.5 rounded-lg font-bold bg-blue-600 text-white transition" data-cfilter="ALL" data-i18n="filter_all_complaints">All Submissions</button>
                         <button class="complaint-tab-btn px-3 py-1.5 rounded-lg font-bold bg-slate-800 text-slate-400 hover:text-white transition" data-cfilter="PENDING" data-i18n="filter_pending_approval">🟡 Pending Approval</button>
@@ -341,45 +299,41 @@
                     </div>
                 </div>
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left text-xs">
+                    <table class="w-full text-left text-xs min-w-[620px]">
                         <thead>
                             <tr class="text-slate-400 border-b border-slate-800 uppercase tracking-wider font-mono">
-                                <th class="py-3 px-4">Reference No</th>
-                                <th class="py-3 px-4">Vehicle Number</th>
-                                <th class="py-3 px-4">Complainant</th>
-                                <th class="py-3 px-4">District</th>
-                                <th class="py-3 px-4">Submission Date</th>
-                                <th class="py-3 px-4">Scrutiny Status</th>
-                                <th class="py-3 px-4 text-right">Officer Action</th>
+                                <th class="py-3 px-4" data-i18n="th_ref_no">Reference No</th>
+                                <th class="py-3 px-4" data-i18n="th_veh_num">Vehicle Number</th>
+                                <th class="py-3 px-4" data-i18n="th_complainant">Complainant</th>
+                                <th class="py-3 px-4" data-i18n="th_district">District</th>
+                                <th class="py-3 px-4" data-i18n="th_sub_date">Submission Date</th>
+                                <th class="py-3 px-4" data-i18n="th_scrutiny_status">Scrutiny Status</th>
+                                <th class="py-3 px-4 text-right" data-i18n="th_officer_action">Officer Action</th>
                             </tr>
                         </thead>
                         <tbody id="dash-complaints-tbody">
-                            <!-- Populated dynamically by JS -->
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Tamil Nadu District Crime Distribution -->
+            <!-- District Crime Analytics -->
             <div class="pt-6 border-t border-slate-800">
                 <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4" data-i18n="tab_district_analytics">District Crime Distribution & Checkpoint Activity (Demo Data)</h4>
-                <div id="district-analytics-bars" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Populated dynamically by JS -->
+                <div id="district-analytics-bars" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 </div>
             </div>
 
         </div>
     </main>
 
-    <!-- Footer -->
     <footer class="bg-slate-950 border-t border-slate-800 text-slate-400 text-xs py-8 mt-12">
         <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
             <p class="font-bold text-slate-300" data-i18n="demo_footer_disclaimer">DEMO PROTOTYPE — NOT CONNECTED TO LIVE GOVERNMENT SYSTEMS</p>
-            <p class="text-[11px]">VehicleGuard AI Command & Intelligence Dashboard for law enforcement evaluation.</p>
+            <p class="text-[11px]" data-i18n="demo_footer_sub">VehicleGuard AI Command & Intelligence Dashboard for law enforcement evaluation.</p>
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script src="js/translations.js"></script>
     <script src="js/app.js"></script>
     <script src="js/dashboard.js"></script>

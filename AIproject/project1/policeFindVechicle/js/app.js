@@ -1,6 +1,7 @@
 /**
  * VehicleGuard AI - Main Application Core Script
- * Handles LocalStorage state, mock database, sound alerts, theme toggle, plate normalization & validation.
+ * Handles LocalStorage state, mock database, sound alerts, theme toggle,
+ * single-button dynamic Police Login/Logout state management, plate normalization & validation.
  */
 
 // Initial Seed Stolen Vehicle Database (Tamil Nadu Jurisdiction inspired demo data)
@@ -239,7 +240,6 @@ function initDatabase() {
         localStorage.setItem('vg_complaints', JSON.stringify(INITIAL_COMPLAINTS));
     }
     if (!localStorage.getItem('vg_theme')) {
-        // Default to Dark Mode as requested for tactical police IT look
         localStorage.setItem('vg_theme', 'dark');
     }
 }
@@ -273,7 +273,6 @@ function addScanHistory(scanRecord) {
         officer: getLoggedInOfficer() ? `${getLoggedInOfficer().name} (${getLoggedInOfficer().id})` : "Checkpoint Field Officer (DEMO)",
         ...scanRecord
     });
-    // Keep last 100 scans
     if (history.length > 100) history.pop();
     localStorage.setItem('vg_scan_history', JSON.stringify(history));
 }
@@ -290,8 +289,6 @@ function getComplaints() {
 
 /**
  * Normalize Vehicle Number
- * e.g., 'tn 09 ab 1234' -> 'TN09AB1234'
- * 'TN-09-AB-1234' -> 'TN09AB1234'
  */
 function normalizeVehicleNumber(input) {
     if (!input) return "";
@@ -303,22 +300,12 @@ function normalizeVehicleNumber(input) {
 
 /**
  * Validate Common Indian Vehicle Registration Formats
- * Standard: 2 Letters (State) + 1-2 Digits (RTO) + 0-3 Letters (Series) + 4 Digits (Number)
- * e.g. TN09AB1234, TN01A1234, DL3CAA1111, KL071234
- * BH series: 2 Digits (Year) + BH + 4 Digits + 1-2 Letters (e.g. 22BH1234AB)
  */
 function validateVehicleNumber(normalizedNumber) {
     if (!normalizedNumber) return false;
-    
-    // Standard format regex
     const standardRegex = /^[A-Z]{2}[0-9]{1,2}[A-Z]{0,3}[0-9]{4}$/;
-    
-    // Bharat (BH) Series format regex
     const bhRegex = /^[0-9]{2}BH[0-9]{4}[A-Z]{1,2}$/;
-    
-    // Diplomatic & Special Formats (e.g., DL01CD1234, ARMY)
     const generalValidRegex = /^[A-Z0-9]{6,12}$/;
-    
     return standardRegex.test(normalizedNumber) || bhRegex.test(normalizedNumber) || generalValidRegex.test(normalizedNumber);
 }
 
@@ -332,11 +319,10 @@ function playAlertSound(type = 'stolen') {
         const ctx = new AudioContext();
 
         if (type === 'stolen') {
-            // High-priority urgent double-pulse alert
             const osc1 = ctx.createOscillator();
             const gain1 = ctx.createGain();
             osc1.type = 'sawtooth';
-            osc1.frequency.setValueAtTime(880, ctx.currentTime); // A5
+            osc1.frequency.setValueAtTime(880, ctx.currentTime);
             osc1.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.15);
             gain1.gain.setValueAtTime(0.3, ctx.currentTime);
             gain1.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.15);
@@ -359,12 +345,11 @@ function playAlertSound(type = 'stolen') {
                 osc2.stop(ctx.currentTime + 0.21);
             }, 180);
         } else if (type === 'clean') {
-            // Calm positive 2-tone chime
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
             osc.type = 'sine';
-            osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
-            osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.1); // E5
+            osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+            osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.1);
             gain.gain.setValueAtTime(0.2, ctx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
             osc.connect(gain);
@@ -372,7 +357,6 @@ function playAlertSound(type = 'stolen') {
             osc.start();
             osc.stop(ctx.currentTime + 0.3);
         } else if (type === 'beep') {
-            // Simple camera shutter/capture click beep
             const osc = ctx.createOscillator();
             const gain = ctx.createGain();
             osc.type = 'triangle';
@@ -397,15 +381,15 @@ function showToast(message, type = 'info', duration = 3500) {
     if (!container) {
         container = document.createElement('div');
         container.id = 'toast-container';
-        container.className = 'fixed bottom-6 right-6 z-50 flex flex-col space-y-3 max-w-sm w-full pointer-events-none';
+        container.className = 'fixed bottom-6 right-6 z-50 flex flex-col space-y-3 max-w-sm w-full pointer-events-none px-4 sm:px-0';
         document.body.appendChild(container);
     }
 
     const toast = document.createElement('div');
-    toast.className = `pointer-events-auto flex items-center p-4 rounded-lg shadow-2xl border transition-all duration-300 transform translate-y-4 opacity-0 ${
-        type === 'success' ? 'bg-emerald-900/90 border-emerald-500 text-emerald-100' :
+    toast.className = `pointer-events-auto flex items-center p-4 rounded-xl shadow-2xl border transition-all duration-300 transform translate-y-4 opacity-0 ${
+        type === 'success' ? 'bg-emerald-900/95 border-emerald-500 text-emerald-100' :
         type === 'error' || type === 'stolen' ? 'bg-rose-900/95 border-rose-500 text-rose-100 strobe-alert' :
-        type === 'warning' ? 'bg-amber-900/90 border-amber-500 text-amber-100' :
+        type === 'warning' ? 'bg-amber-900/95 border-amber-500 text-amber-100' :
         'bg-slate-800/95 border-slate-600 text-slate-100'
     }`;
 
@@ -414,20 +398,18 @@ function showToast(message, type = 'info', duration = 3500) {
                  type === 'warning' ? '⚠️' : 'ℹ️';
 
     toast.innerHTML = `
-        <span class="text-xl mr-3">${icon}</span>
-        <div class="flex-1 text-sm font-medium leading-snug">${message}</div>
-        <button class="ml-2 text-slate-400 hover:text-white text-lg font-bold" onclick="this.parentElement.remove()">&times;</button>
+        <span class="text-xl mr-3 flex-shrink-0">${icon}</span>
+        <div class="flex-1 text-xs sm:text-sm font-semibold leading-snug">${message}</div>
+        <button class="ml-2 text-slate-400 hover:text-white text-lg font-bold p-1 leading-none" onclick="this.parentElement.remove()">&times;</button>
     `;
 
     container.appendChild(toast);
 
-    // Animate in
     setTimeout(() => {
         toast.classList.remove('translate-y-4', 'opacity-0');
         toast.classList.add('translate-y-0', 'opacity-100');
     }, 10);
 
-    // Auto remove
     setTimeout(() => {
         toast.classList.add('opacity-0', 'translate-x-4');
         setTimeout(() => toast.remove(), 300);
@@ -435,7 +417,7 @@ function showToast(message, type = 'info', duration = 3500) {
 }
 
 /**
- * Theme Toggle Handler (Dark Black/Navy vs Clean White Slate)
+ * Theme Toggle Handler
  */
 function applyTheme(theme) {
     if (theme === 'light') {
@@ -447,16 +429,15 @@ function applyTheme(theme) {
     }
     localStorage.setItem('vg_theme', theme);
     
-    // Update theme icons in all toggle buttons
     document.querySelectorAll('.theme-toggle-btn').forEach(btn => {
         const iconSpan = btn.querySelector('.theme-icon');
         const textSpan = btn.querySelector('.theme-text');
         if (theme === 'light') {
             if (iconSpan) iconSpan.textContent = '☀️';
-            if (textSpan) textSpan.textContent = 'Light Mode';
+            if (textSpan) textSpan.textContent = typeof t === 'function' ? t('theme_light') : 'Light Mode';
         } else {
             if (iconSpan) iconSpan.textContent = '🌙';
-            if (textSpan) textSpan.textContent = 'Dark Mode';
+            if (textSpan) textSpan.textContent = typeof t === 'function' ? t('theme_dark') : 'Dark Mode';
         }
     });
 }
@@ -465,14 +446,128 @@ function toggleTheme() {
     const currentTheme = localStorage.getItem('vg_theme') || 'dark';
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
     applyTheme(newTheme);
-    showToast(`Switched to ${newTheme.toUpperCase()} mode`, 'info', 2000);
+    const msg = typeof t === 'function' 
+        ? (newTheme === 'dark' ? t('theme_dark') : t('theme_light'))
+        : `Switched to ${newTheme.toUpperCase()} mode`;
+    showToast(msg, 'info', 1800);
 }
+
+/**
+ * Get current logged in officer from LocalStorage
+ */
+function getLoggedInOfficer() {
+    try {
+        const auth = localStorage.getItem('vg_auth');
+        return auth ? JSON.parse(auth) : null;
+    } catch (e) {
+        return null;
+    }
+}
+
+/**
+ * Universal Dynamic Logout Handler
+ * Updates button state in-place without page reload on public pages!
+ */
+function handleLogout(e) {
+    if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    localStorage.removeItem('vg_auth');
+    sessionStorage.removeItem('vg_auth');
+
+    // Dynamically update nav buttons immediately in-place
+    updateNavAuthBadge();
+    
+    // Apply translations to ensure freshly toggled button has correct language
+    if (typeof applyTranslations === 'function') {
+        applyTranslations();
+    }
+
+    showToast(typeof t === 'function' ? t('toast_logged_out') : 'Logged out successfully.', 'info', 2500);
+
+    // If on protected dashboard, redirect to login.html; otherwise stay on current page!
+    if (window.location.pathname.includes('dashboard.html')) {
+        setTimeout(() => {
+            window.location.href = 'login.html';
+        }, 600);
+    }
+}
+
+/**
+ * Update and dynamically render auth state in navbar (Desktop & Mobile)
+ * Single button in the exact same location that toggles between "Login" and "Logout".
+ */
+function updateNavAuthBadge() {
+    const officer = getLoggedInOfficer();
+    const lang = typeof getCurrentLanguage === 'function' ? getCurrentLanguage() : (localStorage.getItem('vg_language') || 'en');
+    const isTamil = lang === 'ta';
+    const loginText = isTamil ? (typeof translations !== 'undefined' && translations.ta ? translations.ta.nav_login : "உள்நுழைவு") : (typeof translations !== 'undefined' && translations.en ? translations.en.nav_login : "Login");
+    const logoutText = isTamil ? (typeof translations !== 'undefined' && translations.ta ? translations.ta.nav_logout : "வெளியேறு") : (typeof translations !== 'undefined' && translations.en ? translations.en.nav_logout : "Logout");
+
+    // Target all single-button auth containers (desktop and mobile)
+    document.querySelectorAll('.btn-auth-toggle').forEach(btn => {
+        const iconSpan = btn.querySelector('.auth-btn-icon');
+        const textSpan = btn.querySelector('.auth-btn-text');
+
+        if (officer) {
+            // Logged In State: Button shows "Logout" / "வெளியேறு"
+            btn.setAttribute('data-auth-state', 'logged-in');
+            btn.setAttribute('title', `Logged in as ${officer.name || officer.id} (${officer.id}) - Click to Logout`);
+            if (iconSpan) iconSpan.textContent = '🚪';
+            if (textSpan) {
+                textSpan.setAttribute('data-i18n', 'nav_logout');
+                textSpan.textContent = logoutText;
+            }
+            // Style as active logout button
+            btn.classList.remove('text-slate-200', 'bg-slate-800/80', 'border-slate-700/80', 'hover:bg-slate-700/90', 'hover:border-blue-500/60');
+            btn.classList.add('text-rose-100', 'bg-rose-600/90', 'hover:bg-rose-500', 'border-rose-500/80', 'shadow-md');
+        } else {
+            // Logged Out State: Button shows "Login" / "உள்நுழைவு"
+            btn.setAttribute('data-auth-state', 'logged-out');
+            btn.setAttribute('title', 'Police Officer Login');
+            if (iconSpan) iconSpan.textContent = '👮';
+            if (textSpan) {
+                textSpan.setAttribute('data-i18n', 'nav_login');
+                textSpan.textContent = loginText;
+            }
+            // Style as standard login button
+            btn.classList.remove('text-rose-100', 'bg-rose-600/90', 'hover:bg-rose-500', 'border-rose-500/80', 'shadow-md');
+            btn.classList.add('text-slate-200', 'bg-slate-800/80', 'border-slate-700/80', 'hover:bg-slate-700/90', 'hover:border-blue-500/60');
+        }
+    });
+}
+
+/**
+ * Handle Auth Button Click (Delegated)
+ */
+function handleAuthButtonClick(e) {
+    const btn = e.target.closest('.btn-auth-toggle');
+    if (!btn) return;
+
+    const authState = btn.getAttribute('data-auth-state');
+    if (authState === 'logged-in') {
+        e.preventDefault();
+        e.stopPropagation();
+        handleLogout(e);
+    } else {
+        // Logged out -> Navigate to login.html
+        if (!window.location.pathname.includes('login.html')) {
+            window.location.href = 'login.html';
+        }
+    }
+}
+
+document.addEventListener('click', (e) => {
+    if (e.target.closest('.btn-auth-toggle')) {
+        handleAuthButtonClick(e);
+    }
+});
 
 /**
  * Global Nav & Header Renderer / Initializer
  */
 function initHeaderAndNav() {
-    // Current theme setup
     const savedTheme = localStorage.getItem('vg_theme') || 'dark';
     applyTheme(savedTheme);
 
@@ -485,13 +580,13 @@ function initHeaderAndNav() {
         });
     }
 
-    // Language buttons
+    // Language buttons in header
     document.querySelectorAll('.btn-switch-lang').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const lang = e.currentTarget.dataset.lang;
-            if (lang) {
+            if (lang && typeof setLanguage === 'function') {
                 setLanguage(lang);
-                showToast(lang === 'ta' ? 'தமிழ் மொழி தேர்வு செய்யப்பட்டது' : 'Switched to English', 'success', 2000);
+                showToast(lang === 'ta' ? t('toast_lang_ta') : t('toast_lang_en'), 'success', 2000);
             }
         });
     });
@@ -501,109 +596,146 @@ function initHeaderAndNav() {
         btn.addEventListener('click', toggleTheme);
     });
 
-    // Auth status badge in nav
+    // Dynamic Police Login/Logout state in same button area
     updateNavAuthBadge();
 }
 
-/**
- * Universal Logout Handler
- */
-function handleLogout(e) {
-    if (e) {
-        e.preventDefault();
-        e.stopPropagation();
-    }
-    localStorage.removeItem('vg_auth');
-    sessionStorage.removeItem('vg_auth');
-    updateNavAuthBadge();
-    showToast(getCurrentLanguage() === 'ta' ? 'வெற்றிகரமாக வெளியேறியது.' : 'Logged out successfully.', 'info', 2000);
-    
-    // Redirect cleanly
-    setTimeout(() => {
-        if (window.location.pathname.includes('dashboard.html')) {
-            window.location.href = 'login.html';
-        } else {
-            window.location.href = 'index.html';
-        }
-    }, 350);
-}
-
-// Global delegated click listener for any logout button across the entire page
-document.addEventListener('click', (e) => {
-    const logoutBtn = e.target.closest('#btn-nav-logout, .btn-logout, #btn-mobile-logout');
-    if (logoutBtn) {
-        handleLogout(e);
+// Sync across multiple browser tabs
+window.addEventListener('storage', (e) => {
+    if (e.key === 'vg_auth') {
+        updateNavAuthBadge();
     }
 });
-
-/**
- * Check and render auth state in navbar (Desktop & Mobile)
- */
-function getLoggedInOfficer() {
-    try {
-        const auth = localStorage.getItem('vg_auth');
-        return auth ? JSON.parse(auth) : null;
-    } catch (e) {
-        return null;
-    }
-}
-
-function updateNavAuthBadge() {
-    const officer = getLoggedInOfficer();
-    
-    // Desktop Nav Elements
-    const navLoginLink = document.getElementById('nav-login-link');
-    const navUserBadge = document.getElementById('nav-user-badge');
-    const navOfficerId = document.getElementById('nav-officer-id');
-    const navOfficerRank = document.getElementById('nav-officer-rank');
-    const navOfficerName = document.getElementById('nav-officer-name');
-
-    // Mobile Menu Elements
-    const mobileLoginLink = document.getElementById('mobile-login-link');
-    const mobileUserBadge = document.getElementById('mobile-user-badge');
-    const mobileOfficerName = document.getElementById('mobile-officer-name');
-
-    if (officer) {
-        if (navLoginLink) navLoginLink.classList.add('hidden');
-        if (navUserBadge) {
-            navUserBadge.classList.remove('hidden');
-            navUserBadge.classList.add('inline-flex');
-            if (navOfficerId) navOfficerId.textContent = officer.id || 'DEMO001';
-            if (navOfficerRank) navOfficerRank.textContent = officer.name ? `• ${officer.name.split(' ').slice(0, 2).join(' ')}` : '• Officer';
-            if (navOfficerName) navOfficerName.textContent = `${officer.id} (SI)`;
-        }
-
-        if (mobileLoginLink) mobileLoginLink.classList.add('hidden');
-        if (mobileUserBadge) {
-            mobileUserBadge.classList.remove('hidden');
-            mobileUserBadge.classList.add('flex');
-            if (mobileOfficerName) mobileOfficerName.textContent = `${officer.name || officer.id} (${officer.id})`;
-        }
-    } else {
-        if (navLoginLink) {
-            navLoginLink.classList.remove('hidden');
-            navLoginLink.classList.add('inline-flex');
-        }
-        if (navUserBadge) {
-            navUserBadge.classList.add('hidden');
-            navUserBadge.classList.remove('inline-flex', 'flex');
-        }
-
-        if (mobileLoginLink) mobileLoginLink.classList.remove('hidden');
-        if (mobileUserBadge) {
-            mobileUserBadge.classList.add('hidden');
-            mobileUserBadge.classList.remove('flex');
-        }
-    }
-}
 
 // Auto Boot
 document.addEventListener('DOMContentLoaded', () => {
     initDatabase();
     initHeaderAndNav();
-    if (typeof setLanguage === 'function') {
-        const lang = localStorage.getItem('vg_language') || 'en';
-        setLanguage(lang);
-    }
 });
 
+// Listen to language change to update header auth labels
+window.addEventListener('languageChanged', () => {
+    updateNavAuthBadge();
+});
+
+/**
+ * Universal Crime Dossier Modal Dialog (Shared across Scanner and Dashboard)
+ */
+function showCrimeDossierModal(record) {
+    if (!record) return;
+    const existing = document.getElementById('crime-dossier-modal');
+    if (existing) existing.remove();
+
+    const closeTxt = typeof t === 'function' ? t('btn_close_dossier') : "Close Dossier";
+    const printTxt = typeof t === 'function' ? t('btn_print_dossier') : "🖨️ Print Dossier";
+    const regLabel = typeof t === 'function' ? t('lbl_reg_no') : "Registration No:";
+    const makeLabel = typeof t === 'function' ? t('lbl_make_model') : "Make & Model:";
+    const typeLabel = typeof t === 'function' ? t('lbl_veh_type') : "Vehicle Type:";
+    const colorLabel = typeof t === 'function' ? t('lbl_color') : "Color:";
+    const firLabel = typeof t === 'function' ? t('lbl_fir_complaint') : "FIR / Complaint Ref:";
+    const stationLabel = typeof t === 'function' ? t('lbl_police_station') : "Police Station:";
+    const dateLabel = typeof t === 'function' ? t('lbl_theft_date') : "Complaint Date:";
+    const distLabel = typeof t === 'function' ? t('lbl_district') : "District / City:";
+    const locLabel = typeof t === 'function' ? t('lbl_theft_location') : "Theft Location:";
+    const ownerLabel = typeof t === 'function' ? t('lbl_owner') : "Complainant Name:";
+    const engLabel = typeof t === 'function' ? t('lbl_engine_no') : "Engine / Chassis Hash:";
+
+    const modal = document.createElement('div');
+    modal.id = 'crime-dossier-modal';
+    modal.className = 'fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md';
+    modal.innerHTML = `
+        <div class="bg-slate-900 border-2 border-rose-600 rounded-2xl max-w-2xl w-full p-4 sm:p-6 shadow-2xl space-y-4 max-h-[92vh] overflow-y-auto">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div class="flex items-center space-x-2">
+                    <span class="text-2xl">🚨</span>
+                    <div>
+                        <h3 class="font-black text-white text-base sm:text-lg uppercase">Official Stolen Crime Dossier</h3>
+                        <p class="text-xs text-rose-400 font-mono">${record.complaintNumber}</p>
+                    </div>
+                </div>
+                <button onclick="document.getElementById('crime-dossier-modal').remove()" class="text-slate-400 hover:text-white text-2xl font-bold p-1 leading-none">&times;</button>
+            </div>
+
+            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2 text-xs">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <div><span class="text-slate-400">${regLabel}</span> <strong class="text-rose-300 font-mono">${record.vehicleNumber}</strong></div>
+                    <div><span class="text-slate-400">${makeLabel}</span> <strong class="text-white">${record.make} ${record.model}</strong></div>
+                    <div><span class="text-slate-400">${typeLabel}</span> <span class="text-slate-200">${record.vehicleType}</span></div>
+                    <div><span class="text-slate-400">${colorLabel}</span> <span class="text-slate-200">${record.color}</span></div>
+                    <div><span class="text-slate-400">${dateLabel}</span> <span class="text-slate-200">${record.complaintDate}</span></div>
+                    <div><span class="text-slate-400">${distLabel}</span> <span class="text-slate-200">${record.district}</span></div>
+                    <div class="sm:col-span-2"><span class="text-slate-400">${stationLabel}</span> <span class="text-slate-200">${record.policeStation}</span></div>
+                    <div class="sm:col-span-2"><span class="text-slate-400">${locLabel}</span> <span class="text-slate-200">${record.theftLocation}</span></div>
+                    <div class="sm:col-span-2"><span class="text-slate-400">${ownerLabel}</span> <strong class="text-slate-200">${record.ownerName}</strong></div>
+                    <div class="sm:col-span-2"><span class="text-slate-400">${engLabel}</span> <span class="text-slate-300 font-mono">${record.engineHash || 'N/A'}</span></div>
+                </div>
+            </div>
+
+            <div class="p-3 bg-rose-950/40 border border-rose-900/60 rounded-xl text-xs text-rose-200 leading-relaxed">
+                <strong>Officer Action Directives:</strong>
+                <ol class="list-decimal list-inside space-y-1 mt-1 text-slate-300">
+                    <li>Tactfully detain vehicle and request driver's license and registration certificate.</li>
+                    <li>Match chassis number with local engine hash: <code class="text-rose-300 font-mono">${record.engineHash || 'RE350U89281X'}</code>.</li>
+                    <li>Notify Division Control Room and initiate formal vehicle seizure protocol.</li>
+                </ol>
+            </div>
+
+            <div class="flex justify-end space-x-2 pt-2 border-t border-slate-800">
+                <button onclick="window.print()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-semibold">${printTxt}</button>
+                <button onclick="document.getElementById('crime-dossier-modal').remove()" class="px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white rounded-lg text-xs font-bold">${closeTxt}</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+}
+
+/**
+ * Universal Control Room Dispatch Modal
+ */
+function showDispatchNotifyModal(record) {
+    if (!record) return;
+    const existing = document.getElementById('dispatch-modal');
+    if (existing) existing.remove();
+
+    const officer = getLoggedInOfficer() || { name: "SI K. Arumugam", id: "DEMO001", station: "T. Nagar E-1" };
+    const modal = document.createElement('div');
+    modal.id = 'dispatch-modal';
+    modal.className = 'fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md';
+    modal.innerHTML = `
+        <div class="bg-slate-900 border-2 border-blue-500 rounded-2xl max-w-lg w-full p-4 sm:p-6 shadow-2xl space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <div class="flex items-center space-x-2">
+                    <span class="text-2xl">📡</span>
+                    <h3 class="font-bold text-white text-base">Control Room Alert Broadcast</h3>
+                </div>
+                <button onclick="document.getElementById('dispatch-modal').remove()" class="text-slate-400 hover:text-white text-2xl font-bold p-1 leading-none">&times;</button>
+            </div>
+
+            <div class="space-y-3 text-xs">
+                <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-1">
+                    <div><span class="text-slate-400">Target Vehicle:</span> <strong class="text-rose-400 font-mono">${record.vehicleNumber}</strong> (${record.make} ${record.model})</div>
+                    <div><span class="text-slate-400">Reporting Officer:</span> <span class="text-white">${officer.name} (${officer.id})</span></div>
+                    <div><span class="text-slate-400">Station / Checkpoint:</span> <span class="text-white">${officer.station || 'Koyambedu Checkpost'}</span></div>
+                    <div><span class="text-slate-400">Timestamp:</span> <span class="text-slate-300 font-mono">${new Date().toISOString().replace('T', ' ').substring(0, 19)}</span></div>
+                </div>
+
+                <div>
+                    <label class="block text-slate-300 font-semibold mb-1">Tactical Intercept Notes:</label>
+                    <textarea id="dispatch-notes-input" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-xs text-white" rows="2" placeholder="Vehicle heading northbound towards Poonamallee High Road. Driver requested to pull over."></textarea>
+                </div>
+            </div>
+
+            <div class="flex justify-end space-x-2 pt-2 border-t border-slate-800">
+                <button onclick="document.getElementById('dispatch-modal').remove()" class="px-4 py-2 bg-slate-800 text-slate-300 hover:text-white rounded-lg text-xs">Cancel</button>
+                <button onclick="sendDispatchNotification('${record.vehicleNumber}')" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold">Transmit Alert (Demo)</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+}
+
+function sendDispatchNotification(vehicleNum) {
+    const modal = document.getElementById('dispatch-modal');
+    if (modal) modal.remove();
+    showToast("📡 Control Room & Nearby Patrol Units Dispatched for " + vehicleNum, "success", 4500);
+}

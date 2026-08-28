@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Help & Officer SOP Guide - VehicleGuard AI</title>
+    <title>Officer SOP & Help Guide - VehicleGuard AI</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -20,112 +20,87 @@
     </script>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="dark bg-[#070d18] text-slate-100 min-h-screen flex flex-col antialiased transition-colors duration-200">
+<body class="dark bg-[#070d18] text-slate-100 min-h-screen flex flex-col antialiased transition-colors duration-200 overflow-x-hidden">
 
     <!-- Top Demo Disclaimer Banner -->
-    <div class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-slate-950 font-bold text-xs py-1.5 px-4 text-center tracking-wide shadow-md flex items-center justify-center space-x-2">
-        <span>⚠️</span>
-        <span data-i18n="demo_banner">DEMO PROTOTYPE — NOT CONNECTED TO LIVE GOVERNMENT DATABASES (FOR DEMO & EVALUATION ONLY)</span>
-        <span>⚠️</span>
+    <div class="bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 text-slate-950 font-bold text-[11px] sm:text-xs py-1.5 px-3 text-center tracking-wide shadow-md flex items-center justify-center space-x-1.5 sm:space-x-2">
+        <span class="flex-shrink-0">⚠️</span>
+        <span data-i18n="demo_banner" class="leading-tight">DEMO PROTOTYPE — NOT CONNECTED TO LIVE GOVERNMENT DATABASES (FOR DEMO & EVALUATION ONLY)</span>
+        <span class="flex-shrink-0">⚠️</span>
     </div>
 
-    <!-- Header Navigation -->
-    <header class="sticky top-0 z-40 bg-slate-900/90 dark:bg-[#0d1527]/95 backdrop-blur-md border-b border-slate-800 transition-colors">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <!-- Creative & Professional Police Siren Logo & Title -->
-                <div class="flex items-center space-x-3">
-                    <a href="index.html" class="flex items-center space-x-3 group">
-                        <div class="relative flex items-center justify-center p-1 rounded-xl bg-slate-950 border border-slate-700/80 shadow-md group-hover:scale-105 transition transform w-11 h-11 sm:w-12 sm:h-12 overflow-hidden">
+    <!-- Header Navigation (Guaranteed 100% Fit & Visibility for Logout Button in Tamil) -->
+    <header class="sticky top-0 z-40 bg-slate-900/95 dark:bg-[#070e1e]/95 backdrop-blur-md border-b border-slate-800 transition-colors shadow-xl shadow-black/40">
+        <div class="max-w-7xl mx-auto px-3 sm:px-4 lg:px-5 w-full">
+            <div class="flex items-center justify-between h-16 sm:h-20 gap-2 sm:gap-3 xl:gap-4 w-full">
+                
+                <!-- Police Siren Logo & Stacked Title/Badge -->
+                <div class="flex items-center space-x-2 sm:space-x-2.5 flex-shrink-0">
+                    <a href="index.html" class="flex items-center space-x-2.5 sm:space-x-3 group">
+                        <div class="relative flex items-center justify-center p-1 rounded-xl bg-slate-950 border border-slate-700/80 shadow-md group-hover:scale-105 transition transform w-8 h-8 sm:w-9 sm:h-9 overflow-hidden flex-shrink-0">
                             <img src="images/police_siren_logo.svg" alt="Police Siren Beacon" class="w-full h-full object-contain filter drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]">
                         </div>
-                        <div>
-                            <div class="flex items-center space-x-2">
-                                <span class="font-black text-lg sm:text-xl tracking-tight text-white group-hover:text-blue-400 transition uppercase">VehicleGuard AI</span>
-                                <span class="text-[10px] font-mono font-bold uppercase px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/40">POLICE IT</span>
+                        <div class="flex flex-col justify-center">
+                            <span class="font-black text-xs sm:text-sm lg:text-base tracking-tight text-white group-hover:text-blue-400 transition uppercase whitespace-nowrap leading-tight" data-i18n="brand_name">VehicleGuard AI</span>
+                            <div class="flex items-center space-x-1 mt-0.5 leading-none">
+                                <span class="text-[8px] sm:text-[9px] font-mono font-bold uppercase px-1.5 py-0.2 rounded bg-blue-500/20 text-blue-300 border border-blue-500/40 whitespace-nowrap tracking-wider inline-block leading-none" data-i18n="brand_badge">POLICE IT</span>
                             </div>
-                            <p class="text-[11px] text-slate-300 hidden sm:block tracking-wide font-medium">Stolen Vehicle Detection & ANPR Verification Portal</p>
                         </div>
                     </a>
                 </div>
 
-                <nav class="hidden lg:flex items-center space-x-1">
-                    <a href="index.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_home">Home</a>
-                    <a href="scan.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_scan">Vehicle Scan</a>
-                    <a href="report.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_report">Report Vehicle</a>
-                    <a href="status.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_status">Check Status</a>
-                    <a href="dashboard.html" class="px-3.5 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition" data-i18n="nav_dashboard">Police Dashboard</a>
-                    <a href="help.html" class="px-3.5 py-2 rounded-lg text-sm font-semibold text-blue-400 bg-slate-800/80 transition" data-i18n="nav_help">Help & FAQ</a>
+                <nav class="hidden lg:flex items-center space-x-1 xl:space-x-1.5 flex-shrink-0">
+                    <a href="index.html" class="px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg text-xs xl:text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition whitespace-nowrap" data-i18n="nav_home">Home</a>
+                    <a href="scan.html" class="px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg text-xs xl:text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition whitespace-nowrap" data-i18n="nav_scan">Vehicle Scan</a>
+                    <a href="report.html" class="px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg text-xs xl:text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition whitespace-nowrap" data-i18n="nav_report">Report Vehicle</a>
+                    <a href="status.html" class="px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg text-xs xl:text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition whitespace-nowrap" data-i18n="nav_status">Check Status</a>
+                    <a href="dashboard.html" class="px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg text-xs xl:text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800/50 transition whitespace-nowrap" data-i18n="nav_dashboard">Police Dashboard</a>
+                    <a href="help.html" class="px-2 py-1.5 xl:px-2.5 xl:py-2 rounded-lg text-xs xl:text-sm font-semibold text-blue-400 bg-slate-800/90 transition whitespace-nowrap" data-i18n="nav_help">Help & FAQ</a>
                 </nav>
 
-                <div class="hidden sm:flex items-center space-x-3">
-                    <div class="flex items-center bg-slate-800/80 dark:bg-slate-900 border border-slate-700/80 rounded-lg p-1 text-xs">
-                        <button class="btn-switch-lang lang-btn-en px-2.5 py-1 rounded font-semibold text-blue-400 transition" data-lang="en">EN</button>
+                <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+                    <div class="flex items-center bg-slate-800/80 dark:bg-slate-900 border border-slate-700/80 rounded-lg p-0.5 text-xs flex-shrink-0 shadow-sm">
+                        <button class="btn-switch-lang lang-btn-en px-1.5 sm:px-2 py-0.5 rounded font-semibold text-blue-400 transition" data-lang="en">EN</button>
                         <span class="text-slate-600">|</span>
-                        <button class="btn-switch-lang lang-btn-ta px-2.5 py-1 rounded font-semibold text-slate-400 hover:text-white transition" data-lang="ta">தமிழ்</button>
+                        <button class="btn-switch-lang lang-btn-ta px-1.5 sm:px-2 py-0.5 rounded font-semibold text-slate-400 hover:text-white transition" data-lang="ta">தமிழ்</button>
                     </div>
 
-                    <button class="theme-toggle-btn p-2 rounded-lg bg-slate-800/80 dark:bg-slate-900 border border-slate-700/80 text-slate-300 hover:text-white transition">
-                        <span class="theme-icon text-sm">🌙</span>
+                    <button class="theme-toggle-btn p-1.5 rounded-lg bg-slate-800/80 dark:bg-slate-900 border border-slate-700/80 text-slate-300 hover:text-white transition flex-shrink-0 shadow-sm">
+                        <span class="theme-icon text-xs sm:text-sm">🌙</span>
                     </button>
 
-                    <!-- Auth status badge in nav (Unified Single-Line Flex Pill) -->
+                    <!-- Exact Single Login ↔ Logout Button in Same Location -->
                     <div id="nav-auth-container" class="flex-shrink-0 flex items-center">
-                        <a id="nav-login-link" href="login.html" class="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-slate-200 hover:text-white border border-slate-700/80 hover:border-blue-500/60 bg-slate-800/80 hover:bg-slate-700/90 shadow-sm transition whitespace-nowrap flex-shrink-0">
-                            <span class="text-sm">👮</span>
-                            <span data-i18n="nav_login">Police Login</span>
-                        </a>
-                        <div id="nav-user-badge" class="hidden items-center space-x-2 px-3 py-1.5 rounded-xl bg-slate-800/90 border border-blue-500/40 text-xs shadow-md shrink-0 whitespace-nowrap">
-                            <div class="flex items-center space-x-1.5">
-                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                                <span class="text-blue-300 font-mono font-bold" id="nav-officer-id">DEMO001</span>
-                                <span class="text-slate-300 font-medium text-[11px] hidden xl:inline" id="nav-officer-rank">• SI Arumugam</span>
-                            </div>
-                            <button id="btn-nav-logout" type="button" class="btn-logout px-2.5 py-1 rounded-lg bg-rose-600/90 hover:bg-rose-500 text-white text-[11px] font-bold transition shadow-sm" data-i18n="nav_logout">Logout</button>
-                        </div>
+                        <button type="button" id="nav-auth-btn" class="btn-auth-toggle inline-flex items-center space-x-1 sm:space-x-1.5 px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl text-xs font-bold text-slate-200 hover:text-white border border-slate-700/80 hover:border-blue-500/60 bg-slate-800/80 hover:bg-slate-700/90 shadow-sm transition whitespace-nowrap flex-shrink-0 cursor-pointer" data-auth-state="logged-out">
+                            <span class="auth-btn-icon text-sm">👮</span>
+                            <span class="auth-btn-text" data-i18n="nav_login">Login</span>
+                        </button>
                     </div>
-                </div>
 
-                <div class="flex lg:hidden items-center space-x-2">
-                    <button class="theme-toggle-btn p-2 rounded-lg bg-slate-800 border border-slate-700 text-slate-300">
-                        <span class="theme-icon text-sm">🌙</span>
-                    </button>
-                    <button id="mobile-menu-btn" class="p-2.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white border border-slate-700">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    <button id="mobile-menu-btn" class="lg:hidden p-1.5 sm:p-2 rounded-lg bg-slate-800 text-slate-300 hover:text-white border border-slate-700 flex-shrink-0">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                     </button>
                 </div>
             </div>
         </div>
 
-        <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-800 bg-slate-900/95 px-4 pt-3 pb-6 space-y-2">
-            <a href="index.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300" data-i18n="nav_home">Home</a>
-            <a href="scan.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:bg-slate-800" data-i18n="nav_scan">Vehicle Scan</a>
-            <a href="report.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:bg-slate-800" data-i18n="nav_report">Report Vehicle</a>
-            <a href="status.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:bg-slate-800" data-i18n="nav_status">Check Status</a>
-            <a href="dashboard.html" class="block px-3 py-2 rounded-lg text-base font-medium text-slate-300 hover:bg-slate-800" data-i18n="nav_dashboard">Police Dashboard</a>
-            <a href="help.html" class="block px-3 py-2 rounded-lg text-base font-semibold text-blue-400 bg-slate-800" data-i18n="nav_help">Help & FAQ</a>
+        <div id="mobile-menu" class="hidden lg:hidden border-t border-slate-800 bg-slate-900/98 px-4 pt-3 pb-6 space-y-2 shadow-2xl">
+            <a href="index.html" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300" data-i18n="nav_home">Home</a>
+            <a href="scan.html" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800" data-i18n="nav_scan">Vehicle Scan</a>
+            <a href="report.html" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800" data-i18n="nav_report">Report Vehicle</a>
+            <a href="status.html" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800" data-i18n="nav_status">Check Status</a>
+            <a href="dashboard.html" class="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-slate-800" data-i18n="nav_dashboard">Police Dashboard</a>
+            <a href="help.html" class="block px-3 py-2.5 rounded-lg text-sm font-semibold text-blue-400 bg-slate-800" data-i18n="nav_help">Help & FAQ</a>
             
-            <div id="mobile-auth-section" class="pt-2 border-t border-slate-800">
-                <a id="mobile-login-link" href="login.html" class="inline-flex items-center space-x-2 w-full px-3.5 py-2.5 rounded-xl text-sm font-bold text-blue-400 bg-slate-800/90 hover:bg-slate-700 border border-slate-700/70 transition whitespace-nowrap">
-                    <span class="text-base">👮</span>
-                    <span data-i18n="nav_login">Police Login</span>
-                </a>
-                <div id="mobile-user-badge" class="hidden flex-col space-y-2 p-3 bg-slate-800/90 border border-blue-500/40 rounded-xl whitespace-nowrap">
-                    <div class="flex items-center justify-between text-xs">
-                        <div class="flex items-center space-x-2">
-                            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                            <span id="mobile-officer-name" class="font-bold text-white">DEMO001</span>
-                        </div>
-                        <span class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-blue-900/60 text-blue-300 border border-blue-500/40">ON DUTY</span>
-                    </div>
-                    <button id="btn-mobile-logout" type="button" class="btn-logout w-full py-2 bg-rose-600 hover:bg-rose-500 text-white rounded-lg text-xs font-bold transition shadow-md" data-i18n="nav_logout">
-                        Logout from Portal
-                    </button>
-                </div>
+            <div class="pt-2 border-t border-slate-800">
+                <button type="button" id="mobile-auth-btn" class="btn-auth-toggle w-full flex items-center justify-center space-x-2 py-2.5 rounded-xl text-sm font-bold text-slate-200 bg-slate-800/90 border border-slate-700/80 transition" data-auth-state="logged-out">
+                    <span class="auth-btn-icon text-base">👮</span>
+                    <span class="auth-btn-text" data-i18n="nav_login">Login</span>
+                </button>
             </div>
 
-            <div class="pt-4 border-t border-slate-800 flex items-center justify-between">
-                <span class="text-xs text-slate-400">Language / மொழி:</span>
+            <div class="pt-3 border-t border-slate-800 flex items-center justify-between">
+                <span class="text-xs text-slate-400" data-i18n="lang_label">Language / மொழி:</span>
                 <div class="flex space-x-2">
                     <button class="btn-switch-lang px-3 py-1 bg-slate-800 rounded text-xs font-bold text-blue-400" data-lang="en">EN</button>
                     <button class="btn-switch-lang px-3 py-1 bg-slate-800 rounded text-xs font-bold text-slate-400" data-lang="ta">தமிழ்</button>
@@ -135,181 +110,186 @@
     </header>
 
     <!-- Main Content -->
-    <main class="flex-grow py-8 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full space-y-10">
-        
-        <!-- Heading -->
-        <div class="text-center sm:text-left">
+    <main class="flex-grow py-6 sm:py-8 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto w-full space-y-8 sm:space-y-10">
+        <div class="text-center">
             <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-950/80 border border-blue-500/40 text-blue-300 text-xs font-bold mb-2">
-                <span>📘</span>
-                <span>LAW ENFORCEMENT SOP & HELP GUIDE</span>
+                <span>📖</span>
+                <span data-i18n="help_tag">LAW ENFORCEMENT SOP & HELP GUIDE</span>
             </div>
-            <h1 class="text-2xl sm:text-3xl font-black text-white" data-i18n="help_title">Officer Field Guide & FAQs</h1>
-            <p class="text-slate-400 text-sm mt-1" data-i18n="help_subtitle">Standard operating procedures, number plate validation formats, and scanning troubleshooting.</p>
+            <h1 class="text-xl sm:text-2xl md:text-3xl font-black text-white" data-i18n="help_title">Officer Field Guide & FAQs</h1>
+            <p class="text-slate-400 text-xs sm:text-sm mt-1 max-w-xl mx-auto" data-i18n="help_subtitle">
+                Standard operating procedures, number plate validation formats, and scanning troubleshooting.
+            </p>
         </div>
 
-        <!-- 1. How to Scan a Vehicle (7 Steps Guide) -->
-        <div class="bg-slate-900/95 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6">
-            <h2 class="text-lg font-bold text-white flex items-center space-x-2 border-b border-slate-800 pb-3">
-                <span class="text-blue-400">⚡</span>
+        <div class="bg-slate-900/95 border border-slate-800 rounded-2xl p-4 sm:p-6 md:p-8 shadow-2xl space-y-4 sm:space-y-6 min-w-0">
+            <h2 class="text-base sm:text-lg font-bold text-white flex items-center space-x-2 border-b border-slate-800 pb-3" data-i18n="help_sec1_title">
+                <span>📋</span>
                 <span>Standard Vehicle Scanning Procedure (SOP)</span>
             </h2>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="p-4 bg-slate-800/50 rounded-xl space-y-1">
-                    <span class="text-xs font-mono font-bold text-blue-400 uppercase">Step 1</span>
-                    <h4 class="font-bold text-white text-sm">Open Vehicle Scanner</h4>
-                    <p class="text-xs text-slate-400">Navigate to the Vehicle Scan page on your mobile browser or terminal.</p>
+            <div class="space-y-4 text-xs sm:text-sm">
+                <div class="flex items-start space-x-3.5">
+                    <div class="w-7 h-7 rounded-full bg-blue-600/30 border border-blue-500 text-blue-300 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">1</div>
+                    <div>
+                        <h4 class="font-bold text-white" data-i18n="help_s1_t">1. Open Vehicle Scanner</h4>
+                        <p class="text-slate-400 text-xs mt-0.5" data-i18n="help_s1_d">Navigate to the Vehicle Scan page on your mobile browser or terminal.</p>
+                    </div>
                 </div>
 
-                <div class="p-4 bg-slate-800/50 rounded-xl space-y-1">
-                    <span class="text-xs font-mono font-bold text-blue-400 uppercase">Step 2</span>
-                    <h4 class="font-bold text-white text-sm">Start Camera or Upload Image</h4>
-                    <p class="text-xs text-slate-400">Grant camera access to align the number plate or upload a photo from storage.</p>
+                <div class="flex items-start space-x-3.5">
+                    <div class="w-7 h-7 rounded-full bg-blue-600/30 border border-blue-500 text-blue-300 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">2</div>
+                    <div>
+                        <h4 class="font-bold text-white" data-i18n="help_s2_t">2. Start Camera or Upload Image</h4>
+                        <p class="text-slate-400 text-xs mt-0.5" data-i18n="help_s2_d">Grant camera access to align the number plate or upload a photo from storage.</p>
+                    </div>
                 </div>
 
-                <div class="p-4 bg-slate-800/50 rounded-xl space-y-1">
-                    <span class="text-xs font-mono font-bold text-blue-400 uppercase">Step 3</span>
-                    <h4 class="font-bold text-white text-sm">Capture Number Plate</h4>
-                    <p class="text-xs text-slate-400">Hold steady and tap "Capture Plate Image" when the plate is centered in the HUD.</p>
+                <div class="flex items-start space-x-3.5">
+                    <div class="w-7 h-7 rounded-full bg-blue-600/30 border border-blue-500 text-blue-300 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">3</div>
+                    <div>
+                        <h4 class="font-bold text-white" data-i18n="help_s3_t">3. Capture Number Plate</h4>
+                        <p class="text-slate-400 text-xs mt-0.5" data-i18n="help_s3_d">Hold steady and tap "Capture Plate Image" when the plate is centered in the HUD.</p>
+                    </div>
                 </div>
 
-                <div class="p-4 bg-slate-800/50 rounded-xl space-y-1">
-                    <span class="text-xs font-mono font-bold text-blue-400 uppercase">Step 4</span>
-                    <h4 class="font-bold text-white text-sm">Confirm Detected Number</h4>
-                    <p class="text-xs text-slate-400">Verify the OCR recognized registration characters in the input field.</p>
+                <div class="flex items-start space-x-3.5">
+                    <div class="w-7 h-7 rounded-full bg-blue-600/30 border border-blue-500 text-blue-300 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">4</div>
+                    <div>
+                        <h4 class="font-bold text-white" data-i18n="help_s4_t">4. Confirm Detected Number</h4>
+                        <p class="text-slate-400 text-xs mt-0.5" data-i18n="help_s4_d">Verify the OCR recognized registration characters in the input field.</p>
+                    </div>
                 </div>
 
-                <div class="p-4 bg-slate-800/50 rounded-xl space-y-1">
-                    <span class="text-xs font-mono font-bold text-blue-400 uppercase">Step 5</span>
-                    <h4 class="font-bold text-white text-sm">Select Check Vehicle Status</h4>
-                    <p class="text-xs text-slate-400">Trigger sub-second database cross-referencing against active theft registers.</p>
+                <div class="flex items-start space-x-3.5">
+                    <div class="w-7 h-7 rounded-full bg-blue-600/30 border border-blue-500 text-blue-300 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">5</div>
+                    <div>
+                        <h4 class="font-bold text-white" data-i18n="help_s5_t">5. Select Check Vehicle Status</h4>
+                        <p class="text-slate-400 text-xs mt-0.5" data-i18n="help_s5_d">Trigger sub-second database cross-referencing against active theft registers.</p>
+                    </div>
                 </div>
 
-                <div class="p-4 bg-slate-800/50 rounded-xl space-y-1">
-                    <span class="text-xs font-mono font-bold text-blue-400 uppercase">Step 6</span>
-                    <h4 class="font-bold text-white text-sm">Review Result Banner</h4>
-                    <p class="text-xs text-slate-400">Immediately inspect whether the screen turns RED (Stolen), GREEN (Clean), or YELLOW (Verification Required).</p>
+                <div class="flex items-start space-x-3.5">
+                    <div class="w-7 h-7 rounded-full bg-blue-600/30 border border-blue-500 text-blue-300 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">6</div>
+                    <div>
+                        <h4 class="font-bold text-white" data-i18n="help_s6_t">6. Review Result Banner</h4>
+                        <p class="text-slate-400 text-xs mt-0.5" data-i18n="help_s6_d">Immediately inspect whether the screen turns RED (Stolen), GREEN (Clean), or YELLOW (Verification Required).</p>
+                    </div>
                 </div>
 
-                <div class="p-4 bg-slate-800/50 rounded-xl space-y-1 md:col-span-2">
-                    <span class="text-xs font-mono font-bold text-blue-400 uppercase">Step 7</span>
-                    <h4 class="font-bold text-white text-sm">Follow Official Police Protocols</h4>
-                    <p class="text-xs text-slate-400">Verify physical vehicle details (Chassis / Engine number) and coordinate with the Division Control Room before enforcement.</p>
+                <div class="flex items-start space-x-3.5">
+                    <div class="w-7 h-7 rounded-full bg-blue-600/30 border border-blue-500 text-blue-300 flex items-center justify-center font-bold text-xs flex-shrink-0 mt-0.5">7</div>
+                    <div>
+                        <h4 class="font-bold text-white" data-i18n="help_s7_t">7. Follow Official Police Protocols</h4>
+                        <p class="text-slate-400 text-xs mt-0.5" data-i18n="help_s7_d">Verify physical vehicle details (Chassis / Engine number) and coordinate with the Division Control Room before enforcement.</p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- 2. Understanding Results & Badges -->
-        <div class="bg-slate-900/95 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6">
-            <h2 class="text-lg font-bold text-white flex items-center space-x-2 border-b border-slate-800 pb-3">
-                <span>🎯</span>
+        <div class="bg-slate-900/95 border border-slate-800 rounded-2xl p-4 sm:p-6 md:p-8 shadow-2xl space-y-4 sm:space-y-6 min-w-0">
+            <h2 class="text-base sm:text-lg font-bold text-white flex items-center space-x-2 border-b border-slate-800 pb-3" data-i18n="help_sec2_title">
+                <span>🚦</span>
                 <span>Understanding Result Classifications</span>
             </h2>
 
-            <div class="space-y-4">
-                <!-- Stolen -->
-                <div class="p-5 rounded-xl bg-rose-950/30 border border-rose-600/40 space-y-2">
+            <div class="space-y-3.5 text-xs sm:text-sm">
+                <div class="p-3.5 sm:p-4 rounded-xl bg-rose-950/40 border border-rose-600/50 space-y-1">
                     <div class="flex items-center space-x-2">
-                        <span class="text-xl">🔴</span>
-                        <h4 class="font-black text-rose-400 text-sm">YES — STOLEN VEHICLE REPORT FOUND</h4>
+                        <span class="text-base sm:text-lg">🔴</span>
+                        <h4 class="font-black text-rose-300" data-i18n="help_res_stolen_t">YES — STOLEN VEHICLE REPORT FOUND</h4>
                     </div>
-                    <p class="text-xs text-slate-300 leading-relaxed">
-                        An active FIR or stolen vehicle complaint matches this registration number in the central database. The officer should click <strong>"Notify Supervisor"</strong> and open the complete crime dossier to compare vehicle make, color, and owner details.
+                    <p class="text-slate-300 text-xs leading-relaxed" data-i18n="help_res_stolen_d">
+                        An active FIR or stolen vehicle complaint matches this registration number in the central database. The officer should click "Notify Supervisor" and open the complete crime dossier to compare vehicle make, color, and owner details.
                     </p>
                 </div>
 
-                <!-- Clean -->
-                <div class="p-5 rounded-xl bg-emerald-950/30 border border-emerald-600/40 space-y-2">
+                <div class="p-3.5 sm:p-4 rounded-xl bg-emerald-950/40 border border-emerald-600/50 space-y-1">
                     <div class="flex items-center space-x-2">
-                        <span class="text-xl">🟢</span>
-                        <h4 class="font-black text-emerald-400 text-sm">NO — NO STOLEN VEHICLE REPORT FOUND</h4>
+                        <span class="text-base sm:text-lg">🟢</span>
+                        <h4 class="font-black text-emerald-300" data-i18n="help_res_clean_t">NO — NO STOLEN VEHICLE REPORT FOUND</h4>
                     </div>
-                    <p class="text-xs text-slate-300 leading-relaxed">
-                        No active theft record was found in the demo repository. <em>Notice:</em> This clearance does not guarantee vehicle ownership or insurance validity. Continue standard physical document checks.
+                    <p class="text-slate-300 text-xs leading-relaxed" data-i18n="help_res_clean_d">
+                        No active theft record was found in the demo repository. Notice: This clearance does not guarantee vehicle ownership or insurance validity. Continue standard physical document checks.
                     </p>
                 </div>
 
-                <!-- Verify -->
-                <div class="p-5 rounded-xl bg-amber-950/30 border border-amber-600/40 space-y-2">
+                <div class="p-3.5 sm:p-4 rounded-xl bg-amber-950/40 border border-amber-600/50 space-y-1">
                     <div class="flex items-center space-x-2">
-                        <span class="text-xl">🟡</span>
-                        <h4 class="font-black text-amber-400 text-sm">VERIFICATION REQUIRED</h4>
+                        <span class="text-base sm:text-lg">🟡</span>
+                        <h4 class="font-black text-amber-300" data-i18n="help_res_verify_t">VERIFICATION REQUIRED</h4>
                     </div>
-                    <p class="text-xs text-slate-300 leading-relaxed">
+                    <p class="text-slate-300 text-xs leading-relaxed" data-i18n="help_res_verify_d">
                         The optical image was blurry, skewed, occluded, or contained an invalid format. Capture a new image under better lighting or type the registration number manually into the confirmation box.
                     </p>
                 </div>
             </div>
         </div>
 
-        <!-- 3. Indian Registration Plate Formats Reference -->
-        <div class="bg-slate-900/95 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6">
-            <h2 class="text-lg font-bold text-white flex items-center space-x-2 border-b border-slate-800 pb-3">
+        <div class="bg-slate-900/95 border border-slate-800 rounded-2xl p-4 sm:p-6 md:p-8 shadow-2xl space-y-4 min-w-0">
+            <h2 class="text-base sm:text-lg font-bold text-white flex items-center space-x-2 border-b border-slate-800 pb-3" data-i18n="help_sec3_title">
                 <span>🇮🇳</span>
                 <span>Indian Vehicle Registration Plate Format Reference</span>
             </h2>
 
-            <div class="space-y-4 text-xs text-slate-300">
-                <p>VehicleGuard AI normalizes and supports common Indian registration structures:</p>
+            <p class="text-xs text-slate-400" data-i18n="help_fmt_intro">VehicleGuard AI normalizes and supports common Indian registration structures:</p>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="p-4 bg-slate-800/60 rounded-xl space-y-2">
-                        <span class="font-bold text-blue-400 block font-mono">Standard State Format: [SS][DD][LL][NNNN]</span>
-                        <p class="text-slate-400">Example: <strong class="text-white font-mono">TN 09 AB 1234</strong></p>
-                        <ul class="list-disc list-inside text-slate-400 space-y-1">
-                            <li><strong class="text-slate-200">TN:</strong> State code (Tamil Nadu)</li>
-                            <li><strong class="text-slate-200">09:</strong> RTO district code (e.g. Chennai West)</li>
-                            <li><strong class="text-slate-200">AB:</strong> Series alphabet combination</li>
-                            <li><strong class="text-slate-200">1234:</strong> 4-digit unique vehicle number</li>
-                        </ul>
-                    </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                <div class="p-3.5 bg-slate-950 rounded-xl border border-slate-800 space-y-1.5">
+                    <span class="font-bold text-blue-400 block" data-i18n="help_fmt_std_title">Standard State Format: [SS][DD][LL][NNNN]</span>
+                    <p class="text-slate-300 font-mono text-[11px]" data-i18n="help_fmt_std_eg">Example: TN 09 AB 1234</p>
+                    <ul class="list-disc list-inside text-slate-400 space-y-0.5 text-[11px]">
+                        <li data-i18n="help_fmt_std_li1">TN: State code (Tamil Nadu)</li>
+                        <li data-i18n="help_fmt_std_li2">09: RTO district code (e.g. Chennai West)</li>
+                        <li data-i18n="help_fmt_std_li3">AB: Series alphabet combination</li>
+                        <li data-i18n="help_fmt_std_li4">1234: 4-digit unique vehicle number</li>
+                    </ul>
+                </div>
 
-                    <div class="p-4 bg-slate-800/60 rounded-xl space-y-2">
-                        <span class="font-bold text-blue-400 block font-mono">Bharat (BH) Series: [YY]BH[NNNN][LL]</span>
-                        <p class="text-slate-400">Example: <strong class="text-white font-mono">22 BH 1234 AB</strong></p>
-                        <ul class="list-disc list-inside text-slate-400 space-y-1">
-                            <li><strong class="text-slate-200">22:</strong> Year of registration</li>
-                            <li><strong class="text-slate-200">BH:</strong> Bharat code</li>
-                            <li><strong class="text-slate-200">1234:</strong> 4-digit unique registration number</li>
-                            <li><strong class="text-slate-200">AB:</strong> Series identification</li>
-                        </ul>
-                    </div>
+                <div class="p-3.5 bg-slate-950 rounded-xl border border-slate-800 space-y-1.5">
+                    <span class="font-bold text-blue-400 block" data-i18n="help_fmt_bh_title">Bharat (BH) Series: [YY]BH[NNNN][LL]</span>
+                    <p class="text-slate-300 font-mono text-[11px]" data-i18n="help_fmt_bh_eg">Example: 22 BH 1234 AB</p>
+                    <ul class="list-disc list-inside text-slate-400 space-y-0.5 text-[11px]">
+                        <li data-i18n="help_fmt_bh_li1">22: Year of registration</li>
+                        <li data-i18n="help_fmt_bh_li2">BH: Bharat code</li>
+                        <li data-i18n="help_fmt_bh_li3">1234: 4-digit unique registration number</li>
+                        <li data-i18n="help_fmt_bh_li4">AB: Series identification</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
-        <!-- 4. Frequently Asked Questions (FAQ) -->
-        <div class="bg-slate-900/95 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6">
-            <h2 class="text-lg font-bold text-white flex items-center space-x-2 border-b border-slate-800 pb-3">
-                <span>❓</span>
+        <div class="bg-slate-900/95 border border-slate-800 rounded-2xl p-4 sm:p-6 md:p-8 shadow-2xl space-y-4 sm:space-y-6 min-w-0">
+            <h2 class="text-base sm:text-lg font-bold text-white flex items-center space-x-2 border-b border-slate-800 pb-3" data-i18n="help_sec4_title">
+                <span>💬</span>
                 <span>Frequently Asked Questions</span>
             </h2>
 
-            <div class="space-y-4 text-xs">
-                <div class="p-4 bg-slate-800/50 rounded-xl space-y-1.5">
-                    <h4 class="font-bold text-white text-sm">Is this connected to the live CCTNS or Parivahan database?</h4>
-                    <p class="text-slate-400 leading-relaxed">
+            <div class="space-y-4 text-xs sm:text-sm">
+                <div>
+                    <h4 class="font-bold text-blue-400" data-i18n="help_faq_q1">Is this connected to the live CCTNS or Parivahan database?</h4>
+                    <p class="text-slate-300 text-xs mt-1 leading-relaxed" data-i18n="help_faq_a1">
                         No. This system is a frontend technological prototype and demonstration platform. All vehicle records, complaints, and police station entries are simulated.
                     </p>
                 </div>
 
-                <div class="p-4 bg-slate-800/50 rounded-xl space-y-1.5">
-                    <h4 class="font-bold text-white text-sm">What should an officer do when a STOLEN alert is triggered?</h4>
-                    <p class="text-slate-400 leading-relaxed">
+                <div>
+                    <h4 class="font-bold text-blue-400" data-i18n="help_faq_q2">What should an officer do when a STOLEN alert is triggered?</h4>
+                    <p class="text-slate-300 text-xs mt-1 leading-relaxed" data-i18n="help_faq_a2">
                         Immediately note the physical details of the driver and vehicle, inspect the chassis number stamped on the vehicle frame, notify the Division Control Room, and verify official CCTNS records before detaining.
                     </p>
                 </div>
 
-                <div class="p-4 bg-slate-800/50 rounded-xl space-y-1.5">
-                    <h4 class="font-bold text-white text-sm">How does the camera OCR work on low-end mobile devices?</h4>
-                    <p class="text-slate-400 leading-relaxed">
+                <div>
+                    <h4 class="font-bold text-blue-400" data-i18n="help_faq_q3">How does the camera OCR work on low-end mobile devices?</h4>
+                    <p class="text-slate-300 text-xs mt-1 leading-relaxed" data-i18n="help_faq_a3">
                         The frontend uses standard HTML5 media streams and client-side bounding box preview, followed by normalized text ingestion for rapid, lightweight processing.
                     </p>
                 </div>
 
-                <div class="p-4 bg-slate-800/50 rounded-xl space-y-1.5">
-                    <h4 class="font-bold text-white text-sm">Can I switch between Dark Mode and Light Mode?</h4>
-                    <p class="text-slate-400 leading-relaxed">
+                <div>
+                    <h4 class="font-bold text-blue-400" data-i18n="help_faq_q4">Can I switch between Dark Mode and Light Mode?</h4>
+                    <p class="text-slate-300 text-xs mt-1 leading-relaxed" data-i18n="help_faq_a4">
                         Yes! Tap the Moon 🌙 / Sun ☀️ icon in the navigation bar to toggle between the tactical Police IT Dark Mode and administrative Light Mode.
                     </p>
                 </div>
@@ -318,15 +298,13 @@
 
     </main>
 
-    <!-- Footer -->
     <footer class="bg-slate-950 border-t border-slate-800 text-slate-400 text-xs py-8 mt-12">
         <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
             <p class="font-bold text-slate-300" data-i18n="demo_footer_disclaimer">DEMO PROTOTYPE — NOT CONNECTED TO LIVE GOVERNMENT SYSTEMS</p>
-            <p class="text-[11px]">VehicleGuard AI standard field operating guide and FAQs.</p>
+            <p class="text-[11px]" data-i18n="demo_footer_sub">VehicleGuard AI Law Enforcement Field Operations Guide.</p>
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script src="js/translations.js"></script>
     <script src="js/app.js"></script>
 </body>

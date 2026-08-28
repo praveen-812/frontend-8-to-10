@@ -1,9 +1,10 @@
 /* ===================================================================
    VehicleGuard AI - Custom Stylesheet
    Theme: Police IT Tactical Dark Mode & Administrative Light Mode
+   Full Responsiveness & Tamil Typography Support
    =================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+Tamil:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Noto+Sans+Tamil:wght@400;500;600;700;800&display=swap');
 
 :root {
     --font-main: 'Inter', system-ui, -apple-system, sans-serif;
@@ -38,17 +39,123 @@
     --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
 }
 
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 body {
     font-family: var(--font-main);
     background-color: var(--bg-primary);
     color: var(--text-primary);
     transition: background-color 0.25s ease, color 0.25s ease;
     overflow-x: hidden;
+    max-width: 100%;
+    min-height: 100vh;
 }
 
-/* Language specific font adjustment */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Language specific font, line-height, and wrapping adjustments */
 [lang="ta"] body, body.lang-tamil {
     font-family: var(--font-tamil);
+    line-height: 1.5;
+    word-break: normal;
+    overflow-wrap: break-word;
+}
+
+body.lang-tamil h1,
+body.lang-tamil h2,
+body.lang-tamil h3,
+body.lang-tamil h4 {
+    line-height: 1.35;
+    letter-spacing: normal;
+    overflow-wrap: break-word;
+}
+
+body.lang-tamil p,
+body.lang-tamil span,
+body.lang-tamil label,
+body.lang-tamil button,
+body.lang-tamil a {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+/* Desktop Navbar in Tamil Mode */
+body.lang-tamil header nav {
+    gap: 0.25rem !important;
+    align-items: center !important;
+}
+
+body.lang-tamil header nav a {
+    font-size: 0.8125rem !important;
+    padding: 0.25rem 0.4rem !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 36px !important;
+    flex-shrink: 0 !important;
+}
+
+/* Allow Help / FAQ / Question navigation item to wrap into 2 lines in Tamil */
+body.lang-tamil header nav a[data-i18n="nav_help"],
+body.lang-tamil header nav a[href="help.html"] {
+    white-space: normal !important;
+    line-height: 1.15 !important;
+    max-width: 85px !important;
+    min-width: 0 !important;
+    text-align: center !important;
+    padding: 0.15rem 0.35rem !important;
+    display: inline-flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    flex-shrink: 1 !important;
+}
+
+@media (min-width: 1280px) {
+    body.lang-tamil header nav {
+        gap: 0.4rem !important;
+    }
+    body.lang-tamil header nav a {
+        font-size: 0.875rem !important;
+        padding: 0.3rem 0.55rem !important;
+        min-height: 38px !important;
+    }
+    body.lang-tamil header nav a[data-i18n="nav_help"],
+    body.lang-tamil header nav a[href="help.html"] {
+        max-width: 95px !important;
+        padding: 0.2rem 0.45rem !important;
+        font-size: 0.8125rem !important;
+    }
+}
+
+@media (min-width: 1536px) {
+    body.lang-tamil header nav {
+        gap: 0.65rem !important;
+    }
+    body.lang-tamil header nav a {
+        font-size: 0.875rem !important;
+        padding: 0.4rem 0.7rem !important;
+    }
+    body.lang-tamil header nav a[data-i18n="nav_help"],
+    body.lang-tamil header nav a[href="help.html"] {
+        max-width: 120px !important;
+        font-size: 0.875rem !important;
+    }
+}
+
+/* Sample Test Buttons in Tamil Mode */
+body.lang-tamil .btn-sample-plate {
+    line-height: 1.35;
 }
 
 .font-mono {
@@ -159,27 +266,6 @@ html:not(.dark) .border-slate-700 {
     border-color: #e2e8f0 !important;
 }
 
-/* Truth and Triumph Header Styling in Light Mode */
-html:not(.dark) h1.text-transparent {
-    -webkit-text-fill-color: #0f172a !important;
-    color: #0f172a !important;
-}
-
-html:not(.dark) .bg-amber-950\/50,
-html:not(.dark) .bg-amber-950\/60 {
-    background: #fffbeb !important;
-    background-color: #fffbeb !important;
-    border-color: #f59e0b !important;
-    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.15) !important;
-}
-
-/* Official Crest Frame in Light Mode */
-html:not(.dark) .official-crest-frame {
-    background: #ffffff !important;
-    border: 2px solid #f59e0b !important;
-    box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.25) !important;
-}
-
 /* Form Inputs, Selects & Textareas in Light Mode */
 html:not(.dark) input,
 html:not(.dark) select,
@@ -235,10 +321,10 @@ html:not(.dark) #card-result-verify {
 }
 
 /* Modals in Light Mode */
-html:not(.dark) #fir-dossier-modal > div,
-html:not(.dark) #complaint-approval-modal > div,
+html:not(.dark) #crime-dossier-modal > div,
+html:not(.dark) #scrutiny-modal > div,
 html:not(.dark) #dispatch-modal > div,
-html:not(.dark) #complaint-success-modal > div,
+html:not(.dark) #complaint-receipt-modal > div,
 html:not(.dark) #add-stolen-modal > div {
     background-color: #ffffff !important;
     background: #ffffff !important;
@@ -283,8 +369,8 @@ html:not(.dark) footer .bg-slate-900\/80 {
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
 }
 ::-webkit-scrollbar-track {
     background: var(--bg-primary);
@@ -345,104 +431,44 @@ html:not(.dark) footer .bg-slate-900\/80 {
         linear-gradient(to bottom, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
 }
 
-.radar-sweep {
-    position: relative;
-}
-.radar-sweep::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: conic-gradient(from 0deg, rgba(56, 189, 248, 0.2) 0deg, transparent 60deg);
-    animation: radarRotate 4s linear infinite;
-    pointer-events: none;
-}
-@keyframes radarRotate {
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
 /* HUD Corner Brackets */
 .hud-corner {
     position: absolute;
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     border-color: #38bdf8;
     z-index: 15;
     pointer-events: none;
 }
+@media (min-width: 640px) {
+    .hud-corner {
+        width: 24px;
+        height: 24px;
+    }
+}
 .hud-corner-tl {
-    top: 12px;
-    left: 12px;
+    top: 10px;
+    left: 10px;
     border-top: 3px solid;
     border-left: 3px solid;
 }
 .hud-corner-tr {
-    top: 12px;
-    right: 12px;
+    top: 10px;
+    right: 10px;
     border-top: 3px solid;
     border-right: 3px solid;
 }
 .hud-corner-bl {
-    bottom: 12px;
-    left: 12px;
+    bottom: 10px;
+    left: 10px;
     border-bottom: 3px solid;
     border-left: 3px solid;
 }
 .hud-corner-br {
-    bottom: 12px;
-    right: 12px;
+    bottom: 10px;
+    right: 10px;
     border-bottom: 3px solid;
     border-right: 3px solid;
-}
-
-/* Number Plate Style Box */
-.ind-number-plate {
-    display: inline-flex;
-    align-items: center;
-    background: #ffffff !important;
-    color: #111827 !important;
-    border: 3px solid #111827;
-    border-radius: 6px;
-    padding: 4px 12px;
-    font-family: var(--font-mono);
-    font-weight: 800;
-    letter-spacing: 2px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.25);
-    position: relative;
-}
-.ind-number-plate .ind-side {
-    border-right: 2px solid #1e3a8a;
-    padding-right: 8px;
-    margin-right: 8px;
-    font-size: 0.65rem;
-    line-height: 1;
-    color: #1e3a8a;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* Pulse Glow Effects */
-.glow-red {
-    box-shadow: 0 0 25px rgba(239, 68, 68, 0.4), 0 0 50px rgba(220, 38, 38, 0.2);
-}
-.glow-green {
-    box-shadow: 0 0 25px rgba(34, 197, 94, 0.35), 0 0 50px rgba(22, 163, 74, 0.15);
-}
-.glow-blue {
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
-}
-.glow-amber {
-    box-shadow: 0 0 25px rgba(245, 158, 11, 0.35), 0 0 50px rgba(217, 119, 6, 0.15);
-}
-
-/* Official State Emblem Crest Frame */
-.official-crest-frame {
-    background: radial-gradient(circle at 50% 40%, rgba(245, 158, 11, 0.18), rgba(15, 28, 63, 0.8) 70%, rgba(6, 10, 23, 0.95));
-    border: 2px solid rgba(245, 158, 11, 0.6);
-    box-shadow: 0 0 30px rgba(245, 158, 11, 0.25), inset 0 0 20px rgba(245, 158, 11, 0.1);
 }
 
 /* Strobe Alert Animation for Stolen Hits */
@@ -461,7 +487,7 @@ html:not(.dark) footer .bg-slate-900\/80 {
 }
 
 /* ===================================================================
-   Police Login Button & Auth Nav Elements (Unified Single-Line Display)
+   Police Login / Logout Button (Always Visible at 100% Zoom)
    =================================================================== */
 #nav-auth-container {
     display: inline-flex !important;
@@ -470,31 +496,105 @@ html:not(.dark) footer .bg-slate-900\/80 {
     white-space: nowrap !important;
 }
 
-#nav-login-link,
-.police-nav-login-btn {
+.btn-auth-toggle {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 0.4rem !important;
+    gap: 0.35rem !important;
     white-space: nowrap !important;
     flex-shrink: 0 !important;
+    width: auto !important;
+    min-width: max-content !important;
     font-weight: 700 !important;
     letter-spacing: 0.01em;
     line-height: 1.2 !important;
+    cursor: pointer !important;
+    user-select: none !important;
+    transition: all 0.2s ease-in-out !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
 }
 
-#mobile-login-link {
+.auth-btn-icon {
     display: inline-flex !important;
     align-items: center !important;
-    gap: 0.5rem !important;
-    white-space: nowrap !important;
-    width: 100% !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    line-height: 1 !important;
+    font-size: 0.95rem !important;
 }
 
-#nav-user-badge,
-#mobile-user-badge {
+.auth-btn-text {
+    display: inline-block !important;
     white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    line-height: 1.2 !important;
     flex-shrink: 0 !important;
+}
+
+#mobile-auth-btn {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    padding-top: 0.65rem !important;
+    padding-bottom: 0.65rem !important;
+}
+
+html:not(.dark) .btn-auth-toggle[data-auth-state="logged-out"] {
+    background-color: #f1f5f9 !important;
+    border-color: #cbd5e1 !important;
+    color: #0f172a !important;
+}
+
+html:not(.dark) .btn-auth-toggle[data-auth-state="logged-out"]:hover {
+    background-color: #e2e8f0 !important;
+    border-color: #3b82f6 !important;
+    color: #1d4ed8 !important;
+}
+
+html:not(.dark) .btn-auth-toggle[data-auth-state="logged-in"] {
+    background-color: #e11d48 !important;
+    border-color: #be123c !important;
+    color: #ffffff !important;
+}
+
+/* ===================================================================
+   Mobile & Responsive Enhancements (Phones, Tablets & Small Laptops)
+   =================================================================== */
+@media (max-width: 639px) {
+    /* Touch friendly minimum tap targets */
+    button, 
+    a.btn, 
+    input[type="button"], 
+    input[type="submit"],
+    select {
+        min-height: 40px;
+    }
+
+    /* Table horizontal scroll indicator hint */
+    .overflow-x-auto {
+        -webkit-overflow-scrolling: touch;
+        border-radius: 0.75rem;
+    }
+
+    /* Reduce scanner viewport height on small screens to fit neatly */
+    .scanner-viewport {
+        height: 220px;
+    }
+
+    /* Compact inputs */
+    #detected-plate-input {
+        font-size: 1.25rem;
+        padding-left: 2.75rem;
+        padding-right: 0.5rem;
+    }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+    .scanner-viewport {
+        height: 280px;
+    }
 }
 
 /* Print Styles for Police Official Dossier */
@@ -517,4 +617,3 @@ html:not(.dark) footer .bg-slate-900\/80 {
         display: none !important;
     }
 }
-

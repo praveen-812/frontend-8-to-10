@@ -1,79 +1,107 @@
 /**
- * VehicleGuard AI - Citizen Theft Reporting & Status Tracking Module
- * Handles complaint submission, unique reference generation, and timeline tracking.
+ * VehicleGuard AI - Citizen Theft Complaint Registration & Status Tracker
+ * Manages public complaint intake, reference generator, and timeline tracking.
  */
 
-// Comprehensive List of Tamil Nadu Districts for Selectors
 const TN_DISTRICTS = [
     "Ariyalur", "Chengalpattu", "Chennai", "Coimbatore", "Cuddalore", "Dharmapuri",
     "Dindigul", "Erode", "Kallakurichi", "Kanchipuram", "Kanyakumari", "Karur",
     "Krishnagiri", "Madurai", "Mayiladuthurai", "Nagapattinam", "Namakkal", "Nilgiris",
     "Perambalur", "Pudukkottai", "Ramanathapuram", "Ranipet", "Salem", "Sivaganga",
-    "Tenkasi", "Thanjavur", "Theni", "Thoothukudi", "Tiruchirappalli", "Tirunelveli",
-    "Tirupathur", "Tiruppur", "Tiruvallur", "Tiruvannamalai", "Tiruvarur", "Vellore",
-    "Viluppuram", "Virudhunagar"
+    "Tenkasi", "Thanjavur", "Theni", "Thoothukudi (Tuticorin)", "Tiruchirappalli",
+    "Tirunelveli", "Tirupathur", "Tiruppur", "Tiruvallur", "Tiruvannamalai", "Tiruvarur",
+    "Vellore", "Viluppuram", "Virudhunagar"
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
-    initReportForm();
-    initStatusChecker();
+    initComplaintsUI();
 });
 
-/**
- * Initialize Reporting Form
- */
-function initReportForm() {
-    const form = document.getElementById('stolen-report-form');
-    const districtSelect = document.getElementById('complaint-district');
-    const photoInput = document.getElementById('complaint-vehicle-photo');
-    const photoPreview = document.getElementById('complaint-photo-preview');
+window.addEventListener('languageChanged', () => {
+    populateDistrictDropdown();
+    const searchInput = document.getElementById('status-search-input');
+    if (searchInput && searchInput.value) {
+        handleStatusSearch();
+    }
+    if (typeof applyTranslations === 'function') {
+        applyTranslations();
+    }
+});
 
-    // Populate districts dropdown
-    if (districtSelect && districtSelect.children.length <= 1) {
-        TN_DISTRICTS.forEach(dist => {
-            const opt = document.createElement('option');
-            opt.value = dist;
-            opt.textContent = dist;
-            districtSelect.appendChild(opt);
-        });
+function initComplaintsUI() {
+    populateDistrictDropdown();
+
+    // Citizen Complaint Form Submission
+    const complaintForm = document.getElementById('stolen-report-form');
+    if (complaintForm) {
+        complaintForm.addEventListener('submit', handleComplaintSubmit);
     }
 
-    // Vehicle photo preview
-    if (photoInput && photoPreview) {
-        photoInput.addEventListener('change', (e) => {
+    // Status Tracking Search
+    const trackBtn = document.getElementById('btn-track-status');
+    const statusInput = document.getElementById('status-search-input');
+    if (trackBtn && statusInput) {
+        trackBtn.addEventListener('click', handleStatusSearch);
+        statusInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') handleStatusSearch();
+        });
+
+        // If URL has ref query parameter (e.g. ?ref=SVR-2026-482731)
+        const params = new URLSearchParams(window.location.search);
+        const refParam = params.get('ref') || params.get('veh');
+        if (refParam) {
+            statusInput.value = refParam;
+            handleStatusSearch();
+        }
+    }
+
+    // Vehicle Photo Preview
+    const photoUpload = document.getElementById('complaint-vehicle-photo');
+    const photoPreview = document.getElementById('complaint-photo-preview');
+    if (photoUpload && photoPreview) {
+        photoUpload.addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (file) {
                 const reader = new FileReader();
-                reader.onload = (evt) => {
-                    photoPreview.src = evt.target.result;
+                reader.onload = (ev) => {
+                    photoPreview.src = ev.target.result;
                     photoPreview.classList.remove('hidden');
                 };
                 reader.readAsDataURL(file);
             }
         });
     }
-
-    if (form) {
-        // Set default date to today
-        const dateInput = document.getElementById('complaint-date');
-        if (dateInput) {
-            dateInput.value = new Date().toISOString().split('T')[0];
-        }
-
-        form.addEventListener('submit', handleReportSubmit);
-    }
 }
 
 /**
- * Handle Report Submission
+ * Populate District Dropdown with Tamil Nadu Districts
  */
-function handleReportSubmit(e) {
+function populateDistrictDropdown() {
+    const dropdown = document.getElementById('complaint-district');
+    if (!dropdown) return;
+
+    const currentVal = dropdown.value;
+    const defaultText = typeof t === 'function' ? t('opt_select_district') : "-- Select District --";
+    dropdown.innerHTML = `<option value="">${defaultText}</option>`;
+
+    TN_DISTRICTS.forEach(dist => {
+        const opt = document.createElement('option');
+        opt.value = dist;
+        opt.textContent = dist;
+        if (dist === currentVal) opt.selected = true;
+        dropdown.appendChild(opt);
+    });
+}
+
+/**
+ * Handle Citizen Complaint Submission
+ */
+function handleComplaintSubmit(e) {
     e.preventDefault();
 
     const ownerName = document.getElementById('complaint-owner-name')?.value.trim();
     const mobile = document.getElementById('complaint-mobile')?.value.trim();
-    const email = document.getElementById('complaint-email')?.value.trim();
-    const vehicleNumber = normalizeVehicleNumber(document.getElementById('complaint-vehicle-number')?.value.trim());
+    const vehicleNum = normalizeVehicleNumber(document.getElementById('complaint-vehicle-number')?.value);
     const vehicleType = document.getElementById('complaint-vehicle-type')?.value;
     const make = document.getElementById('complaint-make')?.value.trim();
     const model = document.getElementById('complaint-model')?.value.trim();
@@ -81,391 +109,253 @@ function handleReportSubmit(e) {
     const incidentDate = document.getElementById('complaint-date')?.value;
     const incidentTime = document.getElementById('complaint-time')?.value;
     const district = document.getElementById('complaint-district')?.value;
-    const policeStation = document.getElementById('complaint-station')?.value.trim();
+    const station = document.getElementById('complaint-station')?.value.trim() || `${district} Central Police Station`;
     const location = document.getElementById('complaint-location')?.value.trim();
     const description = document.getElementById('complaint-description')?.value.trim();
 
-    if (!ownerName || !mobile || !vehicleNumber || !vehicleType || !make || !district) {
-        showToast("Please fill in all mandatory fields.", "warning");
+    if (!ownerName || !mobile || !vehicleNum || !incidentDate || !district || !location) {
+        showToast(typeof t === 'function' ? t('toast_fill_all') : "Please fill in all mandatory fields.", "warning");
         return;
     }
 
-    if (!validateVehicleNumber(vehicleNumber)) {
-        showToast("Invalid vehicle registration format. Example: TN09AB1234", "error");
+    if (!validateVehicleNumber(vehicleNum)) {
+        showToast(typeof t === 'function' ? t('toast_invalid_veh') : "Invalid vehicle registration format. Example: TN09AB1234", "warning");
         return;
     }
 
-    // Generate unique complaint reference
-    const refNum = generateComplaintNumber();
+    // Generate Unique Public Reference Number
+    const randomRef = "SVR-2026-" + Math.floor(100000 + Math.random() * 900000);
 
     const newComplaint = {
-        referenceNumber: refNum,
-        vehicleNumber: vehicleNumber,
+        referenceNumber: randomRef,
+        vehicleNumber: vehicleNum,
         ownerName: ownerName,
         mobile: mobile,
-        email: email || "N/A",
         vehicleType: vehicleType,
         make: make,
-        model: model || "Standard",
-        color: color || "N/A",
-        incidentDate: incidentDate || new Date().toISOString().split('T')[0],
-        incidentTime: incidentTime || "N/A",
+        model: model,
+        color: color,
+        incidentDate: incidentDate,
+        incidentTime: incidentTime,
         district: district,
-        policeStation: policeStation || `${district} Town Police Station`,
-        location: location || "Roadside area",
-        description: description || "No specific marks mentioned.",
+        policeStation: station,
+        location: location,
+        description: description,
         status: "Pending Verification",
         statusCode: "PENDING",
         submissionDate: new Date().toISOString().replace('T', ' ').substring(0, 19),
-        remarks: "New public submission received. Assigned for document verification."
+        remarks: "Citizen submission received. Assigned to Sub-Inspector for document scrutiny."
     };
 
-    // Save to LocalStorage
     const complaints = getComplaints();
     complaints.unshift(newComplaint);
     localStorage.setItem('vg_complaints', JSON.stringify(complaints));
 
-    // Reset Form
-    document.getElementById('stolen-report-form').reset();
-    const photoPreview = document.getElementById('complaint-photo-preview');
-    if (photoPreview) photoPreview.classList.add('hidden');
-
-    // Show Success Modal
-    showComplaintSuccessModal(newComplaint);
-    showToast(`Complaint submitted successfully! Ref: ${refNum}`, "success", 5000);
+    playAlertSound('clean');
+    showSubmissionSuccessModal(newComplaint);
 }
 
 /**
- * Generate Complaint Reference ID: SVR-2026-XXXXXX
+ * Citizen Complaint Submission Success Modal / Receipt
  */
-function generateComplaintNumber() {
-    const randomDigits = Math.floor(100000 + Math.random() * 900000);
-    return `SVR-2026-${randomDigits}`;
-}
+function showSubmissionSuccessModal(complaint) {
+    const existing = document.getElementById('complaint-receipt-modal');
+    if (existing) existing.remove();
 
-/**
- * Display Submission Success Modal with Print Option
- */
-function showComplaintSuccessModal(complaint) {
+    const titleTxt = typeof t === 'function' ? t('receipt_title') : "Complaint Request Submitted";
+    const refLbl = typeof t === 'function' ? t('receipt_ref_label') : "Your Complaint Reference Number";
+    const refHint = typeof t === 'function' ? t('receipt_ref_hint') : "Save this reference number to track complaint processing status.";
+    const noticeTxt = typeof t === 'function' ? t('receipt_notice') : "⚠️ IMPORTANT NOTICE: This is a prototype submission workflow and does not constitute a legal police FIR. Please submit signed physical documents and identity proofs at your local police station for formal FIR registration.";
+    const trackTxt = typeof t === 'function' ? t('btn_track_status_receipt') : "Track Complaint Status →";
+    const printTxt = typeof t === 'function' ? t('btn_print_receipt') : "🖨️ Print Receipt";
+
     const modal = document.createElement('div');
-    modal.id = 'complaint-success-modal';
-    modal.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-sm overflow-y-auto';
+    modal.id = 'complaint-receipt-modal';
+    modal.className = 'fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md';
     modal.innerHTML = `
-        <div class="bg-slate-900 border-2 border-emerald-500/60 rounded-2xl max-w-xl w-full p-6 md:p-8 shadow-2xl text-slate-100 print-area">
-            <div class="text-center mb-6">
-                <div class="w-16 h-16 bg-emerald-500/20 border border-emerald-400 rounded-full flex items-center justify-center text-3xl mx-auto mb-3 text-emerald-400">
-                    ✓
+        <div class="bg-slate-900 border-2 border-emerald-500 rounded-2xl max-w-lg w-full p-4 sm:p-6 shadow-2xl space-y-4 print-area">
+            <div class="text-center space-y-2">
+                <div class="w-12 h-12 rounded-full bg-emerald-900/60 border border-emerald-500 flex items-center justify-center mx-auto text-2xl">
+                    ✅
                 </div>
-                <h3 class="text-xl md:text-2xl font-bold text-white">Complaint Request Submitted</h3>
-                <p class="text-xs text-slate-400 mt-1">VehicleGuard AI Public Safety Portal (Demo)</p>
+                <h3 class="text-lg font-black text-white">${titleTxt}</h3>
+                <p class="text-xs text-slate-400 font-mono">${complaint.submissionDate}</p>
             </div>
 
-            <div class="bg-slate-800/90 border border-slate-700 rounded-xl p-4 mb-6 text-center">
-                <span class="text-xs uppercase tracking-widest text-slate-400 font-bold block mb-1">Your Complaint Reference Number</span>
-                <div class="font-mono text-2xl md:text-3xl font-extrabold text-blue-400 select-all">${complaint.referenceNumber}</div>
-                <p class="text-xs text-slate-400 mt-2">Save this reference number to track complaint processing status.</p>
+            <!-- Reference Number Highlight Box -->
+            <div class="p-4 bg-slate-950 rounded-xl border border-slate-800 text-center space-y-1">
+                <span class="text-xs text-slate-400 uppercase tracking-wider block font-semibold">${refLbl}</span>
+                <div class="text-2xl sm:text-3xl font-mono font-black text-emerald-400 tracking-wider">
+                    ${complaint.referenceNumber}
+                </div>
+                <p class="text-[11px] text-slate-400">${refHint}</p>
             </div>
 
-            <div class="bg-slate-800/50 rounded-xl p-4 text-xs space-y-2 mb-6 border border-slate-700/60">
-                <div class="flex justify-between py-1 border-b border-slate-700/50">
-                    <span class="text-slate-400">Vehicle Number:</span>
-                    <span class="font-mono font-bold text-white">${complaint.vehicleNumber}</span>
-                </div>
-                <div class="flex justify-between py-1 border-b border-slate-700/50">
-                    <span class="text-slate-400">Owner Name:</span>
-                    <span class="font-medium text-white">${complaint.ownerName}</span>
-                </div>
-                <div class="flex justify-between py-1 border-b border-slate-700/50">
-                    <span class="text-slate-400">Jurisdiction District:</span>
-                    <span class="font-medium text-white">${complaint.district} (${complaint.policeStation})</span>
-                </div>
-                <div class="flex justify-between py-1">
-                    <span class="text-slate-400">Initial Status:</span>
-                    <span class="font-bold text-amber-400">${complaint.status}</span>
-                </div>
+            <!-- Complaint Details Summary -->
+            <div class="p-3 bg-slate-950/60 rounded-xl border border-slate-800 text-xs space-y-1.5">
+                <div class="flex justify-between"><span class="text-slate-400">Vehicle Number:</span> <strong class="font-mono text-white">${complaint.vehicleNumber}</strong></div>
+                <div class="flex justify-between"><span class="text-slate-400">Complainant:</span> <span class="text-white">${complaint.ownerName}</span></div>
+                <div class="flex justify-between"><span class="text-slate-400">District / Station:</span> <span class="text-white">${complaint.district} (${complaint.policeStation})</span></div>
             </div>
 
-            <div class="p-3 bg-amber-950/40 border border-amber-500/40 rounded-lg text-amber-200 text-xs mb-6 leading-relaxed">
-                ⚠️ <strong>IMPORTANT NOTICE:</strong> This is a prototype submission workflow and does not constitute a legal police FIR. Please submit signed physical documents and identity proofs at your local police station for formal FIR registration.
+            <!-- Disclaimer Notice -->
+            <div class="p-3 bg-amber-950/40 border border-amber-500/50 rounded-xl text-[11px] text-amber-200 leading-relaxed">
+                ${noticeTxt}
             </div>
 
-            <div class="flex flex-col sm:flex-row gap-3 no-print">
-                <button class="flex-1 py-2.5 px-4 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-lg text-sm transition" onclick="window.location.href='status.html?ref=${complaint.referenceNumber}'">
-                    Track Complaint Status →
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-2 pt-2 border-t border-slate-800 no-print">
+                <button onclick="window.print()" class="w-full sm:w-auto px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-semibold">
+                    ${printTxt}
                 </button>
-                <button class="py-2.5 px-4 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-slate-200 font-medium rounded-lg text-sm transition" onclick="window.print()">
-                    🖨️ Print Receipt
-                </button>
-                <button class="py-2.5 px-4 bg-slate-700 hover:bg-slate-600 text-slate-200 font-medium rounded-lg text-sm transition" onclick="document.getElementById('complaint-success-modal').remove()">
-                    Close
-                </button>
+                <a href="status.html?ref=${complaint.referenceNumber}" class="w-full sm:w-auto px-5 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold text-center">
+                    ${trackTxt}
+                </a>
             </div>
         </div>
     `;
+
     document.body.appendChild(modal);
 }
 
 /**
- * Initialize Status Tracking Page
+ * Handle Status Lookup on status.html
  */
-function initStatusChecker() {
-    const checkBtn = document.getElementById('btn-track-status');
+function handleStatusSearch() {
     const input = document.getElementById('status-search-input');
+    const query = input ? input.value.trim().toUpperCase() : "";
 
-    if (checkBtn && input) {
-        checkBtn.addEventListener('click', () => {
-            performStatusSearch(input.value);
-        });
-
-        input.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                performStatusSearch(input.value);
-            }
-        });
-
-        // Check if URL has ?ref= query parameter
-        const urlParams = new URLSearchParams(window.location.search);
-        const refParam = urlParams.get('ref');
-        if (refParam) {
-            input.value = refParam;
-            performStatusSearch(refParam);
-        }
-
-        // Listen for storage events (e.g. if officer approves in another tab)
-        window.addEventListener('storage', (e) => {
-            if (e.key === 'vg_complaints' || e.key === 'vg_stolen_db') {
-                const currentVal = input.value.trim();
-                if (currentVal) {
-                    performStatusSearch(currentVal);
-                }
-            }
-        });
-    }
-}
-
-/**
- * Perform Comprehensive Real-Time Status Lookup
- */
-function performStatusSearch(query) {
-    if (!query || query.trim() === '') {
+    if (!query) {
         showToast("Please enter a reference number or vehicle number.", "warning");
         return;
     }
 
-    const cleanQuery = query.trim().toUpperCase();
-    const normalizedVeh = normalizeVehicleNumber(query);
     const container = document.getElementById('status-result-container');
     const emptyState = document.getElementById('status-empty-state');
-    const detailsContainer = document.getElementById('status-details');
+    const detailsCard = document.getElementById('status-details');
+
+    if (!container) return;
+    container.classList.remove('hidden');
 
     const complaints = getComplaints();
-    const stolenDb = getStolenDatabase();
+    const normalizedQuery = normalizeVehicleNumber(query);
 
-    // 1. Search in complaints by reference, normalized vehicle number, or FIR number
-    let match = complaints.find(c => 
-        c.referenceNumber.toUpperCase() === cleanQuery || 
-        normalizeVehicleNumber(c.vehicleNumber) === normalizedVeh ||
-        (c.firNumber && c.firNumber.toUpperCase() === cleanQuery) ||
-        (c.mobile && c.mobile.replace(/[^0-9]/g, '') === cleanQuery.replace(/[^0-9]/g, ''))
+    // Search by Reference No or Vehicle Registration No
+    const match = complaints.find(c => 
+        c.referenceNumber.toUpperCase() === query || 
+        normalizeVehicleNumber(c.vehicleNumber) === normalizedQuery
     );
 
-    // 2. Fallback search in active stolen vehicle database
-    if (!match) {
-        const dbMatch = stolenDb.find(s => 
-            s.complaintNumber.toUpperCase() === cleanQuery || 
-            normalizeVehicleNumber(s.vehicleNumber) === normalizedVeh
-        );
-        if (dbMatch) {
-            match = {
-                referenceNumber: dbMatch.complaintNumber,
-                vehicleNumber: dbMatch.vehicleNumber,
-                firNumber: dbMatch.complaintNumber,
-                ownerName: dbMatch.ownerName || "Confidential Complainant",
-                mobile: "Verified Police Record",
-                vehicleType: dbMatch.vehicleType || "Vehicle",
-                make: dbMatch.make || "Standard",
-                model: dbMatch.model || "Model",
-                color: dbMatch.color || "Standard",
-                incidentDate: dbMatch.complaintDate,
-                district: dbMatch.district || "Chennai",
-                policeStation: dbMatch.policeStation,
-                location: dbMatch.theftLocation || "Roadway",
-                status: "FIR Registered — Active Watchlist",
-                statusCode: "REGISTERED",
-                submissionDate: dbMatch.complaintDate,
-                approvedBy: "Duty Officer / Central IT Cell",
-                remarks: "Active FIR Registered. Target flagged across all zonal police checkpoints."
-            };
-        }
-    }
+    if (match) {
+        if (emptyState) emptyState.classList.add('hidden');
+        if (detailsCard) detailsCard.classList.remove('hidden');
 
-    if (container) container.classList.remove('hidden');
+        // Populate Details
+        document.getElementById('res-ref-no').textContent = match.referenceNumber;
+        document.getElementById('res-veh-no').textContent = match.vehicleNumber;
+        document.getElementById('res-owner').textContent = match.ownerName;
+        document.getElementById('res-date').textContent = match.incidentDate;
+        document.getElementById('res-model').textContent = `${match.make} ${match.model || ''} (${match.color || 'N/A'})`;
+        document.getElementById('res-station').textContent = `${match.policeStation}, ${match.district}`;
+        document.getElementById('res-remarks').textContent = match.remarks || "Processing with jurisdiction police.";
 
-    if (!match) {
-        if (emptyState) emptyState.classList.remove('hidden');
-        if (detailsContainer) detailsContainer.classList.add('hidden');
-        showToast(`No record found for "${query}". Check your reference or registration number.`, "warning");
-        return;
-    }
-
-    if (emptyState) emptyState.classList.add('hidden');
-    if (detailsContainer) {
-        detailsContainer.classList.remove('hidden');
-        renderStatusDetails(match);
-        showToast(`Loaded status for ${match.vehicleNumber} (${match.status})`, "info", 2500);
-    }
-}
-
-/**
- * Render Status Details, FIR Highlights and Dynamic Timeline
- */
-function renderStatusDetails(record) {
-    // Fill basic text elements
-    const refNoEl = document.getElementById('res-ref-no');
-    const vehNoEl = document.getElementById('res-veh-no');
-    const ownerEl = document.getElementById('res-owner');
-    const modelEl = document.getElementById('res-model');
-    const stationEl = document.getElementById('res-station');
-    const dateEl = document.getElementById('res-date');
-    const remarksEl = document.getElementById('res-remarks');
-
-    if (refNoEl) refNoEl.textContent = record.referenceNumber;
-    if (vehNoEl) vehNoEl.textContent = record.vehicleNumber;
-    if (ownerEl) ownerEl.textContent = record.ownerName;
-    if (modelEl) modelEl.textContent = `${record.make} ${record.model || ''} (${record.color || 'Standard'})`;
-    if (stationEl) stationEl.textContent = `${record.policeStation}, ${record.district}`;
-    if (dateEl) dateEl.textContent = record.incidentDate || record.submissionDate;
-    if (remarksEl) remarksEl.textContent = record.remarks || "Under routine processing.";
-
-    // Render Status Badge
-    const statusBadge = document.getElementById('res-status-badge');
-    let badgeClass = "bg-amber-900/60 text-amber-300 border-amber-500/50";
-    let statusIcon = "🟡";
-
-    if (record.statusCode === 'REGISTERED') {
-        badgeClass = "bg-rose-900/60 text-rose-300 border-rose-500/50 strobe-alert";
-        statusIcon = "🔴";
-    } else if (record.statusCode === 'UNDER_REVIEW') {
-        badgeClass = "bg-blue-900/60 text-blue-300 border-blue-500/50";
-        statusIcon = "🔵";
-    } else if (record.statusCode === 'REJECTED') {
-        badgeClass = "bg-slate-800 text-slate-400 border-slate-600";
-        statusIcon = "⚪";
-    }
-
-    if (statusBadge) {
-        statusBadge.className = `inline-flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-bold border ${badgeClass}`;
-        statusBadge.innerHTML = `<span>${statusIcon}</span><span>${record.status}</span>`;
-    }
-
-    // Approved FIR Banner
-    const firBanner = document.getElementById('res-fir-banner');
-    const firNoEl = document.getElementById('res-fir-no');
-    const approvalOfficerEl = document.getElementById('res-approval-officer');
-
-    if (firBanner) {
-        if (record.statusCode === 'REGISTERED' && (record.firNumber || record.referenceNumber.startsWith('FIR-'))) {
-            firBanner.classList.remove('hidden');
-            if (firNoEl) firNoEl.textContent = record.firNumber || record.referenceNumber;
-            if (approvalOfficerEl) approvalOfficerEl.textContent = record.approvedBy ? `Approved by ${record.approvedBy}` : "Verified by Police Station Duty Officer";
+        // Status Badge Style & Translation
+        const badge = document.getElementById('res-status-badge');
+        if (match.statusCode === 'REGISTERED') {
+            badge.setAttribute('data-i18n', 'status_badge_registered');
+            badge.textContent = typeof t === 'function' ? t('status_badge_registered') : match.status;
+            badge.className = "inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border bg-rose-900/60 text-rose-300 border-rose-500/50";
+        } else if (match.statusCode === 'UNDER_REVIEW') {
+            badge.setAttribute('data-i18n', 'filter_under_review');
+            badge.textContent = typeof t === 'function' ? t('filter_under_review') : match.status;
+            badge.className = "inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border bg-blue-900/60 text-blue-300 border-blue-500/50";
         } else {
-            firBanner.classList.add('hidden');
+            badge.setAttribute('data-i18n', 'filter_pending_approval');
+            badge.textContent = typeof t === 'function' ? t('filter_pending_approval') : match.status;
+            badge.className = "inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border bg-amber-900/60 text-amber-300 border-amber-500/50";
         }
-    }
 
-    // Render Timeline Steps
-    updateTimelineUI(record.statusCode || 'PENDING');
+        // FIR Banner Container
+        const firBanner = document.getElementById('res-fir-banner');
+        if (firBanner) {
+            if (match.statusCode === 'REGISTERED') {
+                firBanner.classList.remove('hidden');
+                const firNoEl = document.getElementById('res-fir-no');
+                if (firNoEl) firNoEl.textContent = match.firNumber || "FIR-2026-CHN-00412";
+            } else {
+                firBanner.classList.add('hidden');
+            }
+        }
+
+        // Update Timeline Steps
+        updateTimelineUI(match.statusCode);
+        playAlertSound('clean');
+
+    } else {
+        if (emptyState) emptyState.classList.remove('hidden');
+        if (detailsCard) detailsCard.classList.add('hidden');
+        playAlertSound('beep');
+    }
 }
 
 /**
- * Update visual progress step indicators & Progress Bar
+ * Update 4-Step Timeline Progress Bar
  */
 function updateTimelineUI(statusCode) {
-    const isRegistered = statusCode === 'REGISTERED';
-    const isUnderReview = statusCode === 'UNDER_REVIEW';
-    const isPending = statusCode === 'PENDING';
-    const isRejected = statusCode === 'REJECTED';
-
     const progressFill = document.getElementById('timeline-progress-fill');
-    if (progressFill) {
-        if (isRegistered) {
-            progressFill.style.width = '100%';
-            progressFill.className = 'absolute left-0 top-4 -translate-y-1/2 h-1.5 bg-emerald-500 transition-all duration-700 z-0';
-        } else if (isUnderReview) {
-            progressFill.style.width = '66%';
-            progressFill.className = 'absolute left-0 top-4 -translate-y-1/2 h-1.5 bg-blue-500 transition-all duration-700 z-0';
-        } else if (isRejected) {
-            progressFill.style.width = '33%';
-            progressFill.className = 'absolute left-0 top-4 -translate-y-1/2 h-1.5 bg-rose-500 transition-all duration-700 z-0';
-        } else {
-            progressFill.style.width = '25%';
-            progressFill.className = 'absolute left-0 top-4 -translate-y-1/2 h-1.5 bg-amber-500 transition-all duration-700 z-0';
-        }
-    }
-
-    // Step 1: Submitted
     const dot1 = document.getElementById('step-1-dot');
-    const lbl1 = document.getElementById('step-1-label');
-    if (dot1) {
-        dot1.className = "w-8 h-8 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-xs shadow-lg shadow-emerald-600/30";
-        dot1.innerHTML = "✓";
-    }
-    if (lbl1) lbl1.className = "font-semibold text-white text-xs mt-2 text-center";
-
-    // Step 2: Verification
     const dot2 = document.getElementById('step-2-dot');
-    const lbl2 = document.getElementById('step-2-label');
-    if (dot2) {
-        if (isRegistered || isUnderReview) {
-            dot2.className = "w-8 h-8 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-xs shadow-lg shadow-emerald-600/30";
-            dot2.innerHTML = "✓";
-            if (lbl2) lbl2.className = "font-semibold text-white text-xs mt-2 text-center";
-        } else if (isRejected) {
-            dot2.className = "w-8 h-8 rounded-full bg-rose-600 text-white font-bold flex items-center justify-center text-xs shadow-lg shadow-rose-600/30";
-            dot2.innerHTML = "✗";
-            if (lbl2) {
-                lbl2.className = "font-semibold text-rose-400 text-xs mt-2 text-center";
-                lbl2.textContent = "Rejected";
-            }
-        } else {
-            dot2.className = "w-8 h-8 rounded-full bg-amber-600 text-white font-bold flex items-center justify-center text-xs ring-4 ring-amber-500/20";
-            dot2.innerHTML = "2";
-            if (lbl2) lbl2.className = "font-semibold text-amber-300 text-xs mt-2 text-center";
-        }
-    }
-
-    // Step 3: Under Review
     const dot3 = document.getElementById('step-3-dot');
-    const lbl3 = document.getElementById('step-3-label');
-    if (dot3) {
-        if (isRegistered) {
-            dot3.className = "w-8 h-8 rounded-full bg-emerald-600 text-white font-bold flex items-center justify-center text-xs shadow-lg shadow-emerald-600/30";
-            dot3.innerHTML = "✓";
-            if (lbl3) lbl3.className = "font-semibold text-white text-xs mt-2 text-center";
-        } else if (isUnderReview) {
-            dot3.className = "w-8 h-8 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-xs ring-4 ring-blue-500/30 shadow-lg shadow-blue-600/30";
-            dot3.innerHTML = "3";
-            if (lbl3) lbl3.className = "font-bold text-blue-300 text-xs mt-2 text-center";
-        } else {
-            dot3.className = "w-8 h-8 rounded-full bg-slate-700 text-slate-400 font-bold flex items-center justify-center text-xs border border-slate-600";
-            dot3.innerHTML = "3";
-            if (lbl3) lbl3.className = "text-slate-400 text-xs mt-2 text-center";
-        }
-    }
-
-    // Step 4: FIR Registered & Watchlist
     const dot4 = document.getElementById('step-4-dot');
+
+    const lbl1 = document.getElementById('step-1-label');
+    const lbl2 = document.getElementById('step-2-label');
+    const lbl3 = document.getElementById('step-3-label');
     const lbl4 = document.getElementById('step-4-label');
-    if (dot4) {
-        if (isRegistered) {
-            dot4.className = "w-8 h-8 rounded-full bg-rose-600 text-white font-bold flex items-center justify-center text-xs shadow-lg shadow-rose-600/40 ring-4 ring-rose-500/30 animate-pulse";
-            dot4.innerHTML = "🚨";
-            if (lbl4) lbl4.className = "font-bold text-rose-300 text-xs mt-2 text-center";
-        } else {
-            dot4.className = "w-8 h-8 rounded-full bg-slate-700 text-slate-400 font-bold flex items-center justify-center text-xs border border-slate-600";
-            dot4.innerHTML = "4";
-            if (lbl4) lbl4.className = "text-slate-400 text-xs mt-2 text-center";
+
+    // Reset styles
+    [dot1, dot2, dot3, dot4].forEach((d, i) => {
+        if (d) {
+            d.className = "w-8 h-8 rounded-full bg-slate-700 text-slate-400 font-bold flex items-center justify-center text-xs";
+            d.textContent = (i + 1).toString();
         }
+    });
+
+    [lbl1, lbl2, lbl3, lbl4].forEach(l => {
+        if (l) l.className = "text-slate-400 text-xs mt-2 text-center";
+    });
+
+    if (statusCode === 'PENDING') {
+        if (progressFill) progressFill.style.width = "25%";
+        setStepActive(dot1, lbl1);
+    } else if (statusCode === 'UNDER_REVIEW') {
+        if (progressFill) progressFill.style.width = "65%";
+        setStepCompleted(dot1, lbl1);
+        setStepCompleted(dot2, lbl2);
+        setStepActive(dot3, lbl3);
+    } else if (statusCode === 'REGISTERED') {
+        if (progressFill) progressFill.style.width = "100%";
+        setStepCompleted(dot1, lbl1);
+        setStepCompleted(dot2, lbl2);
+        setStepCompleted(dot3, lbl3);
+        setStepCompleted(dot4, lbl4, true);
+    }
+}
+
+function setStepActive(dot, label) {
+    if (dot) {
+        dot.className = "w-8 h-8 rounded-full bg-amber-500 text-slate-950 font-black flex items-center justify-center text-xs shadow-lg animate-pulse";
+    }
+    if (label) {
+        label.className = "font-bold text-amber-400 text-xs mt-2 text-center";
+    }
+}
+
+function setStepCompleted(dot, label, isFinal = false) {
+    if (dot) {
+        dot.className = `w-8 h-8 rounded-full ${isFinal ? 'bg-rose-600' : 'bg-emerald-600'} text-white font-bold flex items-center justify-center text-xs shadow-lg`;
+        dot.textContent = "✓";
+    }
+    if (label) {
+        label.className = `font-bold ${isFinal ? 'text-rose-400' : 'text-white'} text-xs mt-2 text-center`;
     }
 }

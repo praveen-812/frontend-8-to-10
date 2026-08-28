@@ -1,141 +1,163 @@
 /**
- * VehicleGuard AI - Optical Vehicle Scanner & ANPR Engine
- * Handles Camera feed, image upload, OCR normalization, database search, result cards, and alert sounds.
+ * VehicleGuard AI - Optical ANPR Scanner & Real-Time Query Engine
+ * Handles Camera stream, photo uploads, plate OCR normalization,
+ * database lookup, dynamic audio alerts, and audit trail rendering.
  */
 
 let videoStream = null;
-let currentCapturedImage = null;
-
-// Sample database test quick presets
-const SAMPLE_PLATES = {
-    stolen1: { number: "TN09AB1234", name: "Royal Enfield Classic (Chennai)" },
-    stolen2: { number: "TN01CD5678", name: "Honda Activa (Mylapore)" },
-    stolen3: { number: "TN45DE6729", name: "Mahindra Thar (Trichy)" },
-    clean1: { number: "TN07BK9988", name: "Clean Hero Splendor" },
-    clean2: { number: "TN22EF4321", name: "Clean Honda City" },
-    unreadable: { number: "TN??--XXXX", name: "Unreadable Plate" }
-};
+let currentScannedRecord = null;
 
 document.addEventListener('DOMContentLoaded', () => {
     initScannerUI();
     renderRecentScansTable();
 });
 
-function initScannerUI() {
-    const startCamBtn = document.getElementById('btn-start-camera');
-    const stopCamBtn = document.getElementById('btn-stop-camera');
-    const captureBtn = document.getElementById('btn-capture-image');
-    const imageUploadInput = document.getElementById('plate-image-upload');
-    const checkBtn = document.getElementById('btn-check-vehicle');
-    const manualInput = document.getElementById('detected-plate-input');
-    const dropZone = document.getElementById('upload-dropzone');
+// Re-render dynamic elements whenever language is toggled
+window.addEventListener('languageChanged', () => {
+    renderRecentScansTable();
+    if (typeof applyTranslations === 'function') {
+        applyTranslations();
+    }
+});
 
-    if (startCamBtn) startCamBtn.addEventListener('click', startCamera);
-    if (stopCamBtn) stopCamBtn.addEventListener('click', stopCamera);
+function initScannerUI() {
+    const startCameraBtn = document.getElementById('btn-start-camera');
+    const stopCameraBtn = document.getElementById('btn-stop-camera');
+    const captureBtn = document.getElementById('btn-capture-image');
+    const imageUpload = document.getElementById('plate-image-upload');
+    const checkVehicleBtn = document.getElementById('btn-check-vehicle');
+    const plateInput = document.getElementById('detected-plate-input');
+
+    if (startCameraBtn) startCameraBtn.addEventListener('click', startCamera);
+    if (stopCameraBtn) stopCameraBtn.addEventListener('click', stopCamera);
     if (captureBtn) captureBtn.addEventListener('click', captureFrame);
 
-    if (imageUploadInput) {
-        imageUploadInput.addEventListener('change', handleImageUpload);
+    if (imageUpload) {
+        imageUpload.addEventListener('change', handleImageUpload);
     }
 
-    if (dropZone) {
-        dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZone.classList.add('border-blue-500', 'bg-blue-500/10');
-        });
-        dropZone.addEventListener('dragleave', () => {
-            dropZone.classList.remove('border-blue-500', 'bg-blue-500/10');
-        });
-        dropZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZone.classList.remove('border-blue-500', 'bg-blue-500/10');
-            if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-                processUploadedFile(e.dataTransfer.files[0]);
+    if (checkVehicleBtn) {
+        checkVehicleBtn.addEventListener('click', () => {
+            const rawVal = plateInput ? plateInput.value : '';
+            const normalized = normalizeVehicleNumber(rawVal);
+            if (!normalized) {
+                showToast(typeof t === 'function' ? t('toast_invalid_veh') : "Please enter a valid vehicle number.", "warning");
+                if (plateInput) plateInput.focus();
+                return;
             }
+            performVehicleStatusLookup(normalized);
         });
     }
 
-    if (checkBtn) {
-        checkBtn.addEventListener('click', () => {
-            const rawVal = manualInput ? manualInput.value : '';
-            executeVehicleCheck(rawVal);
+    // Auto-normalize input field on keystrokes
+    if (plateInput) {
+        plateInput.addEventListener('input', (e) => {
+            const cursor = e.target.selectionStart;
+            e.target.value = normalizeVehicleNumber(e.target.value);
+            e.target.setSelectionRange(cursor, cursor);
         });
-    }
 
-    if (manualInput) {
-        // Auto uppercase and format as officer types
-        manualInput.addEventListener('input', (e) => {
-            e.target.value = e.target.value.toUpperCase();
-        });
-        manualInput.addEventListener('keypress', (e) => {
+        plateInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
-                executeVehicleCheck(e.target.value);
+                checkVehicleBtn.click();
             }
         });
     }
 
-    // Bind Quick Test Sample Buttons
+    // Bind Sample Plate Shortcut Buttons
     document.querySelectorAll('.btn-sample-plate').forEach(btn => {
         btn.addEventListener('click', (e) => {
-            const sampleKey = e.currentTarget.dataset.sample;
-            loadSamplePlate(sampleKey);
+            const sampleType = e.currentTarget.dataset.sample;
+            loadSamplePlate(sampleType);
         });
     });
+
+    // Stolen Dossier & Notify Supervisor Buttons
+    const viewDossierBtn = document.getElementById('btn-view-dossier');
+    const notifySupervisorBtn = document.getElementById('btn-notify-supervisor');
+    const printVerifBtn = document.getElementById('btn-print-verification');
+
+    if (viewDossierBtn) {
+        viewDossierBtn.addEventListener('click', () => {
+            if (currentScannedRecord) {
+                showCrimeDossierModal(currentScannedRecord);
+            }
+        });
+    }
+
+    if (notifySupervisorBtn) {
+        notifySupervisorBtn.addEventListener('click', () => {
+            if (currentScannedRecord) {
+                showDispatchNotifyModal(currentScannedRecord);
+            }
+        });
+    }
+
+    if (printVerifBtn) {
+        printVerifBtn.addEventListener('click', () => {
+            window.print();
+        });
+    }
 }
 
 /**
- * Start Live Web Camera Feed
+ * 1-Click Quick Demo Presets
+ */
+function loadSamplePlate(type) {
+    const plateInput = document.getElementById('detected-plate-input');
+    let targetNum = "";
+    if (type === 'stolen1') targetNum = "TN09AB1234";
+    else if (type === 'stolen2') targetNum = "TN01CD5678";
+    else if (type === 'clean1') targetNum = "TN07BK9988";
+    else if (type === 'clean2') targetNum = "TN22EF4321";
+
+    if (plateInput) {
+        plateInput.value = targetNum;
+    }
+
+    // Visual feedback & auto-trigger lookup
+    playAlertSound('beep');
+    performVehicleStatusLookup(targetNum);
+}
+
+/**
+ * Start Live Web Camera Stream
  */
 async function startCamera() {
     const video = document.getElementById('camera-video');
-    const cameraPlaceholder = document.getElementById('camera-placeholder');
-    const startCamBtn = document.getElementById('btn-start-camera');
-    const stopCamBtn = document.getElementById('btn-stop-camera');
+    const placeholder = document.getElementById('camera-placeholder');
+    const startBtn = document.getElementById('btn-start-camera');
+    const stopBtn = document.getElementById('btn-stop-camera');
     const captureBtn = document.getElementById('btn-capture-image');
     const laser = document.getElementById('scanner-laser-line');
+    const confidenceBadge = document.getElementById('ocr-confidence-badge');
 
     try {
-        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-            showToast("Camera API is not supported in this browser. Please use the Upload Image option.", "warning", 5000);
-            return;
-        }
-
-        // Request HD Environment (Rear) camera if mobile, default camera if desktop
-        const stream = await navigator.mediaDevices.getUserMedia({
+        videoStream = await navigator.mediaDevices.getUserMedia({
             video: {
                 facingMode: { ideal: "environment" },
                 width: { ideal: 1280 },
                 height: { ideal: 720 }
-            },
-            audio: false
+            }
         });
 
-        videoStream = stream;
         if (video) {
-            video.srcObject = stream;
+            video.srcObject = videoStream;
             video.classList.remove('hidden');
-            video.play();
+            if (placeholder) placeholder.classList.add('hidden');
+            if (startBtn) startBtn.classList.add('hidden');
+            if (stopBtn) stopBtn.classList.remove('hidden');
+            if (captureBtn) captureBtn.classList.remove('hidden');
+            if (laser) laser.classList.remove('hidden');
+            if (confidenceBadge) confidenceBadge.classList.remove('hidden');
+            
+            showToast("Camera optical stream connected.", "info");
         }
-        if (cameraPlaceholder) cameraPlaceholder.classList.add('hidden');
-        if (startCamBtn) startCamBtn.classList.add('hidden');
-        if (stopCamBtn) stopCamBtn.classList.remove('hidden');
-        if (captureBtn) {
-            captureBtn.classList.remove('hidden');
-            captureBtn.disabled = false;
-        }
-        if (laser) laser.classList.remove('hidden');
-
-        showToast("ANPR Camera initialized. Align vehicle number plate within HUD frame.", "success");
     } catch (err) {
-        console.error("Camera access error:", err);
-        let errorMsg = "Unable to access camera. Please allow camera permissions or upload an image.";
-        if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
-            errorMsg = "Camera permission denied. Please grant permission in your browser address bar.";
-        } else if (err.name === 'NotFoundError') {
-            errorMsg = "No camera hardware found on this device. Please use the image upload option.";
-        }
-        showToast(errorMsg, "error", 5000);
+        console.warn("Camera access denied or unavailable:", err);
+        showToast("Camera access unavailable. Using simulated optical preview.", "warning");
+        simulateCameraPreview();
     }
 }
 
@@ -147,506 +169,249 @@ function stopCamera() {
         videoStream.getTracks().forEach(track => track.stop());
         videoStream = null;
     }
+
     const video = document.getElementById('camera-video');
-    const cameraPlaceholder = document.getElementById('camera-placeholder');
-    const startCamBtn = document.getElementById('btn-start-camera');
-    const stopCamBtn = document.getElementById('btn-stop-camera');
+    const placeholder = document.getElementById('camera-placeholder');
+    const startBtn = document.getElementById('btn-start-camera');
+    const stopBtn = document.getElementById('btn-stop-camera');
+    const captureBtn = document.getElementById('btn-capture-image');
+    const laser = document.getElementById('scanner-laser-line');
+    const confidenceBadge = document.getElementById('ocr-confidence-badge');
+
+    if (video) video.classList.add('hidden');
+    if (placeholder) placeholder.classList.remove('hidden');
+    if (startBtn) startBtn.classList.remove('hidden');
+    if (stopBtn) stopBtn.classList.add('hidden');
+    if (captureBtn) captureBtn.classList.add('hidden');
+    if (laser) laser.classList.add('hidden');
+    if (confidenceBadge) confidenceBadge.classList.add('hidden');
+}
+
+/**
+ * Fallback Camera Simulation for Devices without Webcams
+ */
+function simulateCameraPreview() {
+    const placeholder = document.getElementById('camera-placeholder');
+    const startBtn = document.getElementById('btn-start-camera');
+    const stopBtn = document.getElementById('btn-stop-camera');
     const captureBtn = document.getElementById('btn-capture-image');
     const laser = document.getElementById('scanner-laser-line');
 
-    if (video) {
-        video.pause();
-        video.srcObject = null;
-        video.classList.add('hidden');
+    if (placeholder) {
+        placeholder.innerHTML = `
+            <div class="text-center space-y-2">
+                <span class="text-3xl animate-pulse">📷</span>
+                <p class="text-xs font-bold text-amber-300">OPTICAL HUD SIMULATION ACTIVE</p>
+                <p class="text-[10px] text-slate-400">Positioning target plate in optical reticle...</p>
+            </div>
+        `;
     }
-    if (cameraPlaceholder) cameraPlaceholder.classList.remove('hidden');
-    if (startCamBtn) startCamBtn.classList.remove('hidden');
-    if (stopCamBtn) stopCamBtn.classList.add('hidden');
-    if (captureBtn) captureBtn.classList.add('hidden');
-    if (laser) laser.classList.add('hidden');
-
-    showToast("Camera feed terminated.", "info");
+    if (startBtn) startBtn.classList.add('hidden');
+    if (stopBtn) stopBtn.classList.remove('hidden');
+    if (captureBtn) captureBtn.classList.remove('hidden');
+    if (laser) laser.classList.remove('hidden');
 }
 
 /**
- * Capture Frame from Video
+ * Capture Frame & Extract Plate OCR
  */
 function captureFrame() {
-    const video = document.getElementById('camera-video');
-    if (!video || !videoStream) {
-        showToast("Camera is not active.", "warning");
-        return;
+    playAlertSound('beep');
+    showToast("Processing optical plate OCR...", "info", 1200);
+
+    const previewContainer = document.getElementById('preview-container');
+    const previewImg = document.getElementById('captured-preview-img');
+    const plateInput = document.getElementById('detected-plate-input');
+
+    // Pick random demo plate for simulation if camera is live
+    const demoCandidates = ["TN09AB1234", "TN01CD5678", "TN07BK9988", "TN22EF4321", "TN38BZ4590"];
+    const detected = demoCandidates[Math.floor(Math.random() * demoCandidates.length)];
+
+    if (previewImg) {
+        // High contrast canvas simulation preview
+        previewImg.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='120' style='background:%23fef08a;border:4px solid %23000;'><text x='20' y='75' font-family='monospace' font-size='44' font-weight='900' fill='%23000'>IND " + detected + "</text></svg>";
+    }
+    if (previewContainer) previewContainer.classList.remove('hidden');
+
+    if (plateInput) {
+        plateInput.value = detected;
     }
 
-    playAlertSound('beep');
-
-    const canvas = document.createElement('canvas');
-    canvas.width = video.videoWidth || 640;
-    canvas.height = video.videoHeight || 480;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-    const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
-    displayCapturedImage(dataUrl);
-
-    // Simulate OCR plate detection from camera
-    simulateOCRRecognition("TN09AB1234");
-    showToast("Image captured! Processing optical character recognition...", "info");
+    setTimeout(() => {
+        performVehicleStatusLookup(detected);
+    }, 400);
 }
 
 /**
- * Handle File Upload
+ * Handle Image Upload from File/Gallery
  */
 function handleImageUpload(e) {
     const file = e.target.files[0];
-    if (file) {
-        processUploadedFile(file);
-    }
-}
+    if (!file) return;
 
-function processUploadedFile(file) {
-    if (!file.type.startsWith('image/')) {
-        showToast("Please upload a valid image file (JPEG, PNG, WEBP).", "error");
-        return;
-    }
-
+    playAlertSound('beep');
     const reader = new FileReader();
-    reader.onload = function(evt) {
-        displayCapturedImage(evt.target.result);
-        
-        // Smart plate extraction heuristic based on filename or default sample
-        let simulatedPlate = "TN01CD5678";
-        const fname = file.name.toUpperCase();
-        if (fname.includes("09") || fname.includes("TN09")) {
-            simulatedPlate = "TN09AB1234";
-        } else if (fname.includes("38") || fname.includes("TN38")) {
-            simulatedPlate = "TN38BZ4590";
-        } else if (fname.includes("CLEAN") || fname.includes("07")) {
-            simulatedPlate = "TN07BK9988";
-        } else if (fname.includes("22") || fname.includes("CITY")) {
-            simulatedPlate = "TN22EF4321";
-        }
+    reader.onload = function(event) {
+        const previewContainer = document.getElementById('preview-container');
+        const previewImg = document.getElementById('captured-preview-img');
+        const plateInput = document.getElementById('detected-plate-input');
 
-        simulateOCRRecognition(simulatedPlate);
-        showToast("Image uploaded successfully. ANPR OCR engine triggered.", "success");
+        if (previewImg) previewImg.src = event.target.result;
+        if (previewContainer) previewContainer.classList.remove('hidden');
+
+        // Extract plate simulation
+        const demoPlates = ["TN09AB1234", "TN07BK9988", "TN01CD5678"];
+        const recognized = demoPlates[Math.floor(Math.random() * demoPlates.length)];
+
+        if (plateInput) plateInput.value = recognized;
+        showToast("ANPR OCR extracted plate: " + recognized, "success");
+        
+        setTimeout(() => {
+            performVehicleStatusLookup(recognized);
+        }, 500);
     };
     reader.readAsDataURL(file);
 }
 
 /**
- * Display image in preview container with bounding box
+ * Core Logic: Instant Cross-Reference Against Stolen Vehicle Database
  */
-function displayCapturedImage(dataUrl) {
-    currentCapturedImage = dataUrl;
-    const previewContainer = document.getElementById('preview-container');
-    const previewImg = document.getElementById('captured-preview-img');
-    const ocrBox = document.getElementById('ocr-bounding-box');
-
-    if (previewImg) {
-        previewImg.src = dataUrl;
-    }
-    if (previewContainer) {
-        previewContainer.classList.remove('hidden');
-    }
-    if (ocrBox) {
-        ocrBox.classList.remove('hidden');
-    }
-}
-
-/**
- * Load Quick Demo Sample Plate
- */
-function loadSamplePlate(sampleKey) {
-    const input = document.getElementById('detected-plate-input');
-    const previewContainer = document.getElementById('preview-container');
-    const previewImg = document.getElementById('captured-preview-img');
-
-    let plateNum = "TN09AB1234";
-    let imgSvg = createDummyPlateSvg("TN 09 AB 1234");
-
-    if (sampleKey === 'stolen1') {
-        plateNum = "TN09AB1234";
-        imgSvg = createDummyPlateSvg("TN 09 AB 1234");
-    } else if (sampleKey === 'stolen2') {
-        plateNum = "TN01CD5678";
-        imgSvg = createDummyPlateSvg("TN 01 CD 5678");
-    } else if (sampleKey === 'stolen3') {
-        plateNum = "TN45DE6729";
-        imgSvg = createDummyPlateSvg("TN 45 DE 6729");
-    } else if (sampleKey === 'clean1') {
-        plateNum = "TN07BK9988";
-        imgSvg = createDummyPlateSvg("TN 07 BK 9988");
-    } else if (sampleKey === 'clean2') {
-        plateNum = "TN22EF4321";
-        imgSvg = createDummyPlateSvg("TN 22 EF 4321");
-    } else if (sampleKey === 'unreadable') {
-        plateNum = "TN??--XXXX";
-        imgSvg = createDummyPlateSvg("TN ?? -- ????");
-    }
-
-    if (previewImg) previewImg.src = imgSvg;
-    if (previewContainer) previewContainer.classList.remove('hidden');
-    if (input) input.value = plateNum;
-
-    showToast(`Loaded sample: ${plateNum}`, "info");
-    
-    // Auto trigger check if requested
-    simulateOCRRecognition(plateNum);
-}
-
-/**
- * Helper to generate an SVG plate image for demo previews
- */
-function createDummyPlateSvg(text) {
-    const svg = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 600 200">
-            <rect width="100%" height="100%" fill="#0a0f1d"/>
-            <rect x="30" y="30" width="540" height="140" rx="10" fill="#ffffff" stroke="#000000" stroke-width="8"/>
-            <rect x="40" y="40" width="45" height="120" rx="4" fill="#1e3a8a"/>
-            <circle cx="62" cy="70" r="10" fill="#f59e0b"/>
-            <text x="62" y="130" font-family="Arial" font-weight="900" font-size="20" fill="#ffffff" text-anchor="middle">IND</text>
-            <text x="320" y="125" font-family="'JetBrains Mono', monospace, Arial" font-weight="900" font-size="52" fill="#000000" letter-spacing="4" text-anchor="middle">${text}</text>
-        </svg>
-    `;
-    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
-}
-
-/**
- * Simulate OCR recognition with animation
- */
-function simulateOCRRecognition(detectedText) {
-    const input = document.getElementById('detected-plate-input');
-    const confidenceBadge = document.getElementById('ocr-confidence-badge');
-    
-    if (confidenceBadge) {
-        confidenceBadge.classList.remove('hidden');
-        confidenceBadge.textContent = "OCR Confidence: 98.6% (ANPR-Model-v4)";
-    }
-    
-    if (input) {
-        input.value = detectedText;
-        input.classList.add('ring-2', 'ring-blue-500');
-        setTimeout(() => input.classList.remove('ring-2', 'ring-blue-500'), 1200);
-    }
-}
-
-/**
- * Core Search & Verification Execution
- */
-function executeVehicleCheck(rawInput) {
-    const normalized = normalizeVehicleNumber(rawInput);
+function performVehicleStatusLookup(normalizedNumber) {
     const resultsContainer = document.getElementById('scan-results-container');
     const loadingCard = document.getElementById('scan-loading-card');
-
-    if (!rawInput || rawInput.trim() === '') {
-        showToast("Please enter or scan a vehicle registration number.", "warning");
-        return;
-    }
-
-    // Handle Unreadable / Blur test
-    if (rawInput.includes('?') || rawInput.includes('X') || normalized.length < 5) {
-        renderUnreadableResult();
-        return;
-    }
-
-    // Validate Indian vehicle registration plate format
-    const isValidFormat = validateVehicleNumber(normalized);
-    if (!isValidFormat) {
-        renderInvalidFormatResult(normalized);
-        return;
-    }
-
-    // Show loading state with animated progress
-    if (resultsContainer) resultsContainer.classList.remove('hidden');
-    if (loadingCard) loadingCard.classList.remove('hidden');
-    hideAllResultCards();
-
-    // Scroll to results on mobile
-    if (window.innerWidth < 768 && resultsContainer) {
-        resultsContainer.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    // Simulate realistic database query delay (600ms)
-    setTimeout(() => {
-        if (loadingCard) loadingCard.classList.add('hidden');
-        
-        const database = getStolenDatabase();
-        const match = database.find(item => normalizeVehicleNumber(item.vehicleNumber) === normalized);
-
-        if (match) {
-            renderStolenResult(match);
-            playAlertSound('stolen');
-            addScanHistory({
-                vehicleNumber: match.vehicleNumber,
-                result: "STOLEN",
-                location: "Patrol Checkpost (Demo)",
-                details: `${match.make} ${match.model} - FIR: ${match.complaintNumber}`
-            });
-            showToast(`🚨 STOLEN VEHICLE ALERT: ${match.vehicleNumber}`, "stolen", 6000);
-        } else {
-            renderCleanResult(normalized);
-            playAlertSound('clean');
-            addScanHistory({
-                vehicleNumber: normalized,
-                result: "CLEAN",
-                location: "Patrol Checkpost (Demo)",
-                details: "No stolen vehicle record found"
-            });
-            showToast(`✅ No stolen vehicle record found for ${normalized}`, "success");
-        }
-
-        renderRecentScansTable();
-    }, 650);
-}
-
-function hideAllResultCards() {
     const stolenCard = document.getElementById('card-result-stolen');
     const cleanCard = document.getElementById('card-result-clean');
     const verifyCard = document.getElementById('card-result-verify');
+
+    if (!resultsContainer) return;
+
+    resultsContainer.classList.remove('hidden');
+    if (loadingCard) loadingCard.classList.remove('hidden');
     if (stolenCard) stolenCard.classList.add('hidden');
     if (cleanCard) cleanCard.classList.add('hidden');
     if (verifyCard) verifyCard.classList.add('hidden');
-}
 
-/**
- * Render 🔴 STOLEN MATCH Result Card
- */
-function renderStolenResult(record) {
-    const card = document.getElementById('card-result-stolen');
-    if (!card) return;
+    // Simulate fast sub-second CCTNS/FIR repository query
+    setTimeout(() => {
+        if (loadingCard) loadingCard.classList.add('hidden');
 
-    // Populate all dossier fields
-    document.getElementById('stolen-veh-num').textContent = record.vehicleNumber;
-    document.getElementById('stolen-veh-type').textContent = record.vehicleType || "Motorcycle";
-    document.getElementById('stolen-make-model').textContent = `${record.make} ${record.model}`;
-    document.getElementById('stolen-color').textContent = record.color;
-    document.getElementById('stolen-fir-num').textContent = record.complaintNumber;
-    document.getElementById('stolen-station').textContent = record.policeStation;
-    document.getElementById('stolen-district').textContent = record.district || "Chennai";
-    document.getElementById('stolen-date').textContent = record.complaintDate;
-    document.getElementById('stolen-location').textContent = record.theftLocation || "Roadside Parking";
-    document.getElementById('stolen-owner').textContent = record.ownerName || "Confidential Complainant";
-    document.getElementById('stolen-engine').textContent = record.engineHash || "Verified Hash";
-    document.getElementById('stolen-notes').textContent = record.notes || "High priority alert issued to all zonal checkposts.";
+        const stolenDB = getStolenDatabase();
+        const match = stolenDB.find(v => normalizeVehicleNumber(v.vehicleNumber) === normalizedNumber);
 
-    card.classList.remove('hidden');
+        if (match) {
+            // 🔴 STOLEN HIT FOUND
+            currentScannedRecord = match;
+            playAlertSound('stolen');
 
-    // Attach actions
-    const btnNotify = document.getElementById('btn-notify-supervisor');
-    if (btnNotify) {
-        btnNotify.onclick = () => {
-            simulateSupervisorDispatch(record);
-        };
-    }
+            // Populate Dossier
+            document.getElementById('stolen-veh-num').textContent = match.vehicleNumber;
+            document.getElementById('stolen-make-model').textContent = `${match.make} ${match.model}`;
+            document.getElementById('stolen-veh-type').textContent = match.vehicleType;
+            document.getElementById('stolen-color').textContent = match.color;
+            document.getElementById('stolen-fir-num').textContent = match.complaintNumber;
+            document.getElementById('stolen-station').textContent = match.policeStation;
+            document.getElementById('stolen-date').textContent = match.complaintDate;
+            document.getElementById('stolen-district').textContent = match.district;
+            
+            const stolenLoc = document.getElementById('stolen-location');
+            if (stolenLoc) stolenLoc.textContent = match.theftLocation;
+            
+            const stolenOwner = document.getElementById('stolen-owner');
+            if (stolenOwner) stolenOwner.textContent = match.ownerName;
 
-    const btnViewDossier = document.getElementById('btn-view-dossier');
-    if (btnViewDossier) {
-        btnViewDossier.onclick = () => {
-            openDossierModal(record);
-        };
-    }
+            const stolenEngine = document.getElementById('stolen-engine');
+            if (stolenEngine) stolenEngine.textContent = match.engineHash || "RE350U89281X";
 
-    const btnPrint = document.getElementById('btn-print-verification');
-    if (btnPrint) {
-        btnPrint.onclick = () => {
-            window.print();
-        };
-    }
-}
+            const stolenNotes = document.getElementById('stolen-notes');
+            if (stolenNotes) stolenNotes.textContent = match.notes || "Vehicle flagged in regional theft database.";
 
-/**
- * Render 🟢 NO MATCH CLEAN Result Card
- */
-function renderCleanResult(vehicleNumber) {
-    const card = document.getElementById('card-result-clean');
-    if (!card) return;
+            if (stolenCard) stolenCard.classList.remove('hidden');
 
-    const numSpan = document.getElementById('clean-veh-num');
-    if (numSpan) numSpan.textContent = vehicleNumber;
-    const timeSpan = document.getElementById('clean-timestamp');
-    if (timeSpan) timeSpan.textContent = new Date().toLocaleString();
+            // Add to scan audit log
+            addScanHistory({
+                vehicleNumber: match.vehicleNumber,
+                result: "STOLEN",
+                location: "Koyambedu Checkpost #4",
+                details: `${match.make} ${match.model} - ${match.complaintNumber}`
+            });
 
-    card.classList.remove('hidden');
-}
+            showToast("🚨 ALERT: Stolen Vehicle Match Found! " + match.vehicleNumber, "stolen", 6000);
 
-/**
- * Render 🟡 UNREADABLE / VERIFICATION REQUIRED Card
- */
-function renderUnreadableResult() {
-    hideAllResultCards();
-    const card = document.getElementById('card-result-verify');
-    if (card) {
-        card.classList.remove('hidden');
-    }
-    const resultsContainer = document.getElementById('scan-results-container');
-    if (resultsContainer) resultsContainer.classList.remove('hidden');
-    
-    showToast("⚠️ Number plate unreadable or obscured. Manual verification required.", "warning");
-}
+        } else if (validateVehicleNumber(normalizedNumber)) {
+            // 🟢 CLEAN VEHICLE RECORD
+            currentScannedRecord = null;
+            playAlertSound('clean');
 
-function renderInvalidFormatResult(number) {
-    hideAllResultCards();
-    const card = document.getElementById('card-result-verify');
-    if (card) {
-        card.classList.remove('hidden');
-        const desc = card.querySelector('.verify-desc');
-        if (desc) {
-            desc.textContent = `Invalid vehicle number format: "${number}". Please check the registration plate and try again.`;
+            document.getElementById('clean-veh-num').textContent = normalizedNumber;
+            document.getElementById('clean-timestamp').textContent = new Date().toISOString().replace('T', ' ').substring(0, 16);
+
+            if (cleanCard) cleanCard.classList.remove('hidden');
+
+            // Add to scan audit log
+            addScanHistory({
+                vehicleNumber: normalizedNumber,
+                result: "CLEAN",
+                location: "Koyambedu Checkpost #4",
+                details: "No active theft records found"
+            });
+
+            showToast("Clearance: No stolen records found for " + normalizedNumber, "success", 3000);
+
+        } else {
+            // 🟡 VERIFICATION REQUIRED
+            currentScannedRecord = null;
+            playAlertSound('beep');
+            if (verifyCard) verifyCard.classList.remove('hidden');
+            showToast("Invalid number plate format. Please re-enter.", "warning");
         }
-    }
-    const resultsContainer = document.getElementById('scan-results-container');
-    if (resultsContainer) resultsContainer.classList.remove('hidden');
+
+        renderRecentScansTable();
+
+        // Refresh i18n text on newly injected results
+        if (typeof applyTranslations === 'function') {
+            applyTranslations();
+        }
+
+    }, 380);
 }
 
 /**
- * Supervisor Dispatch Notification Simulation
- */
-function simulateSupervisorDispatch(record) {
-    const modal = document.createElement('div');
-    modal.id = 'dispatch-modal';
-    modal.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm';
-    modal.innerHTML = `
-        <div class="bg-slate-900 border border-blue-500/40 rounded-xl max-w-lg w-full p-6 shadow-2xl text-slate-100 animate-in fade-in">
-            <div class="flex items-center space-x-3 text-blue-400 border-b border-slate-700/60 pb-3 mb-4">
-                <span class="text-2xl">📡</span>
-                <div>
-                    <h3 class="font-bold text-lg text-white">POLICE CONTROL ROOM DISPATCH</h3>
-                    <p class="text-xs text-blue-300">Automated Tactical Alert Transmission</p>
-                </div>
-            </div>
-            <div class="space-y-3 text-sm text-slate-300 mb-6">
-                <div class="p-3 bg-slate-800/80 rounded-lg border border-slate-700">
-                    <p class="text-xs text-slate-400">Target Vehicle:</p>
-                    <p class="font-mono text-base font-bold text-rose-400">${record.vehicleNumber} (${record.make} ${record.model})</p>
-                </div>
-                <div class="p-3 bg-slate-800/80 rounded-lg border border-slate-700">
-                    <p class="text-xs text-slate-400">FIR Ref & Station:</p>
-                    <p class="font-medium text-white">${record.complaintNumber} — ${record.policeStation}</p>
-                </div>
-                <div class="p-3 bg-blue-950/60 border border-blue-700/60 rounded-lg text-blue-200 text-xs">
-                    ⚡ <strong>Status:</strong> Alert transmitted to Divisional Duty Officer & Central Modern Control Room. Stand by for backup unit coordination if needed.
-                </div>
-            </div>
-            <div class="flex justify-end space-x-3">
-                <button class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-lg text-sm transition" onclick="document.getElementById('dispatch-modal').remove()">
-                    Acknowledge & Close
-                </button>
-            </div>
-        </div>
-    `;
-    document.body.appendChild(modal);
-}
-
-/**
- * Complete Crime Dossier Modal
- */
-function openDossierModal(record) {
-    const modal = document.createElement('div');
-    modal.id = 'dossier-modal';
-    modal.className = 'fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto';
-    modal.innerHTML = `
-        <div class="bg-slate-900 border-2 border-rose-600/70 rounded-2xl max-w-2xl w-full p-6 md:p-8 shadow-2xl text-slate-100 print-area">
-            <div class="flex justify-between items-start border-b border-slate-700 pb-4 mb-4">
-                <div class="flex items-center space-x-3">
-                    <div class="w-10 h-10 rounded-full bg-rose-600/20 border border-rose-500 flex items-center justify-center text-xl text-rose-500">🚨</div>
-                    <div>
-                        <span class="text-xs font-mono uppercase tracking-widest text-rose-400 font-bold">TAMIL NADU POLICE DEMO IT RECORD</span>
-                        <h2 class="text-xl font-bold text-white">Stolen Vehicle Case Dossier</h2>
-                    </div>
-                </div>
-                <button class="text-slate-400 hover:text-white text-2xl font-bold no-print" onclick="document.getElementById('dossier-modal').remove()">&times;</button>
-            </div>
-
-            <div class="bg-rose-950/40 border border-rose-500/40 rounded-xl p-4 mb-6 flex items-center justify-between">
-                <div>
-                    <span class="text-xs text-rose-300 font-medium">VEHICLE REGISTRATION</span>
-                    <div class="font-mono text-2xl font-black text-rose-200 tracking-wider">${record.vehicleNumber}</div>
-                </div>
-                <span class="px-3 py-1 bg-rose-600 text-white font-bold text-xs uppercase tracking-widest rounded-full">ACTIVE THEFT CASE</span>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm mb-6">
-                <div class="p-3 bg-slate-800/60 rounded-lg">
-                    <span class="text-xs text-slate-400 block">Crime / FIR Reference</span>
-                    <span class="font-mono font-bold text-white">${record.complaintNumber}</span>
-                </div>
-                <div class="p-3 bg-slate-800/60 rounded-lg">
-                    <span class="text-xs text-slate-400 block">Reporting Police Station</span>
-                    <span class="font-semibold text-white">${record.policeStation} (${record.district})</span>
-                </div>
-                <div class="p-3 bg-slate-800/60 rounded-lg">
-                    <span class="text-xs text-slate-400 block">Vehicle Make & Model</span>
-                    <span class="font-semibold text-white">${record.make} ${record.model} (${record.color})</span>
-                </div>
-                <div class="p-3 bg-slate-800/60 rounded-lg">
-                    <span class="text-xs text-slate-400 block">Date of Occurrence</span>
-                    <span class="font-semibold text-white">${record.complaintDate}</span>
-                </div>
-                <div class="p-3 bg-slate-800/60 rounded-lg">
-                    <span class="text-xs text-slate-400 block">Incident Landmark</span>
-                    <span class="font-semibold text-white">${record.theftLocation || "Public Roadside"}</span>
-                </div>
-                <div class="p-3 bg-slate-800/60 rounded-lg">
-                    <span class="text-xs text-slate-400 block">Registered Owner</span>
-                    <span class="font-semibold text-white">${record.ownerName || "Protected Complainant"}</span>
-                </div>
-            </div>
-
-            <div class="p-4 bg-slate-800/80 rounded-xl mb-6 text-xs text-slate-300 space-y-2 border border-slate-700">
-                <h4 class="font-bold text-slate-200 uppercase tracking-wider">Field Investigation Notes:</h4>
-                <p>${record.notes || "Vehicle reported missing. Flagged for instant intercept at all regional toll booths and divisional checkpoints."}</p>
-            </div>
-
-            <div class="p-3 bg-amber-950/50 border border-amber-600/50 rounded-lg text-amber-200 text-xs mb-6">
-                ⚠️ <strong>OFFICER DIRECTIVE:</strong> Cross-check physical Chassis/Engine number with vehicle documents. Do not rely solely on demo system. Initiate standard Tamil Nadu Police checkpoint protocols.
-            </div>
-
-            <div class="flex justify-between items-center no-print">
-                <button class="px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-200 font-medium rounded-lg text-sm transition" onclick="document.getElementById('dossier-modal').remove()">
-                    Close Dossier
-                </button>
-                <div class="space-x-3">
-                    <button class="px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-medium rounded-lg text-sm transition" onclick="window.print()">
-                        🖨️ Print Dossier
-                    </button>
-                </div>
-            </div>
-        </div>
-    `;
-    document.body.appendChild(modal);
-}
-
-/**
- * Render Recent Scans Table in Scanner UI
+ * Render Recent Terminal Scans Table
  */
 function renderRecentScansTable() {
-    const tableBody = document.getElementById('recent-scans-tbody');
-    if (!tableBody) return;
+    const tbody = document.getElementById('recent-scans-tbody');
+    if (!tbody) return;
 
-    const history = getScanHistory().slice(0, 6);
+    const history = getScanHistory().slice(0, 8);
     if (history.length === 0) {
-        tableBody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-slate-500 text-sm">No recent scans recorded.</td></tr>`;
+        const noText = typeof t === 'function' ? t('no_recent_scans') : "No recent scans recorded.";
+        tbody.innerHTML = `<tr><td colspan="5" class="py-4 text-center text-slate-500">${noText}</td></tr>`;
         return;
     }
 
-    tableBody.innerHTML = history.map(item => {
+    const stolenText = typeof t === 'function' ? t('verdict_stolen') : "🔴 STOLEN";
+    const cleanText = typeof t === 'function' ? t('verdict_clean') : "🟢 NO MATCH";
+
+    tbody.innerHTML = history.map(item => {
         const isStolen = item.result === 'STOLEN';
+        const badgeClass = isStolen 
+            ? 'bg-rose-900/70 text-rose-200 border-rose-600/50' 
+            : 'bg-emerald-900/70 text-emerald-200 border-emerald-600/50';
+        const verdictLabel = isStolen ? stolenText : cleanText;
+
         return `
-            <tr class="border-b border-slate-700/40 hover:bg-slate-800/40 transition">
-                <td class="py-3 px-4 font-mono font-bold ${isStolen ? 'text-rose-400' : 'text-emerald-400'}">
-                    ${item.vehicleNumber}
-                </td>
-                <td class="py-3 px-4 text-xs text-slate-400">${item.timestamp}</td>
-                <td class="py-3 px-4">
-                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-extrabold ${
-                        isStolen ? 'bg-rose-900/60 text-rose-300 border border-rose-500/50' : 'bg-emerald-900/60 text-emerald-300 border border-emerald-500/50'
-                    }">
-                        ${isStolen ? '🔴 STOLEN' : '🟢 NO MATCH'}
+            <tr class="border-b border-slate-800/80 hover:bg-slate-800/40 transition">
+                <td class="py-3 px-3 sm:px-4 font-mono font-bold text-white text-xs sm:text-sm">${item.vehicleNumber}</td>
+                <td class="py-3 px-3 sm:px-4 text-slate-400 font-mono text-[11px]">${item.timestamp}</td>
+                <td class="py-3 px-3 sm:px-4">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-black uppercase border ${badgeClass}">
+                        ${verdictLabel}
                     </span>
                 </td>
-                <td class="py-3 px-4 text-xs text-slate-300 hidden md:table-cell">${item.location || 'Patrol Checkpoint'}</td>
-                <td class="py-3 px-4 text-xs text-slate-400 truncate max-w-xs">${item.details || '-'}</td>
+                <td class="py-3 px-3 sm:px-4 text-slate-300 hidden md:table-cell text-xs">${item.location || 'Patrol Checkpost'}</td>
+                <td class="py-3 px-3 sm:px-4 text-slate-400 text-xs">${item.details || 'Routine Check'}</td>
             </tr>
         `;
     }).join('');
 }
+
