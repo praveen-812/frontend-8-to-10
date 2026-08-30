@@ -17,3 +17,26 @@ class student{
 
 student1.displayDetails();
 student2.displayDetails();
+
+// use promise and await asyn//
+const dataPromise = new Promise((resolve) =>{
+    setTimeout(() =>{
+        resolve("data loaded")
+
+    },2000);
+});
+  dataPromise.then((data) =>{
+    console.log(data)
+  });
+  async function loaded(){
+    const data = await dataPromise;
+    console.log(data)
+  }
+loaded();
+
+// use chaining nullish coalescing??
+const user={
+    name:"praveen"
+};
+const city=user?.city?? "no city"
+console.log(city)
