@@ -40,3 +40,24 @@ const user={
 };
 const city=user?.city?? "no city"
 console.log(city)
+// use filter and find and includes and map//
+const number=[10,25,30,45,50,65];
+const filterValue=number.filter(n=>n > 30);
+const findValue= number.find(n=>n > 40);
+const includesValue=number.includes(50);
+const mapValue=number.map(n=>n*2);
+console.log(filterValue);
+console.log(findValue);
+console.log(includesValue);
+console.log(mapValue);
+
+//task10 change the code for es6+//
+const name="ravi";
+const age=25;
+
+const studentBoy={
+    name,
+    age
+}
+const greet= name=>`hello ${name}`;
+console.log(greet(name))
