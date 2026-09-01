@@ -1,5 +1,5 @@
 //var use function scope var is global function but you declared the value insdie function only inside 
-//globally run appart from that outer can you use cannot run//
+//globally run apart from that outer can you use cannot run//
 function test() {
     var username = "Praveen";
 

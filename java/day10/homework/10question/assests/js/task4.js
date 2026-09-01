@@ -52,14 +52,42 @@ for (let a=1;a<=numb;a++){
     fact=fact*a;
 }
 console.log(fact)
-//fibonaccis series//
+// question 7 cfibonaccis series//
 let start=7;
 let c=0;
 let d=1;
 for (let e=1;e<=7;e++){
-    console.log(c)
+    console.log(c)-
 
     let next=c+d;
     c=d;
     d=next;
 }
+//question 8 use sum 1234 > 10 1234 is whole value but write 1,2,3,4 add 10
+// important modules to use last for Ex. 123.4 the after point value only considered to take the code //
+// next math.floor to use 1234/10 123.4 this one to take 123
+let items =1234;
+let add=0;
+while (items>0){
+    let modules=items%10;
+    add=add+modules;
+    items=Math.floor(items/10)
+}
+console.log(add)
+
+// //question 9 count number//
+// let countValue=12345;
+// let count=0;
+// while(countValue>0){
+//     num=countValue%10;
+//     count++
+// }
+// console.log(count)
+
+//question 10 javascript reverse//
+let words="javascript"
+let reversing="";
+for(let w=words.length-1;w>=0;w--){
+    reversing=reversing + words[w]; 
+}
+console.log(reversing)
