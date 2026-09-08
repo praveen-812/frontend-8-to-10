@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>task2</title>
+    <style>
+        #box{
+            background-color: yellow;
+            color: black;
+
+        }
+        #box.changes{
+            background-color: aqua;
+            color: black;
+            
+        }
+
+    </style>
+</head>
+<body>
+    <h1 id="box">this is color change in toggle</h1>
+    <button id="btn">change</button>
+    <script>
+        const box =document. getElementById("box");
+        const change=document.getElementById( "btn")
+    btn.addEventListener( "click",()=>{
+            box.classList.toggle("changes")
+    })
+    </script>
+    
+</body>
+</html>

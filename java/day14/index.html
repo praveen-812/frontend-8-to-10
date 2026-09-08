@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>task1</title>
+    <style>
+        #content {
+            background-color: black;
+            color: white;
+            padding: 10px;
+            opacity: 0;
+            transition: 1s ease-in-out;
+        }
+
+        #content.show {
+            opacity: 2;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="btn">hide</button>
+    <p id="content">this time use in toggle</p>
+
+    <script>
+        const content = document.getElementById("content");
+        const btn = document.getElementById("btn")
+
+        btn.addEventListener("click", () => {
+            content.classList.toggle("show")
+        })
+    </script>
+
+</body>
+
+</html>
