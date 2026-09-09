@@ -1,0 +1,20 @@
+{
+  "name": "talara-palmyra-ecosystem",
+  "version": "1.0.0",
+  "description": "Premium startup website for TALARA - The Borassus flabellifer Multi-Product Ecosystem",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve . -l 3000",
+    "preview": "npx http-server -p 8080 -o"
+  },
+  "keywords": [
+    "palmyra-palm",
+    "borassus-flabellifer",
+    "startup-website",
+    "sustainable-biomaterials",
+    "natural-sweeteners",
+    "e-commerce"
+  ],
+  "author": "TALARA Ecosystem",
+  "license": "MIT"
+}

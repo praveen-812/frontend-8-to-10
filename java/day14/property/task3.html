@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>task3</title>
     <style>
-.main{
+#card{
     width: 250px;
     height: 320px;
     padding: 30px;
@@ -17,24 +17,32 @@ img{
     width: 200px;
     height: 200px;
 }
+#card{
+    transition: 1s ease-in-out;
+    opacity: 0;
 
-
+}
+#card.show{
+    opacity: 1;
+}
     </style>
 </head>
 <body>
-    <div class="main">
+
+
+    <div id="card">
     <img src="../../../courseImage/Capture.PNG" alt="">
     <h2 id="title">my card</h2>
     <p class="content">
         this is additional information for this card
     </p>
-    <button class="btn">show details</button>
     </div>
+     <button id="btn">show details</button>
     <script>
-        const card= document.getElementById("title")
+        const card= document.getElementById("card")
         const btn = document.getElementById ("btn")
         btn.addEventListener( "click",()=>{
-              card. classList.toggle( "")
+              card.classList.toggle("show")
         })
 
     </script>

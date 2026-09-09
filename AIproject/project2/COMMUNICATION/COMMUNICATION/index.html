@@ -1,0 +1,1180 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth" data-theme="light"> 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TALARA — One Palm. Endless Possibilities. | Modern Palmyra Ecosystem</title>
+  <meta name="description" content="TALARA transforms the ancient, zero-felling Palmyra Palm (Borassus flabellifer) into a modern ecosystem of luxury unrefined sweeteners, botanical elixirs, prebiotic flours, and compostable biomaterials." />
+  <meta name="keywords" content="Palmyra palm, Borassus flabellifer, palm jaggery, palm sugar, prebiotic flour, eco-tableware, palm fiber, sustainable startup, non-destructive harvest" />
+
+  <!-- OpenGraph / Social Media -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="TALARA — One Palm. Endless Possibilities." />
+  <meta property="og:description" content="World-class consumer and industrial products engineered sustainably from the ancient Palmyra Palm tree." />
+  <meta property="og:image" content="images/hero-palmyra.jpg" />
+
+  <!-- Tailwind CSS CDN for Atomic Utilities -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            amber: {
+              350: '#f5be6b',
+              450: '#d9923b',
+              550: '#b87523'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Luxury Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='46' fill='%230a0e0c'/><path d='M50 15 L50 85 M15 50 L85 50 M25 25 L75 75 M25 75 L75 25' stroke='%23d9923b' stroke-width='6' stroke-linecap='round'/><circle cx='50' cy='50' r='12' fill='%23d9923b'/></svg>" />
+</head>
+
+<body class="bg-[#090e0b] text-[#f5f6f4] selection:bg-[#d9923b] selection:text-black">
+
+  <!-- ==========================================================================
+       NAVIGATION BAR
+       ========================================================================== -->
+  <header id="main-navbar" class="navbar-fixed px-4 sm:px-8 py-4">
+    <div class="site-container flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <a href="#" class="brand-logo-wrap flex items-center gap-3 group">
+        <!-- Minimalist Radial Palmyra Frond Emblem -->
+        <svg class="brand-logo-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="24" cy="24" r="22" stroke="rgba(217, 146, 59, 0.4)" stroke-width="1.5"/>
+          <path d="M24 6V42" stroke="#d9923b" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M6 24H42" stroke="#d9923b" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M11 11L37 37" stroke="#f4c07c" stroke-width="2" stroke-linecap="round"/>
+          <path d="M11 37L37 11" stroke="#f4c07c" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="24" cy="24" r="5" fill="#d9923b"/>
+        </svg>
+
+        <div>
+          <span class="font-display font-bold text-xl tracking-[0.2em] text-white group-hover:text-amber-300 transition-colors">TALARA</span>
+          <span class="block text-[9px] font-mono tracking-[0.25em] text-zinc-400 uppercase -mt-1">Borassus flabellifer</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <nav class="hidden lg:flex items-center gap-8 text-xs font-mono uppercase tracking-widest text-zinc-300">
+        <a href="#hero-section" class="hover:text-amber-400 transition-colors">Home</a>
+        <a href="#universe-section" class="hover:text-amber-400 transition-colors">Universe</a>
+        <a href="#anatomy-section" class="hover:text-amber-400 transition-colors">Palm Anatomy</a>
+        <a href="#catalog-section" class="hover:text-amber-400 transition-colors">Products</a>
+        <a href="#process-section" class="hover:text-amber-400 transition-colors">Process</a>
+        <a href="#science-section" class="hover:text-amber-400 transition-colors">Science & Lore</a>
+        <a href="#sustainability-section" class="hover:text-amber-400 transition-colors">Zero-Waste</a>
+        <a href="#story-section" class="hover:text-amber-400 transition-colors">Our Story</a>
+        <a href="#contact-section" class="hover:text-amber-400 transition-colors">Partnership</a>
+      </nav>
+
+      <!-- Utility Actions -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        
+        <!-- Theme Switcher Button -->
+        <button 
+          id="theme-toggle-btn"
+          class="theme-toggle-btn relative p-2.5 rounded-full bg-white/5 hover:bg-white/10 text-zinc-300 hover:text-white transition-all border border-white/10"
+          aria-label="Toggle Light / Dark Theme"
+          title="Switch to Light Theme"
+        >
+          <!-- Sun Icon (shown in dark mode) -->
+          <svg class="sun-icon w-4 h-4 text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <!-- Moon Icon (shown in light mode) -->
+          <svg class="moon-icon w-4 h-4 hidden text-amber-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+
+        <!-- Wishlist Button -->
+        <button 
+          class="open-wishlist-btn relative p-2.5 rounded-full bg-white/5 hover:bg-white/10 text-zinc-300 hover:text-white transition-colors border border-white/10"
+          aria-label="View Wishlist"
+          title="Wishlist"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          <span id="wishlist-count-badge" class="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-amber-500 text-black text-[10px] font-mono font-bold flex items-center justify-center" style="display: none;">0</span>
+        </button>
+
+        <!-- Cart Button -->
+        <button 
+          class="open-cart-btn relative flex items-center gap-2 py-2 px-3.5 sm:px-4 rounded-full bg-white/5 hover:bg-white/10 text-zinc-200 hover:text-white transition-all border border-white/10"
+          aria-label="View Shopping Cart"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+          <span class="hidden sm:inline text-xs font-mono font-semibold">CART</span>
+          <span id="cart-count-badge" class="w-5 h-5 rounded-full bg-amber-500 text-black text-xs font-mono font-bold flex items-center justify-center" style="display: none;">0</span>
+        </button>
+
+        <!-- Mobile Menu Toggle -->
+        <button 
+          id="mobile-menu-toggle" 
+          class="lg:hidden p-2.5 rounded-full bg-white/5 text-zinc-300 hover:text-white border border-white/10"
+          aria-label="Open Mobile Menu"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu-drawer" class="lg:hidden hidden pt-4 pb-6 px-4 border-t border-white/10 mt-3 bg-black/95 backdrop-blur-xl">
+      <div class="flex flex-col gap-4 text-sm font-mono uppercase tracking-wider text-zinc-300">
+        <a href="#hero-section" class="py-1 hover:text-amber-400">Home</a>
+        <a href="#universe-section" class="py-1 hover:text-amber-400">Product Universe</a>
+        <a href="#anatomy-section" class="py-1 hover:text-amber-400">Palm Anatomy</a>
+        <a href="#catalog-section" class="py-1 hover:text-amber-400">Full Catalog</a>
+        <a href="#process-section" class="py-1 hover:text-amber-400">Craft & Process</a>
+        <a href="#science-section" class="py-1 hover:text-amber-400">Science vs Tradition</a>
+        <a href="#sustainability-section" class="py-1 hover:text-amber-400">Zero-Waste Matrix</a>
+        <a href="#story-section" class="py-1 hover:text-amber-400">Startup Story</a>
+        <a href="#contact-section" class="py-1 hover:text-amber-400">B2B & Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       HERO SECTION: CINEMATIC STARTUP OPENING
+       ========================================================================== -->
+  <section id="hero-section" class="hero-wrapper">
+    <!-- Cinematic Visual Background -->
+    <div class="hero-background-media">
+      <img 
+        src="images/hero-palmyra.jpg" 
+        alt="Ancient wild towering Palmyra Palm trees in morning mist" 
+        class="hero-bg-img" 
+      />
+      <div class="hero-overlay-gradient"></div>
+    </div>
+
+    <div class="site-container hero-content w-full">
+      <div class="max-w-3xl hero-glass-card p-6 sm:p-10 rounded-3xl">
+        
+        <!-- Startup Tag -->
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/60 border border-amber-500/40 backdrop-blur-md mb-6">
+          <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+          <span class="text-xs font-mono font-medium tracking-widest text-amber-200 uppercase">
+            Modern Biomaterial & Consumer Brand
+          </span>
+        </div>
+
+        <!-- Main Headline -->
+        <h1 class="font-display text-4xl sm:text-6xl md:text-7xl font-bold leading-[1.08] mb-6">
+          One Palm. <br />
+          <span class="gradient-text-amber">Endless Possibilities.</span>
+        </h1>
+
+        <!-- Pitch -->
+        <p class="text-base sm:text-lg text-zinc-300 hero-pitch mb-8 max-w-2xl font-sans font-light leading-relaxed">
+          The Palmyra Palm (<em>Borassus flabellifer</em>) is nature’s most extraordinary zero-felling super-plant. 
+          TALARA transforms every biological part—from morning floral nectar and tender fruit to tough leaf fibers 
+          and subterranean prebiotic roots—into an elevated ecosystem of culinary reserves, isotonic elixirs, and circular homeware.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-wrap items-center gap-4 mb-10">
+          <a href="#catalog-section" class="btn-primary">
+            <span>Explore Products</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+
+          <a href="#story-section" class="btn-secondary">
+            <span>Our Story</span>
+          </a>
+
+          <a href="#anatomy-section" class="text-xs font-mono tracking-wider text-amber-400 hover:text-amber-300 underline underline-offset-4 ml-2">
+            View Anatomy Matrix ↓
+          </a>
+        </div>
+
+        <!-- Startup Micro Metrics Bar -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-white/10 text-xs font-mono">
+          <div class="p-3 rounded-lg bg-black/40 border border-white/5 backdrop-blur-sm metric-box">
+            <span class="text-xl font-bold text-amber-400 block font-display">18</span>
+            <span class="text-zinc-400 metric-label">Flagship Creations</span>
+          </div>
+          <div class="p-3 rounded-lg bg-black/40 border border-white/5 backdrop-blur-sm metric-box">
+            <span class="text-xl font-bold text-amber-400 block font-display">0</span>
+            <span class="text-zinc-400 metric-label">Trees Felled</span>
+          </div>
+          <div class="p-3 rounded-lg bg-black/40 border border-white/5 backdrop-blur-sm metric-box">
+            <span class="text-xl font-bold text-emerald-400 block font-display">94.8%</span>
+            <span class="text-zinc-400 metric-label">Biomass Yield</span>
+          </div>
+          <div class="p-3 rounded-lg bg-black/40 border border-white/5 backdrop-blur-sm metric-box">
+            <span class="text-xl font-bold text-white block font-display">420+</span>
+            <span class="text-zinc-400 metric-label">Tapper Families</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 2: OUR PRODUCT UNIVERSE (CATEGORY ECOSYSTEM)
+       ========================================================================== -->
+  <section id="universe-section" class="py-24 border-t border-white/5 relative bg-[#0a110d]">
+    <div class="site-container">
+      
+      <div class="max-w-2xl mb-16">
+        <span class="badge-tag badge-amber mb-3 font-mono">Category Universe</span>
+        <h2 class="font-display text-3xl sm:text-5xl font-bold text-white mb-4">
+          A Multi-Category Ecosystem Built From A Single Tree
+        </h2>
+        <p class="text-sm sm:text-base text-zinc-400 leading-relaxed">
+          Unlike single-commodity agricultural brands, TALARA orchestrates a holistic product suite across 
+          fine dining, daily wellness, functional refreshments, and circular biomaterials.
+        </p>
+      </div>
+
+      <!-- Category Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Category Card 1 -->
+        <div class="glass-panel p-6 rounded-2xl glass-hover-effect flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center mb-4">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v8"></path><path d="m4.93 10.93 1.41 1.41"></path><path d="M2 18h2"></path><path d="M20 18h2"></path><path d="m19.07 10.93-1.41 1.41"></path><path d="M22 22H2"></path><path d="m16 6-4 4-4-4"></path><path d="M16 18a4 4 0 0 0-8 0"></path></svg>
+            </div>
+            <h3 class="font-display font-semibold text-xl text-white mb-2">Unrefined Natural Sweeteners</h3>
+            <p class="text-xs text-zinc-400 leading-relaxed mb-4">
+              Single-origin liquid jaggery nectar, slow-evaporated crystal sugars, and unbleached solid Karupatti blocks. Lower glycemic profile with preserved trace potassium and iron.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-amber-400">
+            <span>Derived from Floral Sap</span>
+            <a href="#catalog-section" class="hover:underline">Explore Sweeteners →</a>
+          </div>
+        </div>
+
+        <!-- Category Card 2 -->
+        <div class="glass-panel p-6 rounded-2xl glass-hover-effect flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mb-4">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 21h10"></path><path d="M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z"></path><path d="M11.38 2.01 4 9"></path><path d="m12.62 2.01 7.38 6.99"></path></svg>
+            </div>
+            <h3 class="font-display font-semibold text-xl text-white mb-2">Botanical & Fermented Beverages</h3>
+            <p class="text-xs text-zinc-400 leading-relaxed mb-4">
+              Pulsed-electric-field stabilized sparkling sap elixirs infused with wild lime, alongside barrel-matured wild palm wines with explicit legal adult verification.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-emerald-400">
+            <span>Pure Neera & Aged Casks</span>
+            <a href="#catalog-section" class="hover:underline">Explore Beverages →</a>
+          </div>
+        </div>
+
+        <!-- Category Card 3 -->
+        <div class="glass-panel p-6 rounded-2xl glass-hover-effect flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center mb-4">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+            </div>
+            <h3 class="font-display font-semibold text-xl text-white mb-2">Prebiotic Flours & Fruit Preserves</h3>
+            <p class="text-xs text-zinc-400 leading-relaxed mb-4">
+              Stone-milled subterranean Odiyal tuber flour rich in Type-2 resistant starch, and tender translucent Nungu (Ice Apple) fruit preserved in clarified blossom nectar.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-amber-400">
+            <span>Tubers & Tender Kernels</span>
+            <a href="#catalog-section" class="hover:underline">Explore Foods →</a>
+          </div>
+        </div>
+
+        <!-- Category Card 4 -->
+        <div class="glass-panel p-6 rounded-2xl glass-hover-effect flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center mb-4">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M9 21V9"></path></svg>
+            </div>
+            <h3 class="font-display font-semibold text-xl text-white mb-2">Thermo-Pressed Bio-Homeware</h3>
+            <p class="text-xs text-zinc-400 leading-relaxed mb-4">
+              Architectural dining plates and bowls molded from shed leaf petioles at 145°C steam pressure. 100% plastic-free, waterproof, microwave-safe, home-compostable in 45 days.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-amber-400">
+            <span>Shed Leaf Fronds</span>
+            <a href="#catalog-section" class="hover:underline">Explore Homeware →</a>
+          </div>
+        </div>
+
+        <!-- Category Card 5 -->
+        <div class="glass-panel p-6 rounded-2xl glass-hover-effect flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mb-4">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m14 12-8.5 8.5a2.12 2.12 0 1 1-3-3L11 9"></path><path d="M16 16 7.5 7.5a2.12 2.12 0 1 1 3-3L19 13"></path><path d="m8 8 2 2"></path><path d="m11 11 2 2"></path></svg>
+            </div>
+            <h3 class="font-display font-semibold text-xl text-white mb-2">Artisan Fibers & Woven Textiles</h3>
+            <p class="text-xs text-zinc-400 leading-relaxed mb-4">
+              Stiff basal sheath fiber brushes replacing synthetic nylon, and supple young leaf carryalls hand-split and micro-woven by our women's coastal artisan cooperatives.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-emerald-400">
+            <span>Sheath Fibers & Leaves</span>
+            <a href="#catalog-section" class="hover:underline">Explore Fiber Arts →</a>
+          </div>
+        </div>
+
+        <!-- Category Card 6 -->
+        <div class="glass-panel p-6 rounded-2xl glass-hover-effect flex flex-col justify-between">
+          <div>
+            <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center mb-4">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 12V8H6a2 2 0 0 1-2-2c0-1.1.9-2 2-2h12v4"></path><path d="M4 6v12c0 1.1.9 2 2 2h14v-4"></path><path d="M18 12a2 2 0 0 0-2 2c0 1.1.9 2 2 2h4v-4h-4z"></path></svg>
+            </div>
+            <h3 class="font-display font-semibold text-xl text-white mb-2">Heritage Luxury Curations</h3>
+            <p class="text-xs text-zinc-400 leading-relaxed mb-4">
+              Limited-edition collector's caskets turned from end-of-life fallen palmyra hardwood, pairing our signature nectar reserves with hand-cast jaggery and heirloom table accessories.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-amber-400">
+            <span>Fallen Wood & Multi-Part</span>
+            <a href="#catalog-section" class="hover:underline">Explore Curations →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 3: INTERACTIVE PALM ANATOMY ("MAXIMUM-VALUE MATRIX")
+       ========================================================================== -->
+  <section id="anatomy-section" class="py-24 border-t border-white/5 bg-[#090e0b] relative">
+    <div class="site-container">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="badge-tag badge-emerald mb-3 font-mono">Biological Architecture</span>
+        <h2 class="font-display text-3xl sm:text-5xl font-bold text-white mb-4">
+          The Anatomy of Maximum Value
+        </h2>
+        <p class="text-sm sm:text-base text-zinc-400 leading-relaxed">
+          Every organ of <em>Borassus flabellifer</em> evolved over millennia to survive extreme saline drought. 
+          Click on any anatomical node below to explore how TALARA converts that specific fraction into modern high-value products.
+        </p>
+      </div>
+
+      <!-- Interactive Anatomy Grid -->
+      <div id="anatomy-cards-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
+        <!-- Rendered dynamically by js/app.js -->
+      </div>
+
+      <!-- Active Node Detail Panel -->
+      <div id="anatomy-detail-panel">
+        <!-- Rendered dynamically by js/app.js -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 4: FULL E-COMMERCE PRODUCT CATALOG
+       ========================================================================== -->
+  <section id="catalog-section" class="py-24 border-t border-white/5 bg-[#0c1410] relative">
+    <div class="site-container">
+      
+      <!-- Premium Indian Startup Brand Banner -->
+      <div class="mb-10 p-5 sm:p-6 rounded-2xl brand-banner-glass border border-amber-500/20 backdrop-blur-md">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div class="flex flex-wrap items-center gap-2 sm:gap-3 text-xs font-mono tracking-wider text-amber-300">
+            <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-200 border border-amber-500/30 font-bold uppercase">ONE PALMYRA PALM</span>
+            <span class="text-zinc-500">→</span>
+            <span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 font-bold uppercase">MANY RAW MATERIALS</span>
+            <span class="text-zinc-500">→</span>
+            <span class="px-3 py-1 rounded-full bg-amber-400/20 text-amber-100 border border-amber-400/30 font-bold uppercase">19 AUTHENTIC CREATIONS</span>
+            <span class="text-zinc-500">→</span>
+            <span class="px-3 py-1 rounded-full bg-white/10 text-white border border-white/20 font-bold uppercase">ONE LUXURY BRAND</span>
+          </div>
+          <div class="text-[11px] font-mono text-zinc-400 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span>All Prices in Indian Rupees (₹ / INR) • FSSAI Certified</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-6">
+        <div>
+          <span class="badge-tag badge-amber mb-2 font-mono">Borassus flabellifer Multi-Product Ecosystem</span>
+          <h2 class="font-display text-3xl sm:text-5xl font-bold text-white mb-2">
+            The Complete Product Ecosystem
+          </h2>
+          <p class="text-xs sm:text-sm text-zinc-400">
+            Certified South Indian origin • Single-origin cold-chain logistics • Rigorous laboratory testing • Zero tree felling
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-3">
+          <!-- Search Input -->
+          <div class="relative min-w-[240px]">
+            <input 
+              type="text" 
+              id="product-search-input" 
+              placeholder="Search Fresh Kallu, Nungu, Chocolate..." 
+              class="w-full py-2.5 pl-9 pr-4 rounded-full bg-black/50 border border-white/10 text-xs text-white placeholder:text-zinc-500 focus:border-amber-400 outline-none transition-all input-theme-adaptive"
+            />
+            <svg class="absolute left-3 top-3 text-zinc-500" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </div>
+
+          <!-- Sort Select -->
+          <select 
+            id="product-sort-select" 
+            class="py-2.5 px-4 rounded-full bg-black/50 border border-white/10 text-xs text-zinc-300 focus:border-amber-400 outline-none cursor-pointer font-mono select-theme-adaptive"
+          >
+            <option value="featured">Sort: Featured First</option>
+            <option value="price-low">Price: Low to High (₹)</option>
+            <option value="price-high">Price: High to Low (₹)</option>
+            <option value="rating">Highest Rated</option>
+            <option value="name">Alphabetical (A-Z)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Quick Showcase View Sub-Tabs (Featured, New, All) -->
+      <div class="flex flex-wrap items-center gap-2 mb-6 pb-2 border-b border-white/10 text-xs font-mono">
+        <span class="text-zinc-500 uppercase text-[10px] tracking-wider mr-2">Highlight:</span>
+        <button class="status-tab-btn active px-3.5 py-1.5 rounded-lg border border-amber-500/40 bg-amber-950/40 text-amber-200 font-semibold transition-all" data-status="all">
+          Explore All Creations (19)
+        </button>
+        <button class="status-tab-btn px-3.5 py-1.5 rounded-lg border border-white/10 bg-black/40 text-zinc-400 hover:text-white transition-all" data-status="featured">
+          ★ Featured Flagships
+        </button>
+        <button class="status-tab-btn px-3.5 py-1.5 rounded-lg border border-white/10 bg-black/40 text-zinc-400 hover:text-white transition-all" data-status="new">
+          ✦ New Harvest Launches
+        </button>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-4 mb-8 no-scrollbar">
+        <button class="filter-pill active" data-category="all">All Categories (19)</button>
+        <button class="filter-pill" data-category="sweeteners">Palm Jaggery & Sweeteners</button>
+        <button class="filter-pill" data-category="beverages">Fresh Kallu & Drinks</button>
+        <button class="filter-pill" data-category="nungu">Nungu & Tender Fruit</button>
+        <button class="filter-pill" data-category="tuber">Palm Tuber & Powders</button>
+        <button class="filter-pill" data-category="foods">Traditional Sweets & Foods</button>
+        <button class="filter-pill" data-category="frond">Palm Leaf Homeware</button>
+        <button class="filter-pill" data-category="fiber">Palm Fiber & Eco-Craft</button>
+        <button class="filter-pill" data-category="curations">Luxury Gift Collections</button>
+      </div>
+
+      <!-- Results Count Info -->
+      <div class="flex items-center justify-between text-xs text-zinc-400 mb-6 font-mono">
+        <span id="product-results-count">Showing 19 creations across the Borassus ecosystem</span>
+        <span class="flex items-center gap-1.5 text-amber-400/90">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          Direct cold-chain shipping across India • Free delivery above ₹999
+        </span>
+      </div>
+
+      <!-- Products Grid -->
+      <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Rendered dynamically by js/app.js -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 5: PROCESS JOURNEY ("FROM GROVE TO GLASS")
+       ========================================================================== -->
+  <section id="process-section" class="py-24 border-t border-white/5 bg-[#090e0b] relative">
+    <div class="site-container">
+      
+      <div class="max-w-2xl mb-16">
+        <span class="badge-tag badge-amber mb-3 font-mono">Craft & Science</span>
+        <h2 class="font-display text-3xl sm:text-5xl font-bold text-white mb-4">
+          The 6-Stage Transformation Journey
+        </h2>
+        <p class="text-sm sm:text-base text-zinc-400 leading-relaxed">
+          How raw wild botanical materials evolve through ethical climbing, vacuum-chill anti-fermentation, 
+          precision low-thermal concentration, and accredited laboratory validation.
+        </p>
+      </div>
+
+      <!-- Horizontal Stage Selector -->
+      <div id="process-timeline-container" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-8">
+        <!-- Rendered dynamically by js/app.js -->
+      </div>
+
+      <!-- Deep Dive Detail Panel -->
+      <div id="process-detail-panel">
+        <!-- Rendered dynamically by js/app.js -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 6: SCIENCE + TRADITION (RIGOROUS DEMARCATION)
+       ========================================================================== -->
+  <section id="science-section" class="py-24 border-t border-white/5 bg-[#0c1410] relative">
+    <div class="site-container">
+      
+      <div class="max-w-3xl mb-16">
+        <span class="badge-tag badge-emerald mb-3 font-mono">Honest Clarification</span>
+        <h2 class="font-display text-3xl sm:text-5xl font-bold text-white mb-4">
+          Tradition Honored. Science Verified.
+        </h2>
+        <p class="text-sm sm:text-base text-zinc-400 leading-relaxed">
+          For thousands of years, traditional folk medicine revered the Palmyra palm. At TALARA, we never make 
+          miracle claims or fabricate health guarantees. We distinguish ancestral reverence from modern empirical chemistry.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- Science Card 1 -->
+        <div class="glass-panel p-6 sm:p-8 rounded-2xl science-vs-tradition-card">
+          <div class="flex items-center justify-between text-xs font-mono text-amber-400 mb-3">
+            <span>METABOLIC PROFILE</span>
+            <span class="text-zinc-500">Clinical Verification</span>
+          </div>
+          <h3 class="font-display text-xl font-bold text-white mb-4">Glycemic Index & Diabetes Context</h3>
+          
+          <div class="space-y-4 text-xs leading-relaxed">
+            <div class="p-3.5 rounded-lg bg-black/40 border border-white/5">
+              <strong class="text-amber-300 block mb-1">Traditional Folklore Claim:</strong>
+              <p class="text-zinc-400">"Palm jaggery is diabetes-safe sugar and will naturally cure high blood sugar levels."</p>
+            </div>
+
+            <div class="p-3.5 rounded-lg bg-emerald-950/20 border border-emerald-500/20">
+              <strong class="text-emerald-300 block mb-1">Laboratory Scientific Reality:</strong>
+              <p class="text-zinc-300">
+                Unrefined palm sugar possesses a lower glycemic index (~38–42) compared to table cane sucrose (~65) 
+                and digests more gradually. <em>However</em>, it remains ~90% carbohydrates. It does <strong>NOT</strong> 
+                cure diabetes. Persons with insulin resistance or diabetes must treat it as a caloric carbohydrate and consult medical guidance.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Science Card 2 -->
+        <div class="glass-panel p-6 sm:p-8 rounded-2xl science-vs-tradition-card">
+          <div class="flex items-center justify-between text-xs font-mono text-amber-400 mb-3">
+            <span>FOOD STERILIZATION</span>
+            <span class="text-zinc-500">Cryo-Engineering</span>
+          </div>
+          <h3 class="font-display text-xl font-bold text-white mb-4">Lime-Free Natural Preservation</h3>
+          
+          <div class="space-y-4 text-xs leading-relaxed">
+            <div class="p-3.5 rounded-lg bg-black/40 border border-white/5">
+              <strong class="text-amber-300 block mb-1">Traditional Historical Practice:</strong>
+              <p class="text-zinc-400">"Tappers coated collection clay pots with chemical slaked lime to prevent sap from turning sour in the afternoon sun."</p>
+            </div>
+
+            <div class="p-3.5 rounded-lg bg-emerald-950/20 border border-emerald-500/20">
+              <strong class="text-emerald-300 block mb-1">TALARA Modern Solution:</strong>
+              <p class="text-zinc-300">
+                Slaked lime alters the pH and introduces an artificial chalky taste requiring heavy acid neutralization. 
+                TALARA equips tappers with vacuum-insulated stainless chill flasks maintaining 3°C right on the tree crown, 
+                eliminating chemicals entirely while achieving zero yeast fermentation.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Science Card 3 -->
+        <div class="glass-panel p-6 sm:p-8 rounded-2xl science-vs-tradition-card">
+          <div class="flex items-center justify-between text-xs font-mono text-amber-400 mb-3">
+            <span>MICRONUTRIENT ASSAY</span>
+            <span class="text-zinc-500">Atomic Spectrometry</span>
+          </div>
+          <h3 class="font-display text-xl font-bold text-white mb-4">Bioavailable Mineral Integrity</h3>
+          
+          <div class="space-y-4 text-xs leading-relaxed">
+            <div class="p-3.5 rounded-lg bg-black/40 border border-white/5">
+              <strong class="text-amber-300 block mb-1">Traditional Folklore Claim:</strong>
+              <p class="text-zinc-400">"A spoon of raw Karupatti gives the strength of an elephant and cures maternal exhaustion."</p>
+            </div>
+
+            <div class="p-3.5 rounded-lg bg-emerald-950/20 border border-emerald-500/20">
+              <strong class="text-emerald-300 block mb-1">Laboratory Scientific Reality:</strong>
+              <p class="text-zinc-300">
+                Spectroscopic testing confirms that because TALARA nectar is never sulfur-bleached or carbon-filtered, 
+                it retains significant trace quantities of potassium (140mg/tbsp), iron, magnesium, and polyphenols. 
+                It is a nutrient-dense whole sweetener, but not an alternative to medical supplementation.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Science Card 4 -->
+        <div class="glass-panel p-6 sm:p-8 rounded-2xl science-vs-tradition-card">
+          <div class="flex items-center justify-between text-xs font-mono text-amber-400 mb-3">
+            <span>BIOMATERIAL PHYSICS</span>
+            <span class="text-zinc-500">Thermal Lignin Press</span>
+          </div>
+          <h3 class="font-display text-xl font-bold text-white mb-4">Natural Polymer Plasticization</h3>
+          
+          <div class="space-y-4 text-xs leading-relaxed">
+            <div class="p-3.5 rounded-lg bg-black/40 border border-white/5">
+              <strong class="text-amber-300 block mb-1">Traditional Village Craft:</strong>
+              <p class="text-zinc-400">"Palm fronds stitched with toothpicks used once during outdoor wedding meals and discarded."</p>
+            </div>
+
+            <div class="p-3.5 rounded-lg bg-emerald-950/20 border border-emerald-500/20">
+              <strong class="text-emerald-300 block mb-1">Modern Industrial Transformation:</strong>
+              <p class="text-zinc-300">
+                At 145°C under 12 bar pressure, natural botanical lignin inside the petiole fibers melts and self-bonds, 
+                forming an ultra-rigid hydrophobic dishware that resists boiling soups and oven heat up to 120°C with 
+                zero artificial adhesives, waxes, or PFAS chemicals.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 7: SUSTAINABILITY & MAXIMUM VALUE MATRIX
+       ========================================================================== -->
+  <section id="sustainability-section" class="py-24 border-t border-white/5 bg-[#090e0b] relative">
+    <div class="site-container">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <div class="lg:col-span-5">
+          <span class="badge-tag badge-emerald mb-3 font-mono">Maximum Value Agroforestry</span>
+          <h2 class="font-display text-3xl sm:text-5xl font-bold text-white mb-6">
+            Zero Trees Felled. <br />
+            <span class="gradient-text-amber">94.8% Whole-Tree Yield.</span>
+          </h2>
+          <p class="text-sm text-zinc-300 mb-6 leading-relaxed">
+            We do not engage in empty "100% zero waste" marketing. Instead, we measure biological efficiency 
+            across every harvested fraction. Unlike monoculture sugarcane or oil palm plantations that induce 
+            deforestation, the Palmyra palm lives 100+ years and requires zero artificial irrigation.
+          </p>
+
+          <div class="space-y-4 text-xs font-mono">
+            <div class="flex items-center gap-3">
+              <div class="w-2.5 h-2.5 rounded-full bg-amber-400"></div>
+              <span class="text-zinc-300"><strong>Deep Aquifer Taproots:</strong> Thrives on subterranean saline groundwater with zero freshwater irrigation.</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-2.5 h-2.5 rounded-full bg-emerald-400"></div>
+              <span class="text-zinc-300"><strong>Cyclical Harvest:</strong> Living sap tapped twice daily; leaves gathered post natural shedding.</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-2.5 h-2.5 rounded-full bg-amber-300"></div>
+              <span class="text-zinc-300"><strong>Compostable Circularity:</strong> Homeware decomposes in soil within 45 days, replenishing coastal minerals.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Biomass Matrix Graphic -->
+        <div class="lg:col-span-7">
+          <div class="glass-panel p-6 sm:p-8 rounded-2xl border border-amber-500/20">
+            <h3 class="font-display text-xl font-bold text-white mb-6 flex items-center justify-between">
+              <span>Whole-Tree Biomass Utilization Map</span>
+              <span class="text-xs font-mono text-amber-400 font-normal">Audited Seasonal Yield</span>
+            </h3>
+
+            <!-- Progress Rows -->
+            <div class="space-y-5 text-xs font-mono">
+              <div>
+                <div class="flex justify-between text-zinc-300 mb-1.5">
+                  <span>Inflorescence Sap (Nectar & Elixirs)</span>
+                  <span class="text-amber-400 font-bold">100% Captured</span>
+                </div>
+                <div class="w-full h-2.5 rounded-full bg-zinc-800 overflow-hidden">
+                  <div class="h-full bg-amber-400 rounded-full" style="width: 100%;"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-zinc-300 mb-1.5">
+                  <span>Naturally Shed Fronds & Petioles (Homeware & Pulp)</span>
+                  <span class="text-amber-400 font-bold">96.2% Processed</span>
+                </div>
+                <div class="w-full h-2.5 rounded-full bg-zinc-800 overflow-hidden">
+                  <div class="h-full bg-emerald-400 rounded-full" style="width: 96.2%;"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-zinc-300 mb-1.5">
+                  <span>Tender Fruit & Seed Endosperms (Nungu Preserves)</span>
+                  <span class="text-amber-400 font-bold">92.5% Utilized</span>
+                </div>
+                <div class="w-full h-2.5 rounded-full bg-zinc-800 overflow-hidden">
+                  <div class="h-full bg-amber-300 rounded-full" style="width: 92.5%;"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-zinc-300 mb-1.5">
+                  <span>Basal Sheath Structural Fiber (Bristles & Nets)</span>
+                  <span class="text-amber-400 font-bold">91.0% Recovered</span>
+                </div>
+                <div class="w-full h-2.5 rounded-full bg-zinc-800 overflow-hidden">
+                  <div class="h-full bg-emerald-500 rounded-full" style="width: 91.0%;"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-zinc-300 mb-1.5">
+                  <span>Subterranean Germinated Seeds (Prebiotic Flour)</span>
+                  <span class="text-amber-400 font-bold">94.0% Stone-Milled</span>
+                </div>
+                <div class="w-full h-2.5 rounded-full bg-zinc-800 overflow-hidden">
+                  <div class="h-full bg-amber-500 rounded-full" style="width: 94.0%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs">
+              <div class="text-zinc-400">
+                Cumulative Biomass Diverted From Open Burning: <strong class="text-white font-mono">142 Metric Tons</strong>
+              </div>
+              <span class="badge-tag badge-emerald text-[11px]">Independent Carbon Audit 2026</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 8: BRAND STORY & TAPPER COLLECTIVE
+       ========================================================================== -->
+  <section id="story-section" class="py-24 border-t border-white/5 bg-[#0c1410] relative">
+    <div class="site-container">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <div class="lg:col-span-6">
+          <div class="rounded-2xl overflow-hidden border border-white/10 shadow-2xl relative">
+            <img 
+              src="images/hero-palmyra.jpg" 
+              alt="The master tapper heritage and coastal groves" 
+              class="w-full h-[460px] object-cover" 
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent"></div>
+            <div class="absolute bottom-6 left-6 right-6">
+              <span class="badge-tag badge-amber mb-2 font-mono">The Tapper Vanguard</span>
+              <p class="text-white text-base font-display font-medium">
+                “Tapping is an aerial ballet practiced 30 meters in the sky. We honor their mastery with dignity, modern safety, and equity.”
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-6">
+          <span class="badge-tag badge-amber mb-3 font-mono">Our Origin</span>
+          <h2 class="font-display text-3xl sm:text-5xl font-bold text-white mb-6">
+            The world remembered the palm, but forgot its possibilities.
+          </h2>
+
+          <div class="space-y-4 text-sm text-zinc-300 leading-relaxed font-light">
+            <p>
+              In historical South Asia, the Palmyra palm was called <em>Karpaha Tharu</em>—the celestial tree that answers 
+              every human requirement. Ancient manuscripts on palm leaves preserved medicine, astronomy, and poetry for centuries.
+            </p>
+            <p>
+              Yet with the rise of cheap synthetic plastics, chemical white cane sugar, and petroleum fibers, 
+              millions of wild Palmyra trees were abandoned, felled for cheap kilns, or regarded as rustic relics. 
+              The tappers—possessing singular botanical intuition—were left in precarious physical danger.
+            </p>
+            <p>
+              <strong>TALARA was founded to change this destiny.</strong> We build a high-performance modern consumer 
+              and biomaterial company around the Palmyra palm. By fusing cutting-edge food science with ergonomic safety rigging, 
+              we elevate an ancient tree into a globally revered luxury brand.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4 mt-8 pt-6 border-t border-white/10">
+            <div>
+              <span class="text-2xl font-bold font-display text-white">420+</span>
+              <span class="block text-xs text-zinc-400 font-mono mt-1">Climbers Equipped with Safety Harnesses & Full Life Insurance</span>
+            </div>
+            <div>
+              <span class="text-2xl font-bold font-display text-amber-400">3.2x</span>
+              <span class="block text-xs text-zinc-400 font-mono mt-1">Income Multiplier Over Raw Agricultural Broker Rates</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 9: FAQ SECTION
+       ========================================================================== -->
+  <section class="py-24 border-t border-white/5 bg-[#090e0b]">
+    <div class="site-container max-w-4xl">
+      
+      <div class="text-center mb-16">
+        <span class="badge-tag badge-amber mb-3 font-mono">Transparency</span>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-white mb-3">
+          Frequently Answered Questions
+        </h2>
+        <p class="text-xs sm:text-sm text-zinc-400">
+          Clarity regarding our botanical sourcing, diabetic usage, and laboratory safety.
+        </p>
+      </div>
+
+      <div class="space-y-4">
+        
+        <details class="glass-panel rounded-xl p-5 border border-white/5 group cursor-pointer">
+          <summary class="font-display font-semibold text-base text-white list-none flex items-center justify-between">
+            <span>Is TALARA palm sugar safe for people with diabetes?</span>
+            <span class="text-amber-400 group-open:rotate-180 transition-transform">▼</span>
+          </summary>
+          <p class="text-xs sm:text-sm text-zinc-300 mt-3 leading-relaxed border-t border-white/5 pt-3">
+            TALARA palm sweeteners have a measured lower glycemic index (GI ~38–42) than standard white cane sugar (GI ~65) and contain natural trace potassium and magnesium. However, it is still a concentrated source of carbohydrates. It does NOT lower blood glucose, nor does it treat or cure diabetes. If you are diabetic or prediabetic, always consult your endocrinologist or certified dietitian before adding any sweetener to your meal plan.
+          </p>
+        </details>
+
+        <details class="glass-panel rounded-xl p-5 border border-white/5 group cursor-pointer">
+          <summary class="font-display font-semibold text-base text-white list-none flex items-center justify-between">
+            <span>How does TALARA harvest without cutting down the palm tree?</span>
+            <span class="text-amber-400 group-open:rotate-180 transition-transform">▼</span>
+          </summary>
+          <p class="text-xs sm:text-sm text-zinc-300 mt-3 leading-relaxed border-t border-white/5 pt-3">
+            Palmyra palms live for 80 to 120 years. We harvest living inflorescence sap twice daily, collect naturally shed fronds from the ground, harvest seasonal surplus fruit, and gently prune leaf-sheath fibers during annual canopy maintenance. We never chop down living trees for our consumer products. The only timber we ever utilize comes strictly from trees that have naturally fallen at the end of their century-long lifespan.
+          </p>
+        </details>
+
+        <details class="glass-panel rounded-xl p-5 border border-white/5 group cursor-pointer">
+          <summary class="font-display font-semibold text-base text-white list-none flex items-center justify-between">
+            <span>What makes Palmyra Palm distinct from Coconut Palm?</span>
+            <span class="text-amber-400 group-open:rotate-180 transition-transform">▼</span>
+          </summary>
+          <p class="text-xs sm:text-sm text-zinc-300 mt-3 leading-relaxed border-t border-white/5 pt-3">
+            While both belong to the Arecaceae family, the Palmyra Palm (Borassus flabellifer) is a wild, drought-resilient tree with iconic giant fan-shaped fronds. Its sap produces a distinctively deeper, more complex caramel-molasses note with higher mineral ash density, and its leaf petioles are significantly tougher, enabling rigid water-resistant homeware without polymer coatings.
+          </p>
+        </details>
+
+        <details class="glass-panel rounded-xl p-5 border border-white/5 group cursor-pointer">
+          <summary class="font-display font-semibold text-base text-white list-none flex items-center justify-between">
+            <span>Are your products screened for heavy metals and pesticides?</span>
+            <span class="text-amber-400 group-open:rotate-180 transition-transform">▼</span>
+          </summary>
+          <p class="text-xs sm:text-sm text-zinc-300 mt-3 leading-relaxed border-t border-white/5 pt-3">
+            Yes. Every production batch is tested in accredited ISO/IEC 17025 laboratory facilities for heavy metals (lead, arsenic, cadmium, mercury), pesticide residues, microbial pathogens (E. coli, Salmonella), and moisture levels. Certificates of Analysis can be accessed by scanning the batch QR code on your product.
+          </p>
+        </details>
+
+        <details class="glass-panel rounded-xl p-5 border border-white/5 group cursor-pointer">
+          <summary class="font-display font-semibold text-base text-white list-none flex items-center justify-between">
+            <span>What is your legal policy on alcoholic beverages like Toddy?</span>
+            <span class="text-amber-400 group-open:rotate-180 transition-transform">▼</span>
+          </summary>
+          <p class="text-xs sm:text-sm text-zinc-300 mt-3 leading-relaxed border-t border-white/5 pt-3">
+            Our Heritage Toddy Reserve undergoes wild yeast fermentation to ~5.4% ABV. It is strictly age-gated (21+ in USA / 18+ in applicable jurisdictions) and requires age verification at purchase. It is not sold to minors, and is not recommended during pregnancy or while operating motor vehicles.
+          </p>
+        </details>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 10: B2B, WHOLESALE & CONTACT
+       ========================================================================== -->
+  <section id="contact-section" class="py-24 border-t border-white/5 bg-[#0c1410] relative">
+    <div class="site-container">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        
+        <div class="lg:col-span-5">
+          <span class="badge-tag badge-amber mb-3 font-mono">Global Inquiries</span>
+          <h2 class="font-display text-3xl sm:text-4xl font-bold text-white mb-4">
+            Partner With The Palmyra Vanguard
+          </h2>
+          <p class="text-sm text-zinc-300 mb-8 leading-relaxed font-light">
+            Whether you are an executive pastry chef seeking single-origin nectar, a consumer brand transitioning 
+            to tree-free molded pulp packaging, or an international specialty distributor, we welcome collaborative growth.
+          </p>
+
+          <div class="space-y-4 text-xs font-mono text-zinc-300">
+            <div class="flex items-center gap-3">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary-amber)" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              <span>enterprise@talara-ecosystem.io</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary-amber)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <span>Grove Innovation Hub, Tirunelveli Coastal Belt, India</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary-amber)" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              <span>Direct Cold-Chain Express & Maritime Bulk Logistics</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7">
+          <div class="glass-panel p-6 sm:p-10 rounded-2xl border border-white/10">
+            <h3 class="font-display text-xl font-bold text-white mb-2">B2B & Partnership Request</h3>
+            <p class="text-xs text-zinc-400 mb-6">Our commercial logistics team will review and respond with technical spec sheets within 24 hours.</p>
+
+            <form id="b2b-inquiry-form" class="space-y-4 text-xs">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block font-mono uppercase text-zinc-400 text-[10px] mb-1">Full Name</label>
+                  <input type="text" required placeholder="Chef / Procurement Director" class="w-full p-3 rounded-lg bg-black/40 border border-white/10 text-white focus:border-amber-400 outline-none" />
+                </div>
+                <div>
+                  <label class="block font-mono uppercase text-zinc-400 text-[10px] mb-1">Organization / Company</label>
+                  <input type="text" required placeholder="Luxury Hotel Group / Roastery" class="w-full p-3 rounded-lg bg-black/40 border border-white/10 text-white focus:border-amber-400 outline-none" />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block font-mono uppercase text-zinc-400 text-[10px] mb-1">Business Email</label>
+                  <input type="email" required placeholder="procurement@brand.com" class="w-full p-3 rounded-lg bg-black/40 border border-white/10 text-white focus:border-amber-400 outline-none" />
+                </div>
+                <div>
+                  <label class="block font-mono uppercase text-zinc-400 text-[10px] mb-1">Vertical of Interest</label>
+                  <select class="w-full p-3 rounded-lg bg-black/40 border border-white/10 text-zinc-300 focus:border-amber-400 outline-none font-mono">
+                    <option>Culinary Sweeteners (Nectar & Granules)</option>
+                    <option>Beverage Distribution (Botanical Elixirs)</option>
+                    <option>Zero-Tree Molded Pulp Packaging</option>
+                    <option>Compostable Frond Tableware</option>
+                    <option>Prebiotic Tuber Flours</option>
+                    <option>Artisan Woven Homeware</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label class="block font-mono uppercase text-zinc-400 text-[10px] mb-1">Estimated Annual Volume / Inquiry Details</label>
+                <textarea rows="3" placeholder="Specify requirements, country of import, or testing samples requested..." class="w-full p-3 rounded-lg bg-black/40 border border-white/10 text-white focus:border-amber-400 outline-none resize-none"></textarea>
+              </div>
+
+              <button type="submit" class="btn-primary w-full py-3.5 text-sm">
+                Submit Enterprise Inquiry
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       FOOTER
+       ========================================================================== -->
+  <footer class="py-16 border-t border-white/10 bg-[#060a08] text-zinc-400 text-xs font-mono">
+    <div class="site-container">
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+        
+        <!-- Brand Summary -->
+        <div class="lg:col-span-2">
+          <div class="flex items-center gap-3 mb-4">
+            <svg class="brand-logo-icon" viewBox="0 0 48 48" fill="none">
+              <circle cx="24" cy="24" r="22" stroke="rgba(217, 146, 59, 0.4)" stroke-width="1.5"/>
+              <path d="M24 6V42" stroke="#d9923b" stroke-width="2.5" stroke-linecap="round"/>
+              <path d="M6 24H42" stroke="#d9923b" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="24" cy="24" r="5" fill="#d9923b"/>
+            </svg>
+            <span class="font-display font-bold text-xl text-white tracking-widest">TALARA</span>
+          </div>
+          <p class="text-zinc-400 text-xs font-sans leading-relaxed max-w-sm mb-4">
+            The Palmyra Company. Building a modern multi-product consumer and industrial brand from the wild <em>Borassus flabellifer</em> tree with zero tree felling and rigorous laboratory safety.
+          </p>
+          <p class="text-[11px] text-zinc-500">
+            Certified FSSAI • US FDA Food Facility Registration • ISO 22000 Compliant
+          </p>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h4 class="font-bold text-white uppercase tracking-wider mb-3">Creations</h4>
+          <ul class="space-y-2">
+            <li><a href="#catalog-section" class="hover:text-amber-400">Nectar Reserve</a></li>
+            <li><a href="#catalog-section" class="hover:text-amber-400">Sugar Crystals</a></li>
+            <li><a href="#catalog-section" class="hover:text-amber-400">Sparkling Elixirs</a></li>
+            <li><a href="#catalog-section" class="hover:text-amber-400">Prebiotic Tuber Flour</a></li>
+            <li><a href="#catalog-section" class="hover:text-amber-400">Frond Tableware</a></li>
+          </ul>
+        </div>
+
+        <!-- Pillars -->
+        <div>
+          <h4 class="font-bold text-white uppercase tracking-wider mb-3">Pillars</h4>
+          <ul class="space-y-2">
+            <li><a href="#anatomy-section" class="hover:text-amber-400">Palm Anatomy</a></li>
+            <li><a href="#process-section" class="hover:text-amber-400">Cryo-Process</a></li>
+            <li><a href="#science-section" class="hover:text-amber-400">Science vs Tradition</a></li>
+            <li><a href="#sustainability-section" class="hover:text-amber-400">Zero-Felling Policy</a></li>
+            <li><a href="#story-section" class="hover:text-amber-400">Tapper Safety Collective</a></li>
+          </ul>
+        </div>
+
+        <!-- Newsletter -->
+        <div>
+          <h4 class="font-bold text-white uppercase tracking-wider mb-3">Vanguard Dispatch</h4>
+          <p class="text-[11px] text-zinc-400 mb-3 font-sans">Seasonal harvest updates, botanical research, and limited edition releases.</p>
+          <form class="newsletter-form space-y-2">
+            <input type="email" required placeholder="your@email.com" class="w-full p-2 rounded bg-black/50 border border-white/10 text-white text-xs outline-none focus:border-amber-400" />
+            <button type="submit" class="btn-amber-outline w-full py-1.5 text-xs">Join Dispatch</button>
+          </form>
+        </div>
+
+      </div>
+
+      <!-- Statutory Health & Disclaimers Footer Bar -->
+      <div class="pt-8 border-t border-white/10 text-[11px] leading-relaxed text-zinc-500 space-y-2">
+        <p>
+          <strong>FDA & Regulatory Disclaimer:</strong> Statements made on this website regarding food and beverage products have not been evaluated by the Food and Drug Administration. These products are not intended to diagnose, treat, cure, or prevent any disease. Dietary advice should come from a qualified health professional.
+        </p>
+        <p>
+          <strong>Diabetes & Carbohydrate Advisory:</strong> While unrefined palm sweeteners possess a lower glycemic index than refined sucrose, they remain a source of dietary carbohydrates and calories. Suitability must be determined in consultation with your personal physician.
+        </p>
+        <p>
+          <strong>Alcohol Warning:</strong> Fermented offerings (Heritage Toddy Reserve) contain alcohol and are strictly prohibited for minors under the legal drinking age. Do not consume if pregnant or nursing.
+        </p>
+        <div class="flex flex-wrap items-center justify-between pt-4 text-zinc-600">
+          <span>© 2026 TALARA Inc. Borassus Ecosystem. All Rights Reserved.</span>
+          <div class="flex gap-4">
+            <a href="#" class="hover:text-zinc-400">Privacy Policy</a>
+            <a href="#" class="hover:text-zinc-400">Terms of Service</a>
+            <a href="#" class="hover:text-zinc-400">Batch Laboratory Assays</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       MODALS & DRAWERS (E-COMMERCE & INTERACTIVE)
+       ========================================================================== -->
+  
+  <!-- Backdrop for Drawers -->
+  <div id="drawer-backdrop" class="drawer-backdrop"></div>
+
+  <!-- Backdrop for Centered Modals -->
+  <div id="modal-backdrop" class="modal-backdrop"></div>
+
+  <!-- Cart Drawer -->
+  <aside id="cart-drawer" class="cart-drawer">
+    <div class="p-5 border-b border-white/10 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <h3 class="font-display font-bold text-lg text-white">Your Cart</h3>
+        <span class="text-xs font-mono text-zinc-400">(<span id="cart-drawer-count">0</span> items)</span>
+      </div>
+      <button id="close-cart-btn" class="p-2 text-zinc-400 hover:text-white" aria-label="Close cart">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <!-- Free Shipping Progress Tracker -->
+    <div class="p-4 bg-black/40 border-b border-white/5 text-xs font-mono">
+      <div class="flex items-center justify-between mb-1.5 text-zinc-300">
+        <span id="cart-free-shipping-text">Add ₹999 for Free Climate-Neutral Delivery</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+      </div>
+      <div class="w-full h-1.5 rounded-full bg-zinc-800 overflow-hidden">
+        <div id="cart-free-shipping-fill" class="h-full bg-emerald-400 rounded-full transition-all duration-300" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <!-- Cart Items Scroll Area -->
+    <div id="cart-items-list" class="flex-grow overflow-y-auto p-5 space-y-3">
+      <!-- Injected by js/app.js -->
+    </div>
+
+    <!-- Cart Footer & Calculations -->
+    <div class="p-5 border-t border-white/10 bg-black/60 space-y-3 text-xs font-mono">
+      <!-- Promo Code Input -->
+      <div class="flex gap-2">
+        <input 
+          type="text" 
+          id="promo-code-input" 
+          placeholder="Promo (PALMVALUE)" 
+          class="flex-grow p-2 rounded bg-black/50 border border-white/10 text-white uppercase text-xs outline-none focus:border-amber-400" 
+        />
+        <button id="apply-promo-btn" class="btn-amber-outline py-1.5 px-3 text-xs">Apply</button>
+      </div>
+      <span id="promo-feedback-msg" class="hidden"></span>
+
+      <!-- Financial Breakdown -->
+      <div class="space-y-1.5 pt-2 border-t border-white/5 text-zinc-300">
+        <div class="flex justify-between">
+          <span>Subtotal</span>
+          <span id="cart-subtotal-val" class="font-bold text-white">₹0</span>
+        </div>
+        <div id="cart-promo-discount-row" class="flex justify-between text-emerald-400 hidden">
+          <span>Promotional Discount</span>
+          <span id="cart-promo-discount-val">-₹0</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Climate-Neutral Shipping</span>
+          <span id="cart-shipping-val">FREE</span>
+        </div>
+        <div class="flex justify-between text-sm font-bold text-white pt-2 border-t border-white/10">
+          <span class="font-display">Total</span>
+          <span id="cart-total-val" class="font-display text-amber-400 text-lg">₹0</span>
+        </div>
+      </div>
+
+      <button id="cart-checkout-btn" class="btn-primary w-full py-3.5 text-sm font-semibold tracking-wider">
+        Proceed to Checkout →
+      </button>
+      <p class="text-[10px] text-zinc-500 text-center font-sans">
+        Protected by simulated 256-bit bank-grade encryption.
+      </p>
+    </div>
+  </aside>
+
+  <!-- Wishlist Drawer -->
+  <aside id="wishlist-drawer" class="wishlist-drawer">
+    <div class="p-5 border-b border-white/10 flex items-center justify-between">
+      <h3 class="font-display font-bold text-lg text-white">Your Saved Favorites</h3>
+      <button id="close-wishlist-btn" class="p-2 text-zinc-400 hover:text-white" aria-label="Close wishlist">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+    <div id="wishlist-items-list" class="flex-grow overflow-y-auto p-5 space-y-3">
+      <!-- Injected by js/app.js -->
+    </div>
+  </aside>
+
+  <!-- Product Detail Modal -->
+  <div id="product-detail-modal" class="modal-content-wrapper">
+    <!-- Injected dynamically by js/app.js -->
+  </div>
+
+  <!-- Age Verification Modal (for fermented palm wine) -->
+  <div id="age-verification-modal" class="modal-content-wrapper max-w-md">
+    <!-- Injected dynamically by js/app.js -->
+  </div>
+
+  <!-- Checkout Sandbox Modal -->
+  <div id="checkout-modal" class="modal-content-wrapper max-w-2xl">
+    <!-- Injected dynamically by js/app.js -->
+  </div>
+
+  <!-- Order Receipt Success Modal -->
+  <div id="order-success-modal" class="modal-content-wrapper max-w-lg">
+    <!-- Injected dynamically by js/app.js -->
+  </div>
+
+  <!-- Floating Toast Notifications -->
+  <div id="toast-container"></div>
+
+  <!-- Application Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

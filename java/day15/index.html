@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day15</title>
+  <style>
+  #box {
+    width: 200px;
+    height: 100px;
+    background-color: lightgray;
+    color: black;
+    text-align: center;
+    padding: 20px;
+}
+
+#box.active {
+    background-color: blue;
+    color: white;
+}
+  </style>
+</head>
+
+<body>
+  <div id="box">Hello</div>
+<button id="btn">Activate</button>
+    <script>
+     const box = document.getElementById("box");
+const btn = document.getElementById("btn");
+
+btn.addEventListener("click", () => {
+    box.classList.add("active");
+});
+
+    </script>
+</body>
+
+</html>

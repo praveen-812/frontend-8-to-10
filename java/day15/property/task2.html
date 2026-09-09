@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day15 task2</title>
+    <style>
+        #title{
+            background-color: white;
+        }
+        #title.change{
+               background-color: rgb(211, 90, 90);
+        }
+    </style>
+</head>
+<body>
+    <div id="title" class="change">this is my function</div>
+    <button id="btn">click</button>
+    <script>
+        const title= document.getElementById("title")
+        const btn = document.getElementById("btn")
+        btn.addEventListener("click",()=>{
+         title.classList.remove("change")
+        })
+
+    </script>
+    
+</body>
+</html>
