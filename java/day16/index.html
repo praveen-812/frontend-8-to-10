@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+     
+    <form id="studentdata">
+    <input type="text" placeholder="enter the name" id="userName">
+    <input type="text" placeholder="enter your age" id="userAge">
+    <input type="email" , placeholder="Enter your Email" id="userEmail">
+    <button id="btn">click</button>
+    </form>
+
+    <table border="1" cellpadding="4">
+        <thead><tr>
+            <th>name</th><th>age</th><th>email</th>
+            </tr>
+        </thead>
+        <tbody id="studentTable"></tbody>
+     </table>
+    <script>
+        const nameInput = document.getElementById("userName")
+        const ageInput = document.getElementById("userAge")
+        const emailInput = document.getElementById("userEmail")
+        const btnInput = document.getElementById("btn")
+        const tables = document.getElementById("studentTable")
+
+
+        const student = [];
+        
+        btnInput.addEventListener("click", (e) => {
+            e.preventDefault()
+            const name = nameInput.value
+            const age = ageInput.value
+            const email = emailInput.value
+
+            const studentdata = {
+                name: name,
+                age: age,
+                email: email
+            }
+              
+            student.push(studentdata)
+           tables.innerHTML = ""
+
+           student.forEach((e)=>{
+
+            tables.innerHTML +=
+                    `<tr>
+                <td>name:${e.name}</td>  
+                    <td>age:${e.age}</td>   
+                        <td>email:${e.email}</td> 
+                    
+                    
+                    
+                </tr>`
+  
+           })
+            // for (let i = 0; i < student.length; i++) {
+            //     tables.innerHTML +=
+            //         `<tr>
+            //     <td>name:${student[i].name}</td>  
+            //         <td>age:${student[i].age}</td>   
+            //             <td>email:${student[i].email}</td> 
+                    
+                    
+                    
+            //     </tr>`
+            // }
+            nameInput.value = "";
+            ageInput.value = "";
+            emailInput.value = "";
+
+        })
+    </script>
+</body>
+
+</html>

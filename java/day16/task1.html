@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day17 task1</title>
+</head>
+
+<body>
+    <form>
+        <input type="text" placeholder="enter your name" id="userName">
+        <input type="number" placeholder="enter your age" id="userAge">
+        <input type="text" placeholder="city" id="userCity">
+        <button id="btn">AddStudent</button>
+    </form>
+    <div id="output"></div>
+    <script>
+        const studentArray=[]
+        const nameInput = document.getElementById("userName")
+        const ageInput = document.getElementById("userAge")
+        const cityInput = document.getElementById("userCity")
+        const btnInput = document.getElementById("btn")
+        const studentOutput = document.getElementById("output")
+
+        btnInput.addEventListener("click",(e)=>{
+            e.preventDefault()
+            const name=nameInput.value
+            const age=ageInput.value
+            const city=cityInput.value
+
+            const student={
+                 name:name,
+                 age:age,
+                 city:city
+            }
+            
+            studentArray.push(student);
+               studentOutput.innerHTML=""
+            studentArray.forEach((student) =>{
+                 studentOutput.innerHTML+=
+                 `<div>
+                    <h2>name:${student.name}</h2>
+                    <h2>name:${student.age}</h2>
+                    <h2>name:${student.city}</h2>
+                    
+                    </div>`
+            })
+                    nameInput.value="";
+                    ageInput.value="";
+                    cityInput.value="";
+        })
+    </script>
+
+</body>
+
+</html>

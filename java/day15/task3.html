@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dat15 task3</title>
+    <style>
+        #title{
+            background-color: red;
+            color: white;
+        }
+        #title.active{
+           background-color: aqua;
+        }
+    </style>
+</head>
+<body>
+    <h2 id="title">this is toggle</h2>
+    <button id="btn">click</button>
+    <script>
+        const title = document.getElementById("title")
+        const btn = document.getElementById("btn")
+        btn.addEventListener("click",()=>{
+            title.classList.toggle("active")
+        })
+    </script>
+</body>
+</html>

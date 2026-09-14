@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day17 task3</title>
+
+    <style>
+        #productCars{
+            width: 250px;
+            border: 1px solid black;
+            padding: 5px;
+            margin: 5px;
+            background: blue;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" placeholder="enter your product" id="productName">
+    <input type="text"placeholder="enter your price" id="prouctPrice">
+    <input type="text" placeholder="enter your category" id="productCategory">
+    <button id="btn">addCard</button>
+    <div id="productCard"></div>
+<script>
+    const nameInput= document.getElementById("productName")
+     const priceInput= document.getElementById("prouctPrice")
+     const categoryInput= document.getElementById("productCategory")
+     const btn= document.getElementById("btn")
+     const productCards=document.getElementById("productCard")
+
+     const card=[]
+     btn.addEventListener("click",(e)=>{
+        e.preventDefault
+        const product={
+            name:nameInput.value,
+            price:priceInput.value,
+            category:categoryInput.value
+        }
+        card.push(product)
+        productCards.innerHTML="";
+        card.forEach((product) =>{
+            productCards.innerHTML +=
+            `<div>
+                <h2>productName:${product.name}</h2>
+                <p>price:${product.price}</p>
+                <p>category:${product.category}</p>
+                
+                </div>`
+
+        })
+          
+        nameInput.value=""
+        priceInput.value=""
+        categoryInput.value=""
+     })
+</script>    
+    
+</body>
+</html>

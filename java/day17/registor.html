@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <form id="myform">
+
+        <input type="text" placeholder="enter your name" id="userName">
+        <input type="text" placeholder="enter your email" id="userEmail">
+        <input type="text" placeholder="enter your password" id="userPassword">
+        <button id="submit">submit</button>
+        <p>already you have account go to login</p>
+    </form>
+    <script>
+               const submit=document.getElementById("submit")
+        submit.addEventListener("click",()=>{
+         const name=document.getElementById("userName").value
+        const email=document.getElementById("userEmail").value
+        const password=document.getElementById("userPassword").value
+        
+        const savedData=JSON.parse(localStorage.getItem("register")) || []
+        console.log(savedData)
+        const users={name,email,password}
+        savedData.push(users)
+        localStorage.setItem("register",JSON.stringify(savedData))
+    
+
+       
+       window.location.href=login.html
+
+        
+
+        })
+
+    </script>
+
+ 
+</body>
+
+</html>

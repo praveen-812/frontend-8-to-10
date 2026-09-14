@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>login</h2>
+    <input type="text" placeholder="enter your email" id="userEmail">
+    <input type="text" placeholder="enter your password" id="userPassword">
+    <button id="btn">click</button>
+
+    <p>did you have no account pls <a href="register.html">register</a> </p>
+    <script>
+        const btn = document.getElementById("btn")
+
+        const emailInput = document.getElementById("userEmail")
+        const passwordInput = document.getElementById("userPassword")
+
+        if(email="" &&password== ""){
+            alert( "plz enter value")
+        }
+
+        btn.addEventListener("click", (e) => {
+            e.preventDefault
+            const email = emailInput.value
+            const password = passwordInput.value
+
+            const savedData = JSON.parse(localStorage.getItem("register"))
+            const checkemail_password = savedData.find((e)=>e.email==email && e.password==password)
+            if(checkemail_password){
+                window.location.href="dashboard.html"
+            }else{
+                alert(" plz correct your password")
+            }
+
+
+        })
+
+    </script>
+</body>
+
+</html>

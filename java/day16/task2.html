@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day17 task2</title>
+</head>
+
+<body>
+    <form>
+        <input type="text" placeholder="enter your name" id="userName">
+        <input type="text" placeholder="enter your department" id="userDepartment">
+        <input type="numnber" placeholder="enter your salary" id="userSalary">
+        <button id="btn">click</button>
+    </form>
+    <table border="2" cellpadding="10">
+        <thead>
+            <th>Employee Name</th>
+            <th>Department</th>
+            <th>Salary</th>
+        </thead>
+        <tbody id="employeeData"></tbody>
+    </table>
+    <script>
+        const nameInput = document.getElementById("userName")
+        const departmentInput = document.getElementById("userDepartment")
+        const salaryInput = document.getElementById("userSalary")
+        const btn = document.getElementById("btn")
+        const table = document.getElementById("employeeData")
+
+        const employees = []
+
+        btn.addEventListener("click", (e) => {
+            e.preventDefault() 
+
+            const name = nameInput.value
+            const department = departmentInput.value
+            const salary = salaryInput.value
+
+            const employeedetails = {
+                name: name,
+                department: department,
+                salary: salary
+            }
+            employees.push(employeedetails)
+            table.innerHTML = ""
+            employees.forEach((employeedetails) => {
+
+                table.innerHTML +=
+                    `<tr>
+                    <td>${employeedetails.name}</td>
+                    <td>${employeedetails.department}</td>
+                    <td>${employeedetails.salary}</td>
+                    
+                    </tr>`
+
+
+            })
+            nameInput.value = ""
+            departmentInput.value = ""
+            salaryInput.value = ""
+
+        })
+    </script>
+
+</body>
+
+</html>

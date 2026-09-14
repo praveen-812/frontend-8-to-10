@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IT IN 2030 — AI, Web Development & The Future</title>
+  <meta name="description" content="A light, premium editorial exploring three pivotal questions about AI, Web Development, and the future of technology." />
+  
+  <!-- Preconnect and Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%232563eb'/><text x='50' y='68' font-size='55' font-weight='bold' fill='white' text-anchor='middle'>30</text></svg>" />
+</head>
+<body>
+  <!-- Reading Progress Bar -->
+  <div id="readingProgressBar" role="progressbar" aria-label="Reading Progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+
+  <!-- Header Navigation -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <!-- Brand Link -->
+      <a class="brand-link" id="brandLink" href="#" title="IT IN 2030 Homepage">
+        <div class="brand-badge">30</div>
+        <div class="brand-text-group">
+          <span class="brand-title" id="navSiteTitle">IT IN 2030</span>
+          <span class="brand-tagline" id="navSiteTagline">PERSPECTIVE SERIES</span>
+        </div>
+      </a>
+
+      <!-- Active Article Breadcrumb Context -->
+      <div class="header-context" id="headerContext">
+        <a class="context-crumb" id="contextCrumb" href="#">Articles</a>
+        <span class="context-separator">/</span>
+        <span class="context-current" id="contextCurrentTitle">Current Article</span>
+      </div>
+
+      <!-- Controls: Back Button & Language Switcher -->
+      <div class="header-controls">
+        <a class="header-back-btn" id="headerBackBtn" href="#" role="button" aria-label="Back to Articles">
+          <span id="headerBackBtnText">← Back</span>
+        </a>
+
+        <div class="lang-toggle-wrap" role="group" aria-label="Language Selector">
+          <button type="button" class="lang-btn active" id="btnLangEn" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" class="lang-btn" id="btnLangTa" data-lang="ta" aria-pressed="false">தமிழ்</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main View Area -->
+  <main class="main-wrapper" id="mainWrapper">
+    <!-- HOMEPAGE VIEW: HERO + STRICTLY 3 MAIN CARDS -->
+    <section id="homeView" class="view-panel" aria-label="Homepage Overview">
+      <!-- Compact Hero Section -->
+      <div class="hero-section">
+        <div class="hero-tag" id="heroTag">PERSPECTIVE SERIES</div>
+        <h1 class="hero-title" id="heroTitle">IT IN 2030</h1>
+        <h2 class="hero-subtitle" id="heroSubtitle">Three questions about AI, Web Development and the future of technology.</h2>
+        <p class="hero-desc" id="heroDesc">
+          A thoughtful exploration of how software engineering is evolving, why the open web remains society's quiet backbone, and how professionals can thrive by directing artificial intelligence rather than fearing it.
+        </p>
+      </div>
+
+      <!-- ONLY 3 MAIN ARTICLE CARDS SECTION -->
+      <div class="cards-section">
+        <div class="cards-grid" id="cardsGrid" role="list">
+          <!-- Card 1: IT in 2030 — How Will Web Developers Work? -->
+          <div class="article-card" data-card="article-1" role="article" tabindex="0">
+            <div class="card-stripe"></div>
+            <div class="card-header-row">
+              <span class="card-num">01</span>
+              <span class="card-category">THE DEVELOPER'S CRAFT</span>
+            </div>
+            <h3 class="card-title">
+              <a href="#/article-1" style="color: inherit; text-decoration: none;">IT in 2030 — How Will Web Developers Work?</a>
+            </h3>
+            <p class="card-excerpt">By 2030, AI will assemble code, test features, and generate designs in seconds. But programming isn't dying—the true craft is shifting from syntax entry to direction, taste, and human decision-making.</p>
+            <div class="card-visual-frame" id="visualCard1">
+              <!-- Inline Graphic dynamically hydrated or fallback -->
+            </div>
+            <div class="card-action-bar">
+              <a href="#/article-1" class="card-read-cta" style="text-decoration: none;">Read Article →</a>
+              <span class="card-meta-pill">5 min read</span>
+            </div>
+          </div>
+
+          <!-- Card 2: What If Websites Disappeared? -->
+          <div class="article-card" data-card="article-2" role="article" tabindex="0">
+            <div class="card-stripe"></div>
+            <div class="card-header-row">
+              <span class="card-num">02</span>
+              <span class="card-category">SOCIETAL THOUGHT EXPERIMENT</span>
+            </div>
+            <h3 class="card-title">
+              <a href="#/article-2" style="color: inherit; text-decoration: none;">What If Websites Disappeared?</a>
+            </h3>
+            <p class="card-excerpt">Imagine waking up tomorrow and every web page has vanished. This isn't just a crisis for programmers—it would silently disrupt trains, government services, banking, food, and human connectivity.</p>
+            <div class="card-visual-frame" id="visualCard2">
+              <!-- Inline Graphic dynamically hydrated or fallback -->
+            </div>
+            <div class="card-action-bar">
+              <a href="#/article-2" class="card-read-cta" style="text-decoration: none;">Read Article →</a>
+              <span class="card-meta-pill">6 min read</span>
+            </div>
+          </div>
+
+          <!-- Card 3: How Should We Adapt? (THE SOLUTION) -->
+          <div class="article-card solution-card" data-card="article-3" role="article" tabindex="0">
+            <div class="card-stripe"></div>
+            <div class="card-header-row">
+              <span class="card-num">03</span>
+              <span class="card-category solution-badge">THE SOLUTION</span>
+            </div>
+            <h3 class="card-title">
+              <a href="#/article-3" style="color: inherit; text-decoration: none;">How Should We Adapt?</a>
+            </h3>
+            <p class="card-excerpt">The first two articles showed the problem and the stakes. Here is the practical solution: don't run from AI—master the tools, keep fierce quality control, understand human needs, and build lasting individual value.</p>
+            <div class="card-visual-frame" id="visualCard3">
+              <!-- Inline Graphic dynamically hydrated or fallback -->
+            </div>
+            <div class="card-action-bar">
+              <a href="#/article-3" class="card-read-cta" style="text-decoration: none;">Read Article →</a>
+              <span class="card-meta-pill">4 min read</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FULL ARTICLE VIEW -->
+    <article id="articleView" class="view-panel" style="display: none;" aria-label="Article Details">
+      <div class="article-container" id="articleContainer">
+        <!-- Dynamic Article Content Rendered by js/app.js -->
+      </div>
+    </article>
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo" id="footerLogo">IT IN 2030</div>
+      <p class="footer-text" id="footerText">
+        IT IN 2030 Editorial Series. Designed for curious minds, students, and future builders.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/content.js"></script>
+  <script src="js/graphics.js"></script>
+  <script src="js/video-player.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
