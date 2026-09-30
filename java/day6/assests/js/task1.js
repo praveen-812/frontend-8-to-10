@@ -70,7 +70,7 @@ let stringReverse="javascript";
 let print="";
 for(let i=0;i<stringReverse.length;i++){
     print=stringReverse[i]+print;
-}
+}2
 console.log(print);
 
 // find s use javascript//
